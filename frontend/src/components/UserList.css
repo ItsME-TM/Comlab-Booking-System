@@ -1,0 +1,89 @@
+.user-list-container{
+    display: flex;
+    height: 100vh; 
+    width: 100vw;
+    background-color: white;
+}
+.list-left-container{
+    flex: 0.3;
+    background-color: #205464;
+}
+.role{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+.role-button{
+    width: 100%;
+    padding: 15px 50px;
+    margin-bottom: 5px;
+    background-color: #366574;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: large;
+}
+.role-button:hover {
+    background-color: #638793; 
+}
+.list-title{
+    color: white; 
+    text-align: center; 
+    margin-top: 50px; 
+    padding: 10px 0;
+}
+.list-right-container {
+    flex: 1;
+    background-color: #93b6bf;
+    padding: 10px;
+    position: relative; 
+  }
+  
+  .list-right-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .list-right-container th {
+    background-color: rgb(97, 143, 159);
+    color: #205464;
+    border-bottom: 1px solid rgb(97, 143, 159); 
+    padding: 10px; 
+  }
+  
+  .list-right-container td {
+    border-bottom: 1px solid rgb(97, 143, 159); 
+    padding: 10px; 
+    color: #366574;
+  }
+  
+  .list-right-container .action-buttons {
+    display: flex;
+    gap: 15px;
+    color:  white;
+  }
+  
+  .list-right-container .action-button {
+    gap: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color:#205464;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    
+  }
+  
+  .list-right-container .action-button:hover {
+    background-color:  #638793;
+  }
+  
+  .list-right-container td:last-child {
+    border-bottom: none; 
+  }
+
+
+
+  

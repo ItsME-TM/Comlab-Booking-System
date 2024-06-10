@@ -1,0 +1,64 @@
+
+.addUser-container {
+    padding: 5mm;
+    display: flex;
+    background-color: #93b6bf;
+    height: 100vh;
+  }
+  
+  .addUser-header {
+    color:  #205464;
+  }
+  
+  .addUser-form {
+    width: 100%;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5cm;
+  }
+  
+  .addUser-label {
+    display: block;
+    color:  #205464;
+    margin-bottom: 1mm;
+  }
+  
+  .addUser-input {
+    width: 100%;
+  }
+  
+  .button-group {
+    
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .addUser-button {
+    margin-right: 10px;
+  }
+  
+  .addUser-leftContainer {
+    justify-content: center;
+    flex: 1;
+    text-align: left;
+  }
+
+  .addUser-rightContainer {
+    height: 100vh;
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .addUser-img {
+    
+    width: 40%;
+    display: flex;
+    background-color: #205464;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+  }

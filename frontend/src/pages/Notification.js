@@ -72,7 +72,7 @@ export default function Notification() {
     <div>
       <Header onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
       <div className="notification-container">
-        {/* Left side with toolbars */}
+        
         <div className="left-side">
           <h2 className='title'>Notifications</h2>
           <ul className='toolbars'>
@@ -84,9 +84,9 @@ export default function Notification() {
             <button className="toolbar-button" onClick={() => handleButtonClick('Reminders')}>Reminders</button>
           </ul>
         </div>
-        {/* Right side with preview */}
+        
         <div className="right-side">
-          {/* Display preview content here */}
+          
           <div className="scroll-container">
             <ul className="preview-list">
               {previewContent.map((notification, index) => (

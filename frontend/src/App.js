@@ -14,7 +14,9 @@ import Notification from './pages/Notification'; // Import the Notification comp
 import UserSingIn from './pages/userSingIn';
 import AdminLogin from './pages/AdminLogin';
 import { UserProvider } from './components/UserContext';
-
+import UserList from './pages/UserList';
+import AddUser from './pages/AddUser';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
             <Route path="/notification" element={<Notification />} />
             <Route path="/userSingIn" element={<UserSingIn />} />
             <Route path="/adminlogin" element={<AdminLogin />} />
+            <Route path="/UserList" element={<UserList />} />
+            <Route path="/AddUser" element={<AddUser />} />
+            <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
           </Routes>
         </BrowserRouter>
       </div>

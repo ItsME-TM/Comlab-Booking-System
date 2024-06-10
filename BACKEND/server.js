@@ -2,6 +2,7 @@ const app = require('./app');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 dotenv.config();
 
 const PORT = process.env.PORT || 8070;
@@ -23,6 +24,7 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port ${PORT}`);

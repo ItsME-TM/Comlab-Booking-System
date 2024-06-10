@@ -26,7 +26,7 @@ function NavBarBL() {
               </div>
             </Navbar.Brand>  
             <Nav>
-                <Link to ="/adminlogin" className="ml-auto">
+                <Link to ='./pages/admin/UserList' className="ml-auto">
                   <Buttons text="Admin"  borderRadius="0" width="95px"  />
                 </Link>
             </Nav>
