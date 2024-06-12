@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import NavBarBL from '../components/NavBarBL'
+import Header from '../components/Header';
+import NavBarBL from '../components/navBarBL';
 import '../App.css';
 
 
