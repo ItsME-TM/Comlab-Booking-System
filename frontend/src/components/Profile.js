@@ -1,25 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import userIconProfile from '../images/user.png';
-import Buttons from '../components/Buttons';
+import Buttons from '../components/editButton';
 import { Link, useNavigate } from 'react-router-dom';
 import settingIcon from '../images/setting_icon.png';
 import '../components/profile.css';
-import { UserContext } from '../components/UserContext';
+import axios from 'axios';
 
-export default function Profile() {
-  const { userData } = useContext(UserContext);
+export default function Profile({ profileRef }) {
   const navigate = useNavigate();
+  const [userData, setUser] = useState('');
+  const token = localStorage.getItem('token');
+  console.log('token from admin profile component:', token);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('/api/users/tokenUser', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setUser(response.data);
+        console.log('token details:', response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      setUser('');
+    }
+  }, [token]);
 
   const handleProfileSettingsClick = () => {
     if (userData.role === 'admin') {
       navigate('/adminprofile');
+    } else if(userData.role === 'to') {
+      navigate('/toProfile')
     } else {
-      navigate('/user');
+      navigate('/');
     }
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    setUser('');
+  };
+
   return (
-    <div className='profile-container'>
+    <div className='profile-container' ref={profileRef}>
       <div className='containerProfile-2'>
         <img src={userIconProfile} alt="user-icon" className='userIconProfile' />
         <div className='info'>
@@ -30,8 +63,8 @@ export default function Profile() {
             {userData.email}
           </h4>
         </div>
-        <Link to="/"> 
-          <Buttons text="Sign out" borderRadius="50px" width="175px" height="60px" marginTop="25px" />
+        <Link to="/" > 
+          <Buttons text="Sign out" borderRadius="50px" width="175px" height="60px" marginTop="25px" onClick={handleSignOut}/>
         </Link>
       </div>
       <div className='containerProfile-3'>

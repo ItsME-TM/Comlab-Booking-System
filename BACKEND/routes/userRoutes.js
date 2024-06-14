@@ -23,6 +23,7 @@ router.post('/add', auth, async (req, res) => {
 
 //Get all users 
 router.get('/getall', auth, async(req, res) => {
+  console.log('hit getall');
   try{
     if(req.user.role !== 'admin'){
       return res.status(403).json({error: "Access denied. You're not an admin."});
@@ -91,6 +92,17 @@ router.get('/instructors', auth, async(req, res) =>{
     res.json(instructors);
   }
   catch(error){
+    console.error(error);
+    res.status(500).json({error: 'Server error'});
+  }
+});
+
+router.get('/tokenUser', auth, async(req, res) =>{
+  try{
+    const tokenUser = await User.findById(req.user._id).select('-password');
+    res.json(tokenUser);
+    console.log("Token api details:", tokenUser);
+  }catch(error){
     console.error(error);
     res.status(500).json({error: 'Server error'});
   }

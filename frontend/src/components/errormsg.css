@@ -9,8 +9,8 @@
   .msg-container-error {
     width: 500px;
     height: flex;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 10px 10px;
+    border-radius: 0px;
     text-align: center;
     background-color: #93b6bf;
   }
@@ -18,7 +18,9 @@
   .title {
     color: #055366;
   }
-  
+  .msg-container-error h1{
+    color: #055366;
+  }
   .error-message {
     color: red;
   }

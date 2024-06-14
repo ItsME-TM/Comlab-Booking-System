@@ -1,15 +1,13 @@
-// Notification.js
-import React, { useState,useRef, useEffect } from 'react';
-import Header from '../components/Header';
+import React, { useState } from 'react';
+import ToHeader from '../components/ToHeder';
 import '../components/notification.css';
 import Profile from '../components/Profile'
 
-export default function Notification() {
+export default function ToNotification() {
   const [previewContent, setPreviewContent] = useState([]);
   const [labDetails, setLabDetails] = useState(null);
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [showOkButton, setShowOkButton] = useState(false);
-  const profileRef = useRef(null);
 
   const notifications = {
     All: ['Notification 1 for All', 'Notification 2 for All', 'Notification 3 for All'],
@@ -69,26 +67,9 @@ export default function Notification() {
     setIsBoxVisible(!isBoxVisible);
   };
 
-  const handleClickOutside = (event) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
-      setIsBoxVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isBoxVisible) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isBoxVisible]);
-
   return (
     <div>
-      <Header onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
+      <ToHeader onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
       <div className="notification-container">
         {/* Left side with toolbars */}
         <div className="left-side">
@@ -132,7 +113,7 @@ export default function Notification() {
             </div>
           )}
         </div>
-        {isBoxVisible && <Profile profileRef={profileRef}/>}
+        {isBoxVisible && <Profile />}
       </div>
     </div>  
   );

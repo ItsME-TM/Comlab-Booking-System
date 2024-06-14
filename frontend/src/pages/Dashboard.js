@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect  } from 'react';
 import Header from '../components/Header'
 import uniImage from  '../images/university-photo.jpg'
 import '../components/dashboard.css'
@@ -8,10 +8,27 @@ import Profile from '../components/Profile'
 export default function Dashboard() {
 
   const [isBoxVisible, setIsBoxVisible] = useState(false);
+  const profileRef = useRef(null);
 
   const handleUserIconClick = () => {
     setIsBoxVisible(!isBoxVisible);
   };
+  const handleClickOutside = (event) => {
+    if (profileRef.current && !profileRef.current.contains(event.target)) {
+      setIsBoxVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isBoxVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isBoxVisible]);
 
   return (
     <div className='dashboard_body'>
@@ -24,7 +41,7 @@ export default function Dashboard() {
           <img src={uniImage} alt="university-photograph" className='uniImage'/>
         </div>
 
-        {isBoxVisible && <Profile />}
+        {isBoxVisible && <Profile profileRef={profileRef} />}
        
        
     </div>

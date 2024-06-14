@@ -1,111 +1,183 @@
-/* viewuser.css */
+/* General styles for the container */
 .viewuser-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh; /* Use min-height instead of height to allow scrolling */
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling */
+}
+
+/* Left side panel styling */
+.left-side-admin {
+  flex: 0.25;
+  background-color: #205464;
+  padding: 0px;
+  width: 240px;
+  min-width: 240px; /* Ensure minimum width for the left panel */
+}
+
+/* Role list styling */
+.role-list {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.role-list li {
+  padding: 10px;
+  background-color: #366574;
+  margin-bottom: 2px;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  font-weight: 450;
+  line-height: 36px;
+}
+
+.role-list li:hover {
+  background-color: #638793;
+}
+
+.role-list li.selected {
+  color: white;
+  background-color: #638793;
+  border: 2px solid #205464;
+}
+
+/* Right side panel styling */
+.right-side-admin {
+  flex: 0.95;
+  padding: 20px;
+  background-color: #A6BBC1;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Title styling */
+.title-admin {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 43px;
+  line-height: 48px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Role title styling */
+.role-title {
+  color: #205464;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-left: 25px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+  font-size: 43px;
+  line-height: 48px;
+  display: flex;
+  align-items: flex-start; 
+}
+
+/* User table styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-left: 25px;
+  margin-top: 50px;
+  margin-right: 100px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  border-left: none; /* Remove left border */
+  border-right: none; /* Remove right border */
+}
+
+.user-table th {
+  font-weight: 500;
+  line-height: 15px;
+  font-size: 20px;
+  color: #1D4C5A;
+  background-color: #638793;
+}
+
+.user-table td {
+  font-weight: 450;
+  line-height: 36px;
+  font-size: 18px;
+  color: #1D4C5A;
+}
+
+/* Button row styling */
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+/* Media queries for responsiveness */
+
+/* Small devices (portrait tablets and small desktops) */
+@media (max-width: 767px) {
+  .viewuser-container {
+      flex-direction: column; /* Stack left and right panels vertically */
+      min-height: 100vh; /* Ensure the container takes at least full viewport height */
+      height: auto;
+      overflow-y: auto; /* Allow vertical scrolling */
   }
-  
+
   .left-side-admin {
-    flex: 0.25;
-    background-color: #205464;
-    padding: 0px;
-    width: 240px;
+      width: 100%; /* Full width for left panel */
+      flex: none;
+      min-width: auto;
+      height: auto;
+  }
 
-  }
-  
-  .role-list {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-    width: 100%;
-  }
-  
-  .role-list li {
-    padding: 10px;
-    background-color: #366574;
-    margin-bottom: 2px;
-    cursor: pointer;
-    color: white;
-    font-size: 18px;
-    font-weight: 450;
-    line-height: 36px;
-   
-  }
-  
-  .role-list li:hover {
-    background-color: #638793;
-  }
-  
-  .role-list li.selected {
-    color: white;
-    background-color: #638793;
-    border: 2px solid #205464;
-  }
-  
   .right-side-admin {
-    flex: 0.95;
-    padding: 20px;
-    background-color: #A6BBC1;
-    
+      width: 100%; /* Full width for right panel */
+      flex: none;
+      height: auto;
+      overflow-y: auto; /* Allow vertical scrolling */
   }
-  
-  .title-admin {
-    color: white;
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px 0;
-    font-weight: 600;
-    font-size: 43px;
-    line-height: 48px;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  
-  .role-title {
-    color: #205464;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 30px;
-    margin-left: 25px;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-weight: 600;
-    font-size: 43px;
-    line-height: 48px;
-    display: flex;
-    align-items: flex-start; 
-  }
-  
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-left: 25px;
-    margin-top: 50px;
-    margin-right: 100px;
-  }
-  
-  .user-table th,
-  .user-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-    border-left: none; /* Remove left border */
-    border-right: none; /* Remove right border */
-    
-  }
-  
-  .user-table th{
-    font-weight: 500;
-    line-height: 15px;
-    font-size: 20px;
-    color: #1D4C5A;
-    background-color:#638793 ;
+}
+
+/* Medium devices (landscape tablets and small desktops) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .viewuser-container {
+      flex-direction: row; /* Keep left and right panels side by side */
+      overflow-y: auto; /* Allow vertical scrolling */
   }
 
-  .user-table td{
-    font-weight: 450;
-    line-height: 36px;
-    font-size: 18px;
-    color: #1D4C5A;
+  .left-side-admin {
+      width: 240px; /* Ensure fixed width for left panel */
+      flex: 0.25;
   }
- 
-  
- 
+
+  .right-side-admin {
+      flex: 0.75;
+      overflow-y: auto; /* Allow vertical scrolling */
+  }
+}
+
+/* Larger devices */
+@media (min-width: 992px) {
+  .viewuser-container {
+      flex-direction: row; /* Keep left and right panels side by side */
+  }
+
+  .left-side-admin {
+      width: 240px; /* Ensure fixed width for left panel */
+      flex: 0.25;
+  }
+
+  .right-side-admin {
+      flex: 0.95;
+      overflow-y: auto; /* Allow vertical scrolling */
+  }
+}

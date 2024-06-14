@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../components/booking.css';
 import Header from '../components/Header';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function MyApp() {
   const [title, setTitle] = useState("");
@@ -16,8 +17,22 @@ export default function MyApp() {
   const [availabilityMessage, setAvailabilityMessage] = useState('');
   const [users, setUsers] = useState([]);
 
-  const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+  const token = localStorage.getItem('token'); 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.event) {
+      const { event } = location.state;
+      setTitle(event.title);
+      setSelectedDate(moment(event.start).format('YYYY-MM-DD'));
+      setStartTime(moment(event.start).format('HH:mm'));
+      setEndTime(moment(event.end).format('HH:mm'));
+      setDescription(event.description);
+      // Assuming attendees are stored in the event object, adjust as necessary
+      setAttendees(event.attendees || []);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -28,6 +43,7 @@ export default function MyApp() {
           }
         });
         setUsers(response.data);
+        console.log('users from booking page:', response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -81,9 +97,9 @@ export default function MyApp() {
       description,
       attendees: attendees.map(user => user.email) // Using the selected attendees' emails
     };
-
+  
     console.log('Saving booking with data:', bookingData);
-
+  
     try {
       const response = await axios.post('/api/bookings', bookingData, {
         headers: {
@@ -91,6 +107,16 @@ export default function MyApp() {
           'Authorization': `Bearer ${token}`
         }
       });
+  
+      // Delete the earlier lab booking if it exists
+      if (location.state && location.state.event) {
+        await axios.delete(`/api/bookings/${location.state.event.id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      }
+  
       console.log('Booking save response:', response.data);
       alert('Booking Successful');
       window.location.reload();
@@ -103,7 +129,7 @@ export default function MyApp() {
       }
     }
   };
-
+  
   const handleUserIconClick = () => {
     setIsBoxVisible(!isBoxVisible);
   };
@@ -128,7 +154,7 @@ export default function MyApp() {
               </div>
             </div>
           <div className="left">
-            <h1>Book Lab Session</h1>
+            <h1>{location.state && location.state.event ? 'Edit Booking' : 'Book Lab Session'}</h1>
             <div className="form-group">
               <label htmlFor="title">Add Title:</label>
               <input type="text" id="title" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -142,11 +168,11 @@ export default function MyApp() {
 
               <label htmlFor="date">Date:</label>
               <div className="inline-container">
-                <input type="date" id="date" name="date" style={{ width: '150px' }} onChange={handleDateChange} />
+                <input type="date" id="date" name="date" style={{ width: '150px' }} value={selectedDate} onChange={handleDateChange} />
                 <label htmlFor="startTime">From:</label>
-                <input type="time" id="startTime" name="startTime" style={{ width: '90px' }} onChange={(e) => setStartTime(e.target.value)} />
+                <input type="time" id="startTime" name="startTime" style={{ width: '90px' }} value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                 <label htmlFor="endTime">To:</label>
-                <input type="time" id="endTime" name="endTime" style={{ width: '90px' }} onChange={(e) => setEndTime(e.target.value)} />
+                <input type="time" id="endTime" name="endTime" style={{ width: '90px' }} value={endTime} onChange={(e) => setEndTime(e.target.value)} />
                 <button className="check-button" onClick={handleCheckButton}>Check</button>
               </div>
 

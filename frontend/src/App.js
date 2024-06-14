@@ -19,6 +19,12 @@ import AdminHome from './pages/AdminHome';
 import AdminProfile from './pages/AdminProfile';
 import AddUser from './pages/AddUser';
 import ViewUser from './pages/ViewUser';
+import UserList from './pages/UserList';
+import EditUser from './pages/editUser';
+import ToHome from './pages/ToHome';
+import ToView from './pages/ToView';
+import ToProfile from './pages/ToProfile';
+import ToNotification from './pages/ToNotification';
 
 
 function App() {
@@ -44,10 +50,12 @@ function App() {
             <Route path="/adminprofile" element={<AdminProfile />} />
             <Route path="/adduser" element={<AddUser />} />
             <Route path="/viewuser" element={<ViewUser />} />
-
-
-            
-
+            <Route path="/UserList" element={<UserList />} />
+            <Route path="/editUser" element={<EditUser />} />
+            <Route path="/toHome" element={<ToHome />} />
+            <Route path="/toView" element={<ToView />} />
+            <Route path="/toProfile" element={<ToProfile />} />
+            <Route path="toNotification" element={<ToNotification />} />
             
           </Routes>
         </BrowserRouter>

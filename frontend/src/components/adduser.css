@@ -1,87 +1,67 @@
-
-
 body {
-    margin: 0; /* Remove default body margin */
-    overflow: hidden; /* Hide overflow to prevent scrolling */
-  }
- 
-  
-  .main-container-admin {
-    background-color: #A6BBC1; 
-    width: 100%;
-    height: 100vh; /* Make the main container full height of viewport */
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    margin: 0; /* Remove any margin */
-    padding: 0; /* Remove any padding */
-    box-sizing: border-box;
-  }
+  margin: 0; /* Remove default body margin */
+  overflow: hidden; /* Hide overflow to prevent scrolling */
+}
 
-  .container-1-admin{
-    display: flex;
-    flex-direction: row;
-    justify-content: center ;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    margin: 0; /* Remove any margin */
-    padding: 0;
-    box-sizing: border-box;
-  
-  }
 
- 
-.container-3-admin {
+.main-container-admin {
+  background-color: #A6BBC1; 
+  width: 100%;
+  height: 100vh; /* Make the main container full height of viewport */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column; /* Stack children vertically */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+  overflow-y: auto; 
+}
+
+.container-1-admin{
+  display: flex;
+  flex-direction: row;
+  justify-content: center ;
   align-items: center;
-  margin: 0 20px; 
+  height: 100%;
+  width: 100%;
+  margin: 0; /* Remove any margin */
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+
+.container-3-admin {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 0 20px; 
 }
 
 .container-2-admin {
-    padding: 10px;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column; /* Display children in a column */
-    align-items: flex-start;
-    box-sizing: border-box;
-    
-  } 
+  padding: 10px;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Display children in a column */
+  align-items: flex-start;
+  box-sizing: border-box;
+  
+} 
 
-  .text-container-admin{
-    line-height: 48px;
-    font-size: 43px;
-    margin-top: 15px;
-    font-weight: 700;
-    color: #1D4C5A;
-    white-space: nowrap; /* Prevent text from breaking into multiple lines */
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Add drop shadow */
-  }
+.text-container-admin{
+  line-height: 48px;
+  font-size: 43px;
+  margin-top: 15px;
+  font-weight: 700;
+  color: #1D4C5A;
+  white-space: nowrap; /* Prevent text from breaking into multiple lines */
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Add drop shadow */
+}
 
-  .input-label-admin{
-    width: 228px; /* Set the width to 228px */
-    height: 36px; /* Set the height to 36px */
-    top: 376px; /* Set the top position to 376px */
-    left: 1115px; /* Set the left position to 1115px */
-    gap: 0px; /* Set the gap to 0px */
-    opacity: 0px; /* Set the opacity to 0px */
-    font-family: Roboto; /* Set the font family to Roboto */
-    font-size: 18px; /* Set the font size to 24px */
-    font-weight: 10; /* Set the font weight to 400 */
-    line-height: 36px; /* Set the line height to 36px */
-    text-align: left;
-    color: #1A4350;
-    border: none;
-    margin-top: 10px; /* Add some space between label and input */
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  .input-field-admin{
-    background-color: #FFFFFF;
-    width: 600px; /* Adjust width as needed */
-    height: 36px; /* Set the height to 36px */
+.input-label-admin{
+  width: 228px; /* Set the width to 228px */
+  height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
   left: 1115px; /* Set the left position to 1115px */
   gap: 0px; /* Set the gap to 0px */
@@ -91,45 +71,113 @@ body {
   font-weight: 10; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #1D4C5A;
+  color: #1A4350;
   border: none;
+  margin-top: 10px; /* Add some space between label and input */
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.input-field-admin{
+  background-color: #FFFFFF;
+  width: 600px; /* Adjust width as needed */
+  height: 36px; /* Set the height to 36px */
+top: 376px; /* Set the top position to 376px */
+left: 1115px; /* Set the left position to 1115px */
+gap: 0px; /* Set the gap to 0px */
+opacity: 0px; /* Set the opacity to 0px */
+font-family: Roboto; /* Set the font family to Roboto */
+font-size: 18px; /* Set the font size to 24px */
+font-weight: 10; /* Set the font weight to 400 */
+line-height: 36px; /* Set the line height to 36px */
+text-align: left;
+color: #1D4C5A;
+border: none;
+}
+
+
+.container-3-admin{
+  background-color: #205464;
+  width: 548px;
+  height:387px;
+  border-radius: 20px;
+  position: relative;
+}
+
+
+.user-logo-details-admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+ 
+.userImageAdmin{
+  mix-blend-mode:lighten;
+  opacity: 0.8; 
+  width: 100%;
+  height: auto; 
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start; 
+  gap: 50px;
+  
+}
+
+/* Small devices (up to 768px) */
+@media only screen and (max-width: 768px) {
+  .container-1-admin {
+    flex-direction: column; /* Stack container-2 and container-3 vertically */
   }
 
-  
-  .container-3-admin{
-    background-color: #205464;
-    width: 548px;
-    height:387px;
-    border-radius: 20px;
-    position: relative;
+  .container-2-admin {
+    width: 100%; /* Full width for container-2 */
   }
-  
 
-  .user-logo-details-admin {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  .container-3-admin {
+    width: 100%; /* Full width for container-3 */
+    margin-top: 20px; /* Add space between container-2 and container-3 */
   }
-   
-  .userImageAdmin{
-    mix-blend-mode:lighten;
-    opacity: 0.8; 
+
+  .input-field-admin{
+      width: 100%;
+  }
+}
+
+/* Medium devices (769px - 991px) */
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .container-1-admin {
+    flex-direction: row; /* Display container-2 and container-3 side by side */
+  }
+
+  .container-2-admin {
+    width: 60%; /* Half width for container-2 */
+  }
+
+  .container-3-admin {
+    width: 40%; /* Half width for container-3 */
+    margin-top: 0; /* Remove margin from the top */
+  }
+
+  .input-field-admin{
     width: 100%;
-    height: auto; 
+}
+}
+
+
+@media only screen and (min-width: 991px) and (max-width: 1200px) {
+  .container-1-admin {
+    flex-direction: row; /* Display container-2 and container-3 side by side */
   }
 
-  .buttons {
-    display: flex;
-    justify-content: flex-start; 
-    gap: 50px;
-    
+  .container-2-admin {
+    width: 50%; /* Half width for container-2 */
   }
 
-  
-
-
-  
-  
-  
+  .container-3-admin {
+    width: 50%; /* Half width for container-3 */
+    margin-top: 0; /* Remove margin from the top */
+  }
+}

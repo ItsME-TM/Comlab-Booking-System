@@ -1,67 +1,221 @@
+.main-page-container-login {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden; /* Ensure no overflow from combined widths */
+
+}
+
 .page-container-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('../images/56201.jpg');
-    background-size: 100% 100%;
-    display: flex;
-    height: 100vh;
-    justify-content: flex-start;
-    
-  }
-  
-  .form-container-login {
-    width: 500px;
-    height: flex;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-size: 100% 100%;
+  justify-content: flex-start;
+  background-color: #A6BBC1;
+  width: 67%; /* Set width to 65% */
+  position: absolute; /* Use absolute positioning */
+  left: 0; /* Align to the left */
+  z-index: 2; 
+  flex: 1;
+  clip-path: polygon(0 0, calc(100% - 200px) 0, 100% 100%, 0 100%);
+}
+
+.image-container-login {
+  background-size: cover;
+  background-position: center;
+  width: 48%; /* Set width to 45% */
+  height: 100%;
+  position: absolute; /* Use absolute positioning */
+  right: 0; /* Align to the right */
+  z-index: 1;
+}
+
+.EntranceUniImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.oblique-line {
+  position: absolute;
+  width: 813.06px;
+  height: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-106.55deg);
+  transform-origin: center;
+  z-index: 3; 
+}
+
+.form-container-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #638793;
+  width: 100%;
+  height: 525px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 4; 
+  flex: 1;
+  clip-path: polygon(0 0, calc(100% - 100px) 0, 100% 100%, 0 100%);
+}
+
+.form-container-login h1,
+.form-container-login h3 {
+  text-align: center;
+  color: white;
+}
+
+.form-group-login {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.input {
+  width: 496px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: #1D4C5A;
+  font-weight: 400;
+}
+
+.buttonStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgot-password {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.error-message-login {
+  color: #dc3545;
+  margin-top: 10px;
+}
+
+.Not-registered .registration-info {
+  display: flex;
+  align-items: center;
+}
+
+.forgot-password {
+  align-self: flex-end;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #000000;
+}
+
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 1024px) {
+  .page-container-login {
+    width: 100%;
+    clip-path: none;
     padding: 20px;
-    border-radius: 10px;
-    background-color: #328f8a;
-    margin-left: 60px;
   }
-  .form-container-login h1,.form-container-login h3{
-    text-align: center;
-    color: white;
+
+  .image-container-login {
+    width: 50%;
   }
-  
-  
-  .form-group-login {
-    margin-bottom: 10px;
+
+  .form-container-login {
+    width: 90%;
+    padding: 20px;
+    clip-path: none;
   }
-  
-  .label {
-    display: block;
-    margin-bottom: 5px;
-    color: #ffffff; /* White text color for labels */
+
+  .EntranceUniImage {
+    object-fit: cover;
   }
-  
+
+  .oblique-line {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-container-login {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .image-container-login {
+    width: 100%;
+    height: 50%;
+    position: relative;
+  }
+
+  .form-container-login {
+    width: 90%;
+    padding: 20px;
+    clip-path: none;
+  }
+
+  .EntranceUniImage {
+    height: 100%;
+    position: relative;
+  }
+  .oblique-line {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page-container-login {
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .image-container-login {
+    width: 100%;
+    height: 50%;
+    position: relative;
+  }
+
+  .form-container-login {
+    width: 100%;
+    padding: 10px;
+    clip-path: none;
+  }
+
+  .EntranceUniImage {
+    height: 100%;
+    position: relative;
+  }
+
   .input {
     width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc; /* Light gray border */
   }
-  
-  .input:focus {
-    outline: none;
-    border-color: #007bff; /* Blue border color on focus */
+  .oblique-line {
+    display: none;
   }
-  
-  .error-message-login {
-    color: #dc3545; /* Red color for error message */
-    margin-top: 10px;
-  }
-  
-
-  .Not-registered .registration-info {
-    display: flex;
-    align-items: center;
-  }
-  .forgot-password {
-    align-self: flex-end; 
-  }
-  
-  .forgot-password a {
-    text-decoration: none; 
-    color: #000000;
-  }
+}

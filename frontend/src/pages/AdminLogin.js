@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBarBL from '../components/navBarBL';
 import '../components/signIn.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Buttons from '../components/Buttons'
+import Buttons from '../components/submitButton';
+import EntranceImage from  '../images/entrance.jpg'
 
-export default function AdminLogin() {
+export default function UserSignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
@@ -30,8 +30,17 @@ export default function AdminLogin() {
       });
 
       console.log('Login response:', response);
-      alert('Admin Login Successful');
-      navigate('/AdminDashboard');
+      const { role } = response.data.user;
+      if (role === 'lecturer' || role === 'Instructor') {
+        alert('Redirect to the User login page.');
+        navigate('/userSingIn'); 
+      } else if (role === 'admin') {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        navigate('/adminhome'); 
+      } else {
+        setErrorMessage('Unauthorized role');
+      }
     } catch (error) {
       console.error('Login error:', error);
       if (error.response && error.response.data && error.response.data.message) {
@@ -41,10 +50,8 @@ export default function AdminLogin() {
       }
     }
   };
-
   return (
     <div>
-      <NavBarBL />
       <div className="page-container-login">
         <div className="form-container-login">
           <h1>Admin Log in</h1>
@@ -73,13 +80,22 @@ export default function AdminLogin() {
             <div className="forgot-password">
               <Link to="/forgotpassword" style={{textDecoration:'underline'}}>Forgot password?</Link>
             </div>
-            <Link to ="/adminSingIn" >
-              <Buttons text="Log in"  borderRadius="0" width="95px"  />
-            </Link>
+            <div className="buttons">
+                <Buttons text="Save" borderRadius="50px" width="125px"  height="50px" marginTop="20px" /> 
+            </div>
           </form>
           {errorMessage && <p className="error-message-login">{errorMessage}</p>}
         </div>
+        {/* Oblique line divider */}
+       <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'8px' , left:'88%'}}></div>
+      <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'5px', left:'85%'}}></div>  
+      <div className="oblique-line"style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'3px', left:'82%'}}></div>
       </div>
+
+      <div className="image-container-login"  >
+      <img src={EntranceImage} alt="university-photograph-entrance" className='EntranceUniImage'/>
+      </div>
+       
     </div>
   );
 }

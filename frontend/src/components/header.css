@@ -1,60 +1,98 @@
 
-.userIcon img{
+/* header.css */
+.userIcon img {
   width: 50px;
   height: 50px;
-  gap: 0px;
-  opacity: 0px;
   border-radius: 50%;
   mix-blend-mode: darken;
 }
 
 .userIcon:hover img,
 .userIcon.active img,
-.userIcon.active-page img{
-  transform: scale(1.1); /* Scale up the icon on hover */
+.userIcon.active-page img {
+  transform: scale(1.1);
   opacity: 0.3;
 }
 
-.notificationIcon{
+.notificationIcon {
   width: 50px;
   height: 50px;
-  gap: 0px;
-  opacity: 0px;
   border-radius: 50%;
   mix-blend-mode: darken;
-
 }
 
 .notificationIcon:hover,
 .notificationIcon.active-page {
-  transform: scale(1.1); /* Scale up the icon on hover */
+  transform: scale(1.1);
   opacity: 0.3;
 }
+
 .navbar-green {
-  background-color: #A6BBC1; 
-  color: white; 
-  width: 100%; /* Ensure the navbar takes full width */
+  background-color: #A6BBC1;
+  color: white;
+  width: 100%;
 }
 
-
-.buttons-container{
-  margin-right: 20px;
-  display: flex; /* Use flexbox for buttons and user icon */
-  align-items: center; 
-  
+.buttons-container {
+  display: flex;
+  align-items: center;
 }
 
 .buttons-container > * {
-  margin-right: 20px; /* Add margin between buttons */
+  margin-right: 20px;
 }
 
+/* Styles for the Navbar on smaller screens */
+@media (max-width: 992px) {
+  .buttons-container {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
 
-.nav-link {
-  text-decoration: none;
-  color: white;
-  padding: 10px;
-  transition: color 0.3s ease;
+  .buttons-container > * {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .userIcon img,
+  .notificationIcon {
+    width: 40px;
+    height: 40px;
+  }
 }
 
+@media (max-width: 767px) {
+  .navbar-brand {
+    width: 100%;
+    text-align: center;
+  }
 
+  .navbar-collapse {
+    width: 100%;
+  }
 
+  .buttons-container {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons-container > * {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .userIcon,
+  .notificationIcon {
+    width: 100%;
+    text-align: center;
+  }
+
+  .userIcon img,
+  .notificationIcon {
+    width: 30px;
+    height: 30px;
+  }
+}

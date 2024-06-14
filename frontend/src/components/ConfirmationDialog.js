@@ -1,15 +1,18 @@
 import React from 'react';
-import Buttons from './Buttons';
-import '../components/confirmationDialog.css';
+import '../components/confirmDialog.css';
 
-export default function ConfirmationDialog({ message, onConfirm }) {
+function ConfirmationDialog({ onConfirm, onCancel }) {
   return (
     <div className="confirmation-dialog">
-      <div className="message">{message}</div>
-      <div className="buttons">
-        <Buttons text="Yes" onClick={() => onConfirm(true)} />
-        <Buttons text="No" onClick={() => onConfirm(false)} />
+      <div className="dialog-content">
+        <h3>Do you want to remove "L001" User?</h3>
+        <div className="dialog-buttons">
+          <button onClick={onConfirm}>Yes</button>
+          <button onClick={onCancel}>No</button>
+        </div>
       </div>
     </div>
   );
 }
+
+export default ConfirmationDialog;

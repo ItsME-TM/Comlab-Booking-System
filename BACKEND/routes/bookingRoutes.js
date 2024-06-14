@@ -3,7 +3,6 @@ const router = express.Router();
 const Booking = require('../models/labBooking');
 const auth = require('../middleware/auth');
 
-
 function checkRole(req, res, next) {
   console.log('hit checkRole', req.user.role);
   if (req.user.role !== 'lecturer' && req.user.role !== 'instructor') {
@@ -12,9 +11,8 @@ function checkRole(req, res, next) {
   next();
 }
 
-
 router.post('/check-availability', auth, checkRole, async (req, res) => {
-    try {
+  try {
     const { startTime, endTime } = req.body;
     const overlappingBookings = await Booking.find({
       $or: [
@@ -61,6 +59,32 @@ router.post('/', auth, checkRole, async (req, res) => {
   }
 });
 
+// Fetch all bookings
+router.get('/', auth, async (req, res) => {
+  try {
+    const bookings = await Booking.find();
+    res.json(bookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
+// Delete a booking by ID
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await Booking.findByIdAndDelete(id);
+
+    if (!booking) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+
+    res.json({ message: 'Booking deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 module.exports = router;

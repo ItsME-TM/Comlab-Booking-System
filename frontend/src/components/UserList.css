@@ -1,0 +1,150 @@
+.user-list-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+  }
+  .list-left-container {
+    flex: 0.3;
+    background-color: #205464;
+  }
+  .role {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .role-button {
+    width: 100%;
+    padding: 15px 50px;
+    margin-bottom: 5px;
+    background-color: #366574;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: large;
+  }
+  .role-button:hover {
+    background-color: #638793;
+  }
+  .role-button.active,
+  .role-button.active:hover {
+    background-color: #638793;
+  }
+  .list-title {
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px 0;
+  }
+  .list-right-container {
+    flex: 1;
+    background-color: #A6BBC1;
+    padding: 10px;
+    position: relative;
+  }
+  
+  .list-right-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .list-right-container th {
+    background-color: rgb(97, 143, 159);
+    color: #205464;
+    border-bottom: 1px solid rgb(97, 143, 159);
+    padding: 10px;
+  }
+  
+  .list-right-container td {
+    border-bottom: 1px solid rgb(97, 143, 159);
+    padding: 10px;
+    color: #366574;
+  }
+  
+  .list-right-container .action-buttons {
+    display: flex;
+    gap: 15px;
+    color: white;
+  }
+  .action-button {
+    color: white; /* Make button text color white */
+    gap: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #205464;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    border-radius: 20px;
+  }
+  
+  
+  .list-right-container .action-button:hover {
+    background-color: #ffffff;
+  }
+  
+  .list-right-container td:last-child {
+    border-bottom: none;
+  }
+  
+  .role-title {
+    color: #205464;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-left: 25px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 600;
+    font-size: 43px;
+    line-height: 48px;
+    display: flex;
+    align-items: flex-start; 
+  }
+
+  .confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .confirmation-message {
+    color: #205464;
+  }
+  
+  .confirm-button, .cancel-button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .confirm-button {
+    background-color: #205464;
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color: #205464;
+    color: white;
+  }
+  .confirm-button:hover, .cancel-button:hover {
+    background-color: #638793; 
+  }

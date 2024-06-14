@@ -8,17 +8,18 @@ import './styles.css';
 import '../components/header.css';
 import Buttons from '../components/Buttons';
 import userIcon from '../images/user.png';
+import notificationIcon from '../images/notification.jpg';
 import { Link } from 'react-router-dom';
 
-export default function HeaderAdmin({ onUserIconClick, isProfileVisible }) {
-  const location = useLocation();  // Get the current location object
+export default function ToHeader({ onUserIconClick, isProfileVisible }) {
+  const location = useLocation(); 
 
   return (
     <div>
-      <Navbar className="navbar-green" expand="lg">
+      <Navbar className="navbar-green">
         <Container>
           <Navbar.Brand href="#Home">
-            <div className="d-flex align-items-center" style={{height:'70px'}}>
+            <div className="d-flex align-items-center"  style={{height:'70px'}}>
               <img
                 alt=""
                 src={logo}
@@ -30,42 +31,35 @@ export default function HeaderAdmin({ onUserIconClick, isProfileVisible }) {
               </div>
             </div>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
             <div className='buttons-container'>
-              <Link to="/adminhome">
+              <Link to="/toHome">
                 <Buttons 
                   text="Home" 
                   borderRadius="50px" 
                   width="110px" 
-                  className={location.pathname === '/adminhome' ? 'active-button' : ''}/>
+                  className={location.pathname === '/toHome' ? 'active-button' : ''}/>
               </Link>
-              <Link to="/adduser">
+
+              <Link to="/toView">
                 <Buttons 
-                  text="Add User"
+                  text="View" 
                   borderRadius="50px" 
                   width="110px" 
-                  className={location.pathname === '/adduser' ? 'active-button' : ''}/>
-              </Link>
-              <Link to="/viewuser">
-                <Buttons 
-                  text="View User" 
-                  borderRadius="50px" 
-                  width="110px" 
-                  className={location.pathname === '/viewuser' ? 'active-button' : ''} 
+                  className={location.pathname === '/toView' ? 'active-button' : ''} 
                 />
               </Link>
+              <Link to="/toNotification">
+                <img src={notificationIcon} alt="notf-icon" className={`notificationIcon ${location.pathname === '/toNotification' ? 'active-page' : ''}`} />
+              </Link>
               
-              
-              <div className={`userIcon ${isProfileVisible ? 'active' : ''} ${location.pathname === '/adminprofile' ? 'active-page' : ''}`}
+              <div className={`userIcon ${isProfileVisible ? 'active' : ''} ${location.pathname === '/toProfile' ? 'active-page' : ''}`}
                     onClick={onUserIconClick}>
-                    <img src={userIcon} alt="user-icon"  style={{marginLeft:'80px'}}/>
+                    <img src={userIcon} alt="user-icon" />
               </div>
 
             </div>
           </Nav>
-          </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>

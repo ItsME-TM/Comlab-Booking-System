@@ -1,47 +1,179 @@
-/* View.css */
-
-/* Calendar event styles */
-.view_body{
-  background-color:#1A4350;
+.view_body {
+  padding: 50px;
+  background-color: #1A4350;
 }
+
+.calendar-container {
+  background-color: white;
+}
+
+.calendar-wrapper {
+  background-color: white;
+}
+
 .green-event {
-    background-color: #00b528 !important; /* Green color for events */
-    color: #fff !important; /* White text color for events */
-  }
+  position: relative; /* Ensure proper stacking of elements */
+  color: #fff; /* White text color for events */
+}
+
+.green-event-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00b528; /* Green background color */
+  z-index: -1; /* Behind the text */
+}
+
+.green-event-content {
+  position: relative;
+  z-index: 1; /* Ensure text is above background */
   
-  /* Notification box styles */
-  .event-details {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #366574; /* Dark blue-gray background color for notification box */
-    padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    display: flex; /* Use flexbox */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    flex-direction: column; /* Align items in a column */
-  }
-  
-  .event-details h3,p {
-    margin-top: 0;
-    color: white;
-  }
-  
-  .event-details button {
-    margin-top: 10px;
-    background-color: #1a4350; /* Button background color */
-    color: #fff; /* Button text color */
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 15px;
-  }
-  
-  .event-details button:hover {
-    background-color: #3b6978; /* Button background color on hover */
-  }
-  
+}
+
+.custom-toolbar {
+  background-color: #A6BBC1;
+  padding: 10px;
+}
+
+.toolbar-container {
+  color: #638793;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.toolbar-date {
+  margin-left: 20px;
+}
+
+.toolbar-date-box {
+  background-color: #638793;
+  width: 120px;
+  height: 50px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #fff;
+}
+
+.event-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #366574;
+  padding: 50px 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex; /* Use flexbox */
+  justify-content: center; 
+  align-items: center; /* Center items vertically */
+  flex-direction: column; /* Align items in a column */
+}
+
+.event-details h3, .event-details p {
+  margin-top: 0;
+  color: white;
+}
+
+.event-details .button-group {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px;
+}
+
+.event-details button {
+  background-color: #1a4350; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.event-details button:hover {
+  background-color: #3b6978; /* Button background color on hover */
+}
+
+.rbc-header {
+  padding-top: 10px;
+  color: #3b6978; /* Red text color for day names */
+  font-weight: bold;
+  height: 50px;
+}
+
+.rbc-date-cell {
+  text-align: left; /* Align dates to the top left corner */
+  padding: 0; /* Remove padding */
+  position: relative; /* Ensure the date number stays inside the cell */
+}
+
+.rbc-date-cell a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px; /* Small padding to give it a little breathing room */
+  font-size: 0.875rem; /* Adjust font size if necessary */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1em;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.close-button:hover{
+  color: #fff;
+}
+
+.confirmation-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-box {
+  background-color: #EDF1F3;
+  width: 40%;
+  text-align: center;
+  padding: 20px;
+}
+
+.confirmation-box .button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: end;
+}
+
+.confirmation-box button {
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  width: 150px;
+  margin: 0 10px;
+  padding: 10px;
+  border: none;
+}
+
+.confirmation-box .cancel-button {
+  background-color: #FF0000; /* Red background */
+}
+
+.confirmation-box .not-now-button {
+  background-color: #1a4350; /* Custom background color */
+}
