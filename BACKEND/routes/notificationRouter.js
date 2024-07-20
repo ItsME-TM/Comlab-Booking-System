@@ -93,7 +93,10 @@ router.get('/userReciver/', auth, async (req, res) => {
 
         const notifications = await Notification.find({
             senderEmail: userEmail,
-            type: 'booking_confirmation'
+            $or: [
+                { type: 'booking_confirmation' },
+                { type: 'rejected' }
+            ]
         });
 
         if (!notifications) {

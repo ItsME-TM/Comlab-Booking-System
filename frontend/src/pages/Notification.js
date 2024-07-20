@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import '../components/notification.css';
 import Profile from '../components/Profile';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Notification() {
   const [notifications, setNotifications] = useState([]);
@@ -13,8 +14,16 @@ export default function Notification() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [isBoxVisible, setIsBoxVisible] = useState(false);
   const [isCancelConfirmationLaterVisible, setIsCancelConfirmLaterVisible] = useState(false);
-
+  const [uEmail, setEmail] = useState("");
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setEmail(decodedToken.email || ""); 
+    }
+  }, [token]);
+
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -299,6 +308,7 @@ export default function Notification() {
                     </div>
                   </div>
                 )}
+                
                 {selectedNotification.type === 'cancellation' && (
                   <div className="dialog-box-noti">
                     <button className="close-button" onClick={handleCancelClick}>x</button>
@@ -363,11 +373,11 @@ export default function Notification() {
                     <button onClick={handleCancelClick} className="ok-button"> Later on </button>
                   </div>
                 )}
-                {selectedNotification.type === 'rejected' && (
+                {selectedNotification.type === 'rejected' && labDetails.senderEmail === uEmail && (
                   <div className="dialog-box-noti">
                     <button className="close-button" onClick={handleCancelClick}>x</button>
                     <h2>Rejection Notice</h2>
-                    <p>Who rejected: {labDetails.receiverEmail}</p>
+                    <p>rejected by: {labDetails.receiverEmail}</p>
                     <p>{labDetails.labSessionTitle}<br />
                       {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })} 
                       {' '}
@@ -376,6 +386,24 @@ export default function Notification() {
                       {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </p>
                     <p><b>Your Request was rejected.</b></p>
+                    <button onClick={handleCancelClick} className="ok-button">
+                      OK
+                    </button>
+                  </div>
+                )}
+
+                {selectedNotification.type === 'rejected' && labDetails.receiverEmail === uEmail && (
+                  <div className="dialog-box-noti">
+                    <button className="close-button" onClick={handleCancelClick}>x</button>
+                    <h2>Rejection Notice</h2>
+                    <p>{labDetails.labSessionTitle}<br />
+                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })} 
+                      {' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })} 
+                      {' - '} 
+                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    </p>
+                    <p><b>You have rejected the lab session.</b></p>
                     <button onClick={handleCancelClick} className="ok-button">
                       OK
                     </button>

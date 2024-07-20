@@ -58,7 +58,7 @@ export default function ForgotPassword() {
       setMessage(response.data.message);
       setOtp(response.data.otp);
       setEmail(response.data.email);
-
+      console.log(message);
       if (response.data.message === 'Email found') {
         setIsCodeSent(true);
         setErrorMessage('');
