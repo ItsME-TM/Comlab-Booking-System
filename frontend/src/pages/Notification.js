@@ -16,8 +16,6 @@ export default function Notification() {
 
   const token = localStorage.getItem('token');
 
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
     const fetchNotifications = async () => {
       try {

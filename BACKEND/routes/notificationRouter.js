@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer'); 
 const crypto = require('crypto');
 const User = require('../models/user');
+const Booking = require('../models/labBooking');
 require('dotenv').config();
+
 
 // POST route to create notifications
 router.post('/createNotification', auth, async (req, res) => {
@@ -14,7 +16,7 @@ router.post('/createNotification', auth, async (req, res) => {
         if ( req.user.role !== 'lecturer' && req.user.role !== 'instructor') {
             return res.status(403).json({ error: "Access denied." });
           }
-        const { title, startTime, endTime, description, attendees, uEmail, uDate} = req.body;
+          const { title, startTime, endTime, description, attendees, uEmail, uDate, bookingId} = req.body;
 
         // Function to create notifications for each attendee
         const createNotifications = async (attendees) => {
@@ -27,6 +29,7 @@ router.post('/createNotification', auth, async (req, res) => {
 
                 const newNotification = new Notification({
                     receiverEmail,
+                    bookingId:bookingId,
                     senderEmail,
                     labSessionTitle: title,
                     labDate: uDate,
@@ -55,24 +58,6 @@ router.post('/createNotification', auth, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-// GET route to fetch all notifications
-/*router.get('/', auth, async (req, res) => {
-    const requestUser = await User.findById(req.user._id);
-    const userEmail = requestUser.email; 
-
-    try {
-        if (req.user.role !== 'to' && req.user.role !== 'lecturer' && req.user.role !== 'instructor') {
-            return res.status(403).json({ error: "Access denied." });
-          }
-        const notifications = await Notification.find({ receiverEmail: userEmail });
-        console.log('notifications:', notifications);
-        res.status(200).json(notifications);
-    } catch (error) {
-        console.error('Error fetching notifications:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});*/
 
 //fetch all notifications type is not equal to booking_confirmation
 router.get('/', auth, async (req, res) => {
@@ -159,9 +144,6 @@ router.put('/markRead/:id', auth, async (req, res) => {
 
 
 // accepct
-
-
-
 router.post('/updateIsReceiverConfirm/:notificationId', auth, async (req, res) => {
     const { notificationId } = req.params;
     const userEmail = req.user.email;
@@ -224,23 +206,23 @@ router.post('/confirmedLab/:notificationId', auth, async (req, res) => {
         if (req.user.role !== 'lecturer' && req.user.role !== 'instructor' && req.user.role !== 'admin') {
             return res.status(403).json({ error: "Access denied. You're not authorized to book labs." });
         }
-        // Find and update the notification
-        const notification = await Notification.findOneAndUpdate(
-            { _id: notificationId},
-            { IsLabWillGoingOn: true, type: 'confirmed', isRead:false  },
-            { new: true } // Return updated document
-        );
 
+        // Find the notification
+        const notification = await Notification.findById(notificationId);
         if (!notification) {
             return res.status(404).json({ message: 'Notification not found' });
         }
 
-        // Get the bookingId from the notification
         const bookingId = notification.bookingId;
-
         if (!bookingId) {
             return res.status(400).json({ message: 'Booking ID not found in the notification' });
         }
+
+        // Update all notifications with the same bookingId
+        const updatedNotifications = await Notification.updateMany(
+            { bookingId: bookingId },
+            { IsLabWillGoingOn: true, type: 'confirmed', isRead:false  }
+        );
 
         // Find and update the booking
         const booking = await Booking.findOneAndUpdate(
@@ -255,7 +237,7 @@ router.post('/confirmedLab/:notificationId', auth, async (req, res) => {
 
         res.status(200).json({
             message: 'booking status updated successfully',
-            notification,
+            updatedNotifications,
             booking
         });
     } catch (error) {
@@ -271,31 +253,33 @@ router.post('/updateIsLabStatus/:notificationId', auth, async (req, res) => {
     const { notificationId } = req.params;
 
     try {
+        // Check user role
         if (req.user.role !== 'lecturer' && req.user.role !== 'instructor' && req.user.role !== 'admin') {
             return res.status(403).json({ error: "Access denied. You're not authorized to book labs." });
         }
 
-        const notification = await Notification.findOneAndUpdate(
-            { _id: notificationId},
-            { IsLabWillGoingOn: false, 
-              type: 'cancellation',
-              isRead:false
-            },
-            { new: true } // Return updated document
-        );
-
+        // Find the notification
+        const notification = await Notification.findById(notificationId);
         if (!notification) {
-            return res.status(404).json({ message: 'Notification not found for the current user' });
+            return res.status(404).json({ message: 'Notification not found' });
         }
 
-        // Get the bookingId from the notification
         const bookingId = notification.bookingId;
-
         if (!bookingId) {
             return res.status(400).json({ message: 'Booking ID not found in the notification' });
         }
 
-        // Find and update the booking
+        // Update all notifications with the same bookingId
+        const updatedNotifications = await Notification.updateMany(
+            { bookingId: bookingId },
+            {
+                IsLabWillGoingOn: false,
+                type: 'cancellation',
+                isRead: false
+            }
+        );
+
+        // Update the booking
         const booking = await Booking.findOneAndUpdate(
             { _id: bookingId },
             { status: 'cancelled' },
@@ -306,12 +290,13 @@ router.post('/updateIsLabStatus/:notificationId', auth, async (req, res) => {
             return res.status(404).json({ message: 'Booking not found' });
         }
 
-        res.status(200).json({ message: 'IsLabWillGoingOn updated to false and type changed to cancellation', notification });
+        res.status(200).json({ message: 'IsLabWillGoingOn updated to false and type changed to cancellation', updatedNotifications });
     } catch (error) {
         console.error('Error updating IsLabWillGoingOn and type:', error);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 // POST route to update type based on labDate proximity for notifications for the authenticated user
 router.post('/updateNotificationType/:notificationId', auth, async (req, res) => {

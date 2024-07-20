@@ -105,24 +105,19 @@ router.post('/cancelLabSession/:labId', auth, checkRole, async (req, res) => {
         return res.status(404).json({ message: 'Booking not found' });
     }
 
-      // Find and update the notification
-      const notification = await Notification.findOneAndUpdate(
-        { bookingId: labId},
-        { 
-          IsLabWillGoingOn: false, 
-          type: 'cancellation',
-          isRead:false
-        },
-        { new: true } // Return updated document
+      // Update all notifications with the same bookingId
+      const updatedNotifications = await Notification.updateMany(
+        { bookingId: bookingId },
+        {
+            IsLabWillGoingOn: false,
+            type: 'cancellation',
+            isRead: false
+        }
     );
-
-    if (!notification) {
-      return res.status(404).json({ message: 'Notification not found' });
-    }
 
     res.status(200).json({
       message: ' cancel lab session successfully',
-      notification,
+      updatedNotifications,
       booking
   });
   } catch (error) {
