@@ -1,9 +1,10 @@
+
+/* Ensure main container fits within the viewport */
 .main-page-container-login {
   display: flex;
   height: 100vh;
   position: relative;
   overflow: hidden; /* Ensure no overflow from combined widths */
-
 }
 
 .page-container-login {
@@ -24,11 +25,12 @@
 .image-container-login {
   background-size: cover;
   background-position: center;
-  width: 48%; /* Set width to 45% */
+  width: 50%; /* Set width to 45% */
   height: 100%;
   position: absolute; /* Use absolute positioning */
   right: 0; /* Align to the right */
   z-index: 1;
+  overflow: hidden;
 }
 
 .EntranceUniImage {
@@ -41,7 +43,7 @@
   z-index: -1;
 }
 
-.oblique-line {
+/* .oblique-line {
   position: absolute;
   width: 813.06px;
   height: 0;
@@ -49,14 +51,14 @@
   transform: translate(-50%, -50%) rotate(-106.55deg);
   transform-origin: center;
   z-index: 3; 
-}
+} */
 
 .form-container-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
   background-color: #638793;
   width: 100%;
   height: 525px;
@@ -73,6 +75,12 @@
   color: white;
 }
 
+
+.form-signin {
+  width: 80%;
+
+  
+}
 .form-group-login {
   margin-bottom: 10px;
   display: flex;
@@ -84,13 +92,14 @@
   color: #ffffff;
 }
 
-.input {
-  width: 496px;
+.input-1 {
+  width: 80%;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #1D4C5A;
   font-weight: 400;
+  box-sizing: border-box;
 }
 
 .buttonStyle {
@@ -99,14 +108,15 @@
   justify-content: center;
 }
 
-.forgot-password {
+.forgot-password-1 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 80%;
 }
 
-.input:focus {
+.input-1:focus {
   outline: none;
   border-color: #007bff;
 }
@@ -121,101 +131,130 @@
   align-items: center;
 }
 
-.forgot-password {
+.forgot-password-1 {
   align-self: flex-end;
 }
 
-.forgot-password a {
+.forgot-password-1 a {
   text-decoration: none;
   color: #000000;
 }
 
-
 /* Media queries for responsiveness */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1100px) and (min-width:631px) {
+
+  .main-page-container-login{
+    background-color:#A6BBC1 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
   .page-container-login {
     width: 100%;
     clip-path: none;
     padding: 20px;
   }
 
-  .image-container-login {
-    width: 50%;
-  }
+
 
   .form-container-login {
-    width: 90%;
+    width: 40%;
     padding: 20px;
+    height: 80%;
     clip-path: none;
-  }
-
-  .EntranceUniImage {
-    object-fit: cover;
-  }
-
-  .oblique-line {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .page-container-login {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    
+    
+  }
+
+  .form-signin {
     width: 100%;
-    padding: 20px;
+ 
+    
   }
 
-  .image-container-login {
+  .form-group-login {
     width: 100%;
-    height: 50%;
-    position: relative;
+    
+    
   }
 
-  .form-container-login {
-    width: 90%;
-    padding: 20px;
-    clip-path: none;
+  .input-1 {
+    width: 100%;
+    
   }
 
-  .EntranceUniImage {
-    height: 100%;
-    position: relative;
-  }
+
+
   .oblique-line {
     display: none;
   }
 }
 
-@media screen and (max-width: 480px) {
+
+@media screen and (max-width: 630px) {
+
+  .main-page-container-login{
+    background-color:#A6BBC1 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+
+  }
+
   .page-container-login {
-    flex-direction: column;
     width: 100%;
-    padding: 10px;
+    clip-path: none;
+    padding: 20px;
+    height: 100%;
   }
 
-  .image-container-login {
-    width: 100%;
-    height: 50%;
-    position: relative;
-  }
+
 
   .form-container-login {
-    width: 100%;
-    padding: 10px;
+    width: 40%;
+    padding: 20px;
+    height: 80%;
     clip-path: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    
   }
 
-  .EntranceUniImage {
-    height: 100%;
-    position: relative;
-  }
-
-  .input {
+  .form-signin {
     width: 100%;
+    padding: 20px;
+    
   }
+
+  .form-group-login {
+    width: 100%;
+    
+    
+  }
+
+  .input-1 {
+    width: 70%;
+    
+  }
+
+
   .oblique-line {
     display: none;
   }
 }
+
+
+
+
+

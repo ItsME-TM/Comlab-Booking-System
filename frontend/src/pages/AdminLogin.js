@@ -56,13 +56,13 @@ export default function UserSignIn() {
         <div className="form-container-login">
           <h1>Admin Log in</h1>
           <h3>Sign in to continue</h3>
-          <form className="form" onSubmit={sendData}>
+          <form className="form-signin" onSubmit={sendData}>
             <div className="form-group-login">
               <label htmlFor="email" className="label">Email</label>
               <input
                 type="email"
                 id="email"
-                className="input"
+                className="input-1"
                 placeholder="Enter the email"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -72,24 +72,24 @@ export default function UserSignIn() {
               <input
                 type="password"
                 id="password"
-                className="input"
+                className="input-1"
                 placeholder="Enter the password"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="forgot-password">
+            <div className="forgot-password-1">
               <Link to="/forgotpassword" style={{textDecoration:'underline'}}>Forgot password?</Link>
             </div>
             <div className="buttons">
-                <Buttons text="Save" borderRadius="50px" width="125px"  height="50px" marginTop="20px" /> 
+                <Buttons text="Log in" borderRadius="50px" width="125px"  height="50px" marginTop="20px" /> 
             </div>
           </form>
           {errorMessage && <p className="error-message-login">{errorMessage}</p>}
         </div>
         {/* Oblique line divider */}
-       <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'8px' , left:'88%'}}></div>
+       {/* <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'8px' , left:'88%'}}></div>
       <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'5px', left:'85%'}}></div>  
-      <div className="oblique-line"style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'3px', left:'82%'}}></div>
+      <div className="oblique-line"style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'3px', left:'82%'}}></div> */}
       </div>
 
       <div className="image-container-login"  >
