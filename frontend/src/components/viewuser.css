@@ -1,10 +1,33 @@
-/* General styles for the container */
+body {
+  margin: 0; /* Remove default body margin */
+  height: 100vh; /* Ensure body height is 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.vvv {
+  width: 100%;
+  height: 100vh; /* Make the main container full height of viewport */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #A6BBC1; 
+}
+
+
 .viewuser-container {
   display: flex;
-  flex-direction: row;
-  min-height: 100vh; /* Use min-height instead of height to allow scrolling */
+  flex-direction: column;
+  flex-grow: 1;
   width: 100%;
-  overflow-x: auto; /* Allow horizontal scrolling */
+  height: 100vh; /* Make the main container full height of viewport */
+  margin: 0; /* Remove any margin */
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: hidden;
 }
 
 /* Left side panel styling */
@@ -14,6 +37,7 @@
   padding: 0px;
   width: 240px;
   min-width: 240px; /* Ensure minimum width for the left panel */
+  overflow-y: auto;
 }
 
 /* Role list styling */
@@ -48,7 +72,7 @@
 /* Right side panel styling */
 .right-side-admin {
   flex: 0.95;
-  padding: 20px;
+  padding: 10px;
   background-color: #A6BBC1;
   overflow-y: auto; /* Enable vertical scrolling */
 }
@@ -127,23 +151,28 @@
 @media (max-width: 767px) {
   .viewuser-container {
       flex-direction: column; /* Stack left and right panels vertically */
-      min-height: 100vh; /* Ensure the container takes at least full viewport height */
-      height: auto;
       overflow-y: auto; /* Allow vertical scrolling */
+      background-color: #A6BBC1;
   }
 
   .left-side-admin {
       width: 100%; /* Full width for left panel */
-      flex: none;
+       flex: none;
       min-width: auto;
       height: auto;
+      overflow-y: auto;
+     
   }
 
   .right-side-admin {
+      height: 100%;
       width: 100%; /* Full width for right panel */
       flex: none;
       height: auto;
       overflow-y: auto; /* Allow vertical scrolling */
+      margin-top: 40px;
+      
+   
   }
 }
 
@@ -157,6 +186,7 @@
   .left-side-admin {
       width: 240px; /* Ensure fixed width for left panel */
       flex: 0.25;
+      overflow-y: auto; 
   }
 
   .right-side-admin {
@@ -174,6 +204,7 @@
   .left-side-admin {
       width: 240px; /* Ensure fixed width for left panel */
       flex: 0.25;
+      overflow-y: auto;
   }
 
   .right-side-admin {

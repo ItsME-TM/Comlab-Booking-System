@@ -30,16 +30,16 @@ export default function AdminHome() {
   }, [isBoxVisible]);
 
   return (
-    <div>
+    <div className='admin_home_main_container'>
       <HeaderAdmin onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
       <div className='admin_home_body'>
         <div className='image-container-admin'>
           <img src={frontOfAdminImage} alt="university-photograph2" className='frontOfAdminImage' />
           <div className='text-container-admin-home'>
-            <h1 className='text' style={{ fontFamily: 'Roboto Slab, serif', fontSize: '64px', fontWeight: '400', lineHeight: '88px', textAlign: 'center', color: 'white', marginLeft: 0 }}>
+            <h1 className='text-h1' >
               Welcome to the CO1 Lab Booking System
             </h1>
-            <h3 className='text'>Faculty of Engineering - University of Jaffna</h3>
+            <h3 className='text-h3' style={{ fontFamily: 'Roboto, serif'}}>Faculty of Engineering - University of Jaffna</h3>
           </div>
         </div>
       </div>

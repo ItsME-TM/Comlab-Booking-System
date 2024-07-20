@@ -1,8 +1,37 @@
+body {
+  margin: 0; /* Remove default body margin */
+  height: 100vh; /* Ensure body height is 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.admin_home_main_container {
+  width: 100%;
+  height: 100vh; /* Make the main container full height of viewport */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+  
+}
+
 .admin_home_body {
   background-color: #1A4350;
+  background-image: url('../images/adminhome_backgroundjpg.jpg');
+  background-size: cover; /* Ensure the image covers the container */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the background image */
   position: relative;
+  display: flex;
+  justify-content: center ;
+  align-items: center;
+  flex-grow: 1;
   width: 100%;
-  height: 100vh; /* Set height to 100% of viewport height */
+  margin: 0; /* Remove any margin */
+  padding: 0;
+  /* box-sizing: border-box; */
+  overflow: auto;
 }
 
 .text-container-admin-home {
@@ -41,7 +70,18 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset; /* Inset shadow effect */
 }
 
-.text {
+
+.text-h1{
+  font-family: 'Roboto', serif;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 88px;
+  text-align: center;
+  color: white;
+
+
+}
+.text-h3{
   font-family: 'Roboto Slab', serif;
   font-size: 32px;
   font-weight: 400;
@@ -53,7 +93,12 @@
 
 /* Media queries for responsiveness */
 @media screen and (max-width: 1024px) {
-  .text-container-admin-home .text {
+  .text-h1{
+    font-size: 50px;
+    line-height: 56px;
+    padding: 10px;
+  }
+  .text-h3{
     font-size: 24px;
     line-height: 32px;
     padding: 10px;
@@ -65,9 +110,15 @@
 }
 
 @media screen and (max-width: 768px) {
-  .text-container-admin-home .text {
-    font-size: 20px;
+  .text-h1{
+    font-size: 35px;
+    line-height: 38px;
+    padding: 8px;
+  }
+  .text-h3{
+    font-size: 22px;
     line-height: 24px;
+    padding: 8px;
   }
 
   .frontOfAdminImage {
@@ -76,12 +127,16 @@
 }
 
 @media screen and (max-width: 480px) {
-  .text-container-admin-home .text {
-    font-size: 16px;
-    line-height: 20px;
-    white-space: normal; /* Allow text to wrap */
+  .text-h1{
+    font-size: 20px;
+    line-height: 22px;
+    padding: 5px;
   }
-
+  .text-h3{
+    font-size: 10px;
+    line-height: 12px;
+    padding: 3px;
+  }
   .frontOfAdminImage {
     border-width: 2px;
   }

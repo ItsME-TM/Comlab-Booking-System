@@ -73,7 +73,7 @@ export default function AddUser() {
     <div className='main-container-admin'>
     
       <HeaderAdmin onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
-      <hr style={{height: '2px', backgroundColor: 'black', borderStyle: 'none', margin: 0}}/>
+      <hr/>
       <div className='container-1-admin'>
         <div className='container-2-admin'>
             <h3 className='text-container-admin'>{textContainerText}</h3>
@@ -136,17 +136,21 @@ export default function AddUser() {
               <div className="buttons">
                 <Buttons type = "submit" text="Save" borderRadius="50px" width="125px"  height="50px" marginTop="20px" />
                 <Link to='/adminhome'>
-                <Buttons text="Cancel" borderRadius="50px" width="125px" height="50px" marginTop="20px" />
+                <Buttons  text="Cancel" borderRadius="50px" width="125px" height="50px" marginTop="20px"  />
                 </Link>
               </div>
               </form>
           </div>
         </div>
-        <div className='container-3-admin'>
-        <div className='user-logo-details-admin'>
-            <img src={UserImageAdmin} alt="user-photograph" className='userImageAdmin' />
+        <div className='container-3-main-admin'>
+          <div className='container-3-admin'>
+            <div className='user-logo-details-admin'>
+              <img src={UserImageAdmin} alt="user-photograph" className='userImageAdmin' />
+            </div>
           </div>
         </div>
+
+       
         {isBoxVisible && <Profile profileRef={profileRef}/>}
         
       </div>

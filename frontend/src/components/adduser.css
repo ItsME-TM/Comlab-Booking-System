@@ -1,6 +1,8 @@
 body {
   margin: 0; /* Remove default body margin */
-  overflow: hidden; /* Hide overflow to prevent scrolling */
+  height: 100vh; /* Ensure body height is 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -13,7 +15,8 @@ body {
   margin: 0; /* Remove any margin */
   padding: 0; /* Remove any padding */
   box-sizing: border-box;
-  overflow-y: auto; 
+  overflow-y: auto;
+  
 }
 
 .container-1-admin{
@@ -21,7 +24,7 @@ body {
   flex-direction: row;
   justify-content: center ;
   align-items: center;
-  height: 100%;
+  flex-grow: 1;
   width: 100%;
   margin: 0; /* Remove any margin */
   padding: 0;
@@ -29,13 +32,24 @@ body {
 
 }
 
+.container-3-main-admin{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:70%;
+
+}
 
 .container-3-admin {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-margin: 0 20px; 
+margin: 20px 20px; 
+width: 65%;
+height: 100%;
+background-color: #205464;
+border-radius: 20px;
+position: relative;
+
 }
 
 .container-2-admin {
@@ -68,7 +82,7 @@ margin: 0 20px;
   opacity: 0px; /* Set the opacity to 0px */
   font-family: Roboto; /* Set the font family to Roboto */
   font-size: 18px; /* Set the font size to 24px */
-  font-weight: 10; /* Set the font weight to 400 */
+  font-weight: 400; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
   color: #1A4350;
@@ -81,27 +95,21 @@ margin: 0 20px;
   background-color: #FFFFFF;
   width: 600px; /* Adjust width as needed */
   height: 36px; /* Set the height to 36px */
-top: 376px; /* Set the top position to 376px */
-left: 1115px; /* Set the left position to 1115px */
-gap: 0px; /* Set the gap to 0px */
-opacity: 0px; /* Set the opacity to 0px */
-font-family: Roboto; /* Set the font family to Roboto */
-font-size: 18px; /* Set the font size to 24px */
-font-weight: 10; /* Set the font weight to 400 */
-line-height: 36px; /* Set the line height to 36px */
-text-align: left;
-color: #1D4C5A;
-border: none;
+  top: 376px; /* Set the top position to 376px */
+  left: 1115px; /* Set the left position to 1115px */
+  gap: 0px; /* Set the gap to 0px */
+  opacity: 0px; /* Set the opacity to 0px */
+  font-family: Roboto; /* Set the font family to Roboto */
+  font-size: 18px; /* Set the font size to 24px */
+  font-weight: 380; /* Set the font weight to 400 */
+  line-height: 36px; /* Set the line height to 36px */
+  text-align: left;
+  color: #1D4C5A;
+  border: none;
 }
 
 
-.container-3-admin{
-  background-color: #205464;
-  width: 548px;
-  height:387px;
-  border-radius: 20px;
-  position: relative;
-}
+
 
 
 .user-logo-details-admin {
@@ -110,13 +118,15 @@ border: none;
   justify-content: center;
   align-items: center;
   height: 100%;
+  
 }
  
 .userImageAdmin{
   mix-blend-mode:lighten;
   opacity: 0.8; 
-  width: 100%;
+  width: 50%;
   height: auto; 
+  border-radius: 350px;
 }
 
 .buttons {
@@ -126,23 +136,58 @@ border: none;
   
 }
 
+hr {
+  height: 4px;
+  background-color: black;
+  border: 4px;
+  margin: 0;
+  z-index: 3;
+}
+
 /* Small devices (up to 768px) */
 @media only screen and (max-width: 768px) {
   .container-1-admin {
     flex-direction: column; /* Stack container-2 and container-3 vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
   }
 
   .container-2-admin {
+    padding-top: 20px;
     width: 100%; /* Full width for container-2 */
+    
+    
   }
 
   .container-3-admin {
     width: 100%; /* Full width for container-3 */
-    margin-top: 20px; /* Add space between container-2 and container-3 */
+    margin-top: 40px; /* Add space between container-2 and container-3 */
+    
+   
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 40px;
+    
+  
+   
   }
 
   .input-field-admin{
       width: 100%;
+      
+  }
+
+  .user-input-details-admin{
+    width: 100%;
+  }
+
+  .buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0;
   }
 }
 
@@ -153,16 +198,22 @@ border: none;
   }
 
   .container-2-admin {
-    width: 60%; /* Half width for container-2 */
+    width: 100%; /* Half width for container-2 */
+   
   }
 
   .container-3-admin {
-    width: 40%; /* Half width for container-3 */
+    width: 100%; /* Half width for container-3 */
     margin-top: 0; /* Remove margin from the top */
+   
   }
 
   .input-field-admin{
     width: 100%;
+}
+
+.user-input-details-admin{
+  width: 100%;
 }
 }
 
@@ -173,11 +224,13 @@ border: none;
   }
 
   .container-2-admin {
-    width: 50%; /* Half width for container-2 */
+    width: 100%; /* Half width for container-2 */
   }
 
   .container-3-admin {
-    width: 50%; /* Half width for container-3 */
+    width: 100%; /* Half width for container-3 */
     margin-top: 0; /* Remove margin from the top */
   }
 }
+
+

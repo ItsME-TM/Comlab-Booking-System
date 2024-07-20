@@ -16,7 +16,7 @@ export default function ToHeader({ onUserIconClick, isProfileVisible }) {
 
   return (
     <div>
-      <Navbar className="navbar-green">
+      <Navbar className="navbar-green" expand="lg">
         <Container>
           <Navbar.Brand href="#Home">
             <div className="d-flex align-items-center"  style={{height:'70px'}}>
@@ -31,8 +31,10 @@ export default function ToHeader({ onUserIconClick, isProfileVisible }) {
               </div>
             </div>
           </Navbar.Brand>
-          <Nav>
-            <div className='buttons-container'>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+          <Nav style={{display:'flex',justifyContent:'flex-end', width:'100%'}}>
+            <div className='buttons-container' >
               <Link to="/toHome">
                 <Buttons 
                   text="Home" 
@@ -60,6 +62,7 @@ export default function ToHeader({ onUserIconClick, isProfileVisible }) {
 
             </div>
           </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>

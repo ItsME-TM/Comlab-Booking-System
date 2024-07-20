@@ -32,7 +32,7 @@ export default function HeaderAdmin({ onUserIconClick, isProfileVisible }) {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
+          <Nav  style={{display:'flex',justifyContent:'flex-end', width:'100%'}}>
             <div className='buttons-container'>
               <Link to="/adminhome">
                 <Buttons 

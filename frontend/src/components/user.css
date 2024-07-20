@@ -1,98 +1,210 @@
 /* user.css */
 body {
-    margin: 0; /* Remove default body margin */
-    overflow: hidden; /* Hide overflow to prevent scrolling */
-  }
- 
-  
-  .main-container {
-    background-color:#638793;
-    width: 100%;
-    height: 100vh; /* Make the main container full height of viewport */
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-  }
-  
-  
-  .container-1 {
-    width: 100%;
-    flex: 1; /* Grow to fill remaining space */
-    display: flex;
-    justify-content: center; /* Center align horizontally */
-    align-items: center; /* Center align vertically */
-  }
-  
-  .container-2 {
-    background-color: #205464;
-    width: 100%; /* Expand the width to 100% */
-    max-width: 1250px; /* Limit the maximum width of the container */
-    height: 70vh; /* Adjust the height as needed */
-    display: flex;
-    justify-content: left; /* Center align horizontally */
-    align-items: center; /* Center align vertically */
-  }
-
-  .user-logo-details {
-    width: 40%; /* Adjust width as needed */
-    height: 100%;
-    display: flex; /* Use flexbox */
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center;
-    
-   
-
+  margin: 0; /* Remove default body margin */
+  height: 100vh; /* Ensure body height is 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
 }
 
 
-  .text-1{
-    margin-top: 0px;
-    color: #FFFFFF;
-    font-family: Roboto;
-    font-size: 43px;
-    font-weight: 700;
-    line-height: 48px;
-    text-align: center;
-    width: 261px; /* Set the width to 261px */
-    height: 48px; /* Set the height to 48px */
-    top: 219px; /* Set the top position to 219px */
-    left: 184px; /* Set the left position to 184px */
-    gap: 0px; /* Set the gap to 0px */
-    opacity: 0px;
-  }
+.main-container {
+  background-color:#638793;
+  width: 100%;
+  height: 100vh; /* Make the main container full height of viewport */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
 
-  .userImage{
-    margin-top: 20px;
-    margin-bottom: 15px;
-    align-items: center;
-    width: 200px; /* Set the width to 250px */
-    height: 200px; /* Set the height to 250px */
-    top: 297px; /* Set the top position to 297px */
-    left: 190px; /* Set the left position to 190px */
-    gap: 0px; /* Set the gap to 0px */
-    opacity: 10px;
-    border-radius: 50%
-  }
 
-  .user-input-details{
+.container-1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center ;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  margin: 0; /* Remove any margin */
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  width: 65%;
+.container-2 {
+  background-color: #205464;
+  width: 94%; /* Expand the width to 100% */
+  /* max-width: 1125px; Limit the maximum width of the container */
+  height: 85%; /* Adjust the height as needed */
+  display: flex;
+  justify-content: flex-start; /* Center align horizontally */
+  align-items: center; /* Center align vertically */
+}
+
+
+
+.user-logo-details {
+  width: 40%; /* Adjust width as needed */
   height: 100%;
   display: flex; /* Use flexbox */
   flex-direction: column; /* Stack children vertically */
   justify-content: center; /* Center content vertically */
-  align-items: center; 
-    margin-left: 25px;
-  }
+  align-items: center;
+  
+ 
 
-  .button-save {
+}
+
+.user-input-details{
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+
+}
+
+.inputs-wrapper{
+width: 80%;
+
+}
+
+.text-1{
+  margin-top: 0px;
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 48px;
+  text-align: center;
+  width: 261px; /* Set the width to 261px */
+  height: 48px; /* Set the height to 48px */
+  top: 219px; /* Set the top position to 219px */
+  left: 184px; /* Set the left position to 184px */
+  gap: 0px; /* Set the gap to 0px */
+  opacity: 0px;
+}
+
+.userImage{
+  margin-top: 20px;
+  margin-bottom: 15px;
+  align-items: center;
+  width: 200px; /* Set the width to 250px */
+  height: 200px; /* Set the height to 250px */
+  top: 297px; /* Set the top position to 297px */
+  left: 190px; /* Set the left position to 190px */
+  gap: 0px; /* Set the gap to 0px */
+  opacity: 10px;
+  border-radius: 50%
+}
+
+.user-input-details{
+
+width: 60%;
+width: 60%;
+height: 100%;
+display: flex; /* Use flexbox */
+flex-direction: column; /* Stack children vertically */
+}
+
+.button-save {
+  display: flex;
+  justify-content: flex-end;
+ 
+ 
+}
+
+
+
+@media only screen and (max-width: 1050px) {
+  .container-2 {
+    flex-direction: column; /* Stack container-2 and container-3 vertically */
     display: flex;
-    justify-content: flex-end; 
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .container-1{
+      overflow-y: auto;
+
+  }
+  
+  .user-logo-details{
+    width: 100%; /* Full width for both containers */
+    margin-top: 400px; /* Add spacing between the elements */
+
+}
+
+ .button-save{
+    margin-bottom: 10px;
+ }
+
+
+.input-field{
+    width: 100%;
+    
+}
+
+ 
+   .button-save{
+      margin-bottom: 10px;
+   }
+
+}
+
+@media only screen and (max-width: 480px){
+  .container-2 {
+    flex-direction: column; /* Stack container-2 and container-3 vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .container-1{
+      overflow-y: auto;
+
+  }
+  
+  .user-logo-details {
+      width: 100%; /* Full width for both containers */
+      margin-top: 450px; /* Add spacing between the elements */
+
+  }
+
+  
+   .button-save{
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: flex-start; 
+
+   }
+  
+
+  .input-field{
+      width: 100%;
+      
   }
 
   
 
+}
 
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

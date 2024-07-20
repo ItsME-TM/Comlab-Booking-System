@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Link, useLocation } from 'react-router-dom';
-import '../components/user.css';
+import '../components/toProfile.css';
 import userImage from '../images/user-image.png';
 import Buttons from '../components/submitButton';
 import '../App.css';
 import ToHeader from '../components/ToHeder';
 import Profile from '../components/Profile';
-import '../components/userInputs.css';
 import axios from 'axios';
 
 export default function ToProfile() {
@@ -104,24 +103,24 @@ export default function ToProfile() {
   return (    
     <div className='main-container'>
       <ToHeader onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
-      <div className='container-1'>
-        <div className='container-2'>
-          <div className='user-logo-details'>
+      <div className='container-1-to'>
+        <div className='container-2-to'>
+          <div className='user-logo-details-to'>
             <h3 className='text-1'>{textContainerText}</h3>
-            <img src={userImage} alt="user-photograph" className='userImage' />
+            <img src={userImage} alt="user-photograph" className='userImage-to' />
             <Buttons text="Edit" />
           </div>
 
-          <div className='user-input-details'>
-            <div className="inputs-wrapper">
-              <div className='userInputs'>
-                <form onSubmit={handleSave}>  
-                  <label htmlFor="name" className="input-label">Name</label><br />
+          <div className='user-input-details-to'>
+            <div className="inputs-wrapper-to">
+              <div className='userInputs-to'>
+                <form onSubmit={handleSave} className='form-container-to'>  
+                  <label htmlFor="name" className="input-label-to">Name</label><br />
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="input-field"
+                    className="input-field-to"
                     value={`${firstName} ${lastName}`}
                     onChange={(e) => {
                       const [first, ...last] = e.target.value.split(" ");
@@ -129,32 +128,32 @@ export default function ToProfile() {
                       setLastName(last.join(" "));
                     }}
                   /><br />
-                  <label htmlFor="password" className="input-label">Password</label><br />
-                  <div className="input-wrapper">
+                  <label htmlFor="password" className="input-label-to">Password</label><br />
+                  <div className="input-wrapper-to">
                     <input
                       type="password"
                       id="password"
                       name="password"
-                      className="input-field-password"
+                      className="input-field-password-to"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     /><br />
-                    <button type="button" className="changeButton" onClick={handleChangeClick}>Change</button>
+                    <button type="button" className="changeButton-to" onClick={handleChangeClick}>Change</button>
                   </div>
-                  <label htmlFor="email" className="input-label">Email</label><br />
+                  <label htmlFor="email" className="input-label-to">Email</label><br />
                   <input
                     type="text"
                     id="email"
                     name="email"
-                    className="input-field"
+                    className="input-field-to"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   /><br />
-                  <label htmlFor="role" className="input-label">Role</label><br />
+                  <label htmlFor="role" className="input-label-to">Role</label><br />
                   <select
                     id="role"
                     name="role"
-                    className="input-field"
+                    className="input-field-to"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                   >
@@ -162,8 +161,8 @@ export default function ToProfile() {
                     <option value="lecturer">Lecturer</option>
                     <option value="instructor">Instructor</option>
                   </select><br />
-                  <div className="buttons" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                    <Buttons type="submit" text="Save" borderRadius="50px" width="125px" height="50px" marginTop="20px" />
+                  <div className="button-save-to">
+                    <Buttons   type="submit" text="Save" borderRadius="50px" width="125px" height="50px" marginTop="20px" />
                   </div>
                 </form>
               </div>
