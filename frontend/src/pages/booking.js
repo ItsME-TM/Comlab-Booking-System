@@ -6,6 +6,7 @@ import axios from 'axios';
 import Profile from '../components/Profile';
 import moment from 'moment';
 import {jwtDecode} from 'jwt-decode';
+import Select from 'react-select';
 
 export default function MyApp() {
   const [title, setTitle] = useState("");
@@ -161,7 +162,6 @@ export default function MyApp() {
         });
       }
 
-      alert('Booking Successful');
 
       const notificationData = {
         title: bookingData.title,
@@ -207,10 +207,13 @@ export default function MyApp() {
     setIsBoxVisible(!isBoxVisible);
   };
 
-  const handleAttendeesChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions);
-    setAttendees(selectedOptions.map(option => JSON.parse(option.value)));
+  const handleAttendeesChange = (selectedOptions) => {
+    if (selectedOptions.length > 2) {
+      selectedOptions = selectedOptions.slice(0, 2);
+    }
+    setAttendees(selectedOptions);
   };
+  
 
   const handlePollButtonClick = () => {
     setIsPollVisible(true);
@@ -244,11 +247,27 @@ export default function MyApp() {
               <input type="text" id="title" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
               <label htmlFor="attendees">Invite Attendees:</label>
-              <select multiple id="attendees" name="attendees" onChange={handleAttendeesChange}>
+              <Select
+                  isMulti
+                  value={attendees}
+                  onChange={handleAttendeesChange}
+                  options={users.map(user => ({
+                    value: user._id,
+                    label: `${user.firstName} ${user.lastName}: ${user.email}`,
+                    email: user.email
+                  }))}
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  controlShouldRenderValue={true}
+                  maxMenuHeight={450}
+                />
+
+
+              {/* <select multiple id="attendees" name="attendees" onChange={handleAttendeesChange}>
                 {users.map(user => (
                   <option key={user._id} value={JSON.stringify(user)}>{`${user.firstName} ${user.lastName}: ${user.email}`}</option>
                 ))}
-              </select>
+              </select> */}
 
               <label htmlFor="date">Date:</label>
               <div className="inline-container">

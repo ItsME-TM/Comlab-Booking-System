@@ -24,6 +24,7 @@
     "react-router-dom": "^6.23.1",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
     "start": "^5.1.0",
     "stream-browserify": "^3.0.0",
     "url": "^0.11.3",
