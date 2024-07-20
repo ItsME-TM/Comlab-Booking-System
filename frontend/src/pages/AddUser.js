@@ -106,7 +106,7 @@ export default function AddUser() {
               name="password"
               className="input-field-admin"
               onChange={(e) => setPassword(e.target.value)}
-              />
+              /><br />
 
         <label htmlFor="email" className="input-label-admin">Email</label><br />
         <input
@@ -125,6 +125,7 @@ export default function AddUser() {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
+                <option value=""></option>
                 <option value="to">To</option>
                 <option value="lecturer">Lecturer</option>
                 <option value="instructor">Instructor</option>

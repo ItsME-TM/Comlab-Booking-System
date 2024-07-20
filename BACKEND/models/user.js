@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  otp: String,
 });
 
 userSchema.pre('save', async function (next) {

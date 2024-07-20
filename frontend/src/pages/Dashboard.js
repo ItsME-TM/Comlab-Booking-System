@@ -1,6 +1,6 @@
 import React, { useState,useRef, useEffect  } from 'react';
 import Header from '../components/Header'
-import uniImage from  '../images/university-photo.jpg'
+import uniImage from  '../images/adminhome_backgroundjpg.jpg'
 import '../components/dashboard.css'
 import Profile from '../components/Profile'
 

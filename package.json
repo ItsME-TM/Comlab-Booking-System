@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 {"scripts":{"test":"jest"},
 "devDependencies":{"cypress":"^13.11.0","jest":"^29.7.0","jest-puppeteer":"^10.0.1","mongodb-memory-server":"^9.3.0","puppeteer":"^22.11.0"},
 "dependencies":{"axios":"^1.7.2","moment":"^2.30.1","react":"^18.3.1","react-dom":"^18.3.1","react-router-dom":"^6.23.1","supertest":"^7.0.0"}}
+=======
+{
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
+>>>>>>> f04e41f7a835c64ab7451cbab0571d86bc2b91a7

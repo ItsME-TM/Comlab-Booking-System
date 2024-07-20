@@ -28,8 +28,11 @@
     cursor: pointer;
     font-size: large;
   }
+  .toolbar-button.selected {
+    background-color: #afccd6; 
+  }
   .toolbar-button:hover {
-    background-color: #638793; 
+    background-color: #afccd6; 
   }
   
   .right-side {
@@ -72,32 +75,80 @@
     overflow-y: auto;
   }
   
-  .lab-details-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    max-width: 400px;
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    z-index: 100; 
-    text-align: center; 
-  }
-  
-  .ok-button {
-    background-color: #366574;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: medium;
-    border-radius: 5px;
-  }
   .ok-button:hover {
-    background-color: #638793; 
+    background-color: #638793;
   }
   
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10; 
+  }
+  
+ 
+  .blur {
+    filter: blur(5px);
+    pointer-events: none;
+  }
+  
+@media (max-width: 600px) {
+  .lab-details-box {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+.dialog-box-noti {
+  background-color: rgb(197, 223, 244);
+  padding: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: left;
+  position: relative; 
+  color: #366574;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #366574;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 5%;
+  position: relative;
+  width: 100%;
+}
+
+.ok-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #366574;
+  color: white;
+  cursor: pointer;
+}
+
+.ok-button:hover {
+  background-color: #27485a;
+}

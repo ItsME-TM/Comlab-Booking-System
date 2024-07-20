@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Booking = require('../models/labBooking');
 const auth = require('../middleware/auth');
+const Notification = require('../models/notification');
 
 function checkRole(req, res, next) {
   console.log('hit checkRole', req.user.role);
@@ -85,6 +86,49 @@ router.delete('/:id', auth, async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
+});
+
+router.post('/cancelLabSession/:labId', auth, checkRole, async (req, res) => {
+  const { labId } = req.params;
+  console.log ('y8gbtgbs68y7hy7uasr7ybat76', labId);
+
+  try {
+
+    // Find and update the booking
+    const booking = await Booking.findOneAndUpdate(
+        { _id: labId },
+        { status: 'cancelled' },
+        { new: true } // Return updated document
+      );
+
+    if (!booking) {
+        return res.status(404).json({ message: 'Booking not found' });
+    }
+
+      // Find and update the notification
+      const notification = await Notification.findOneAndUpdate(
+        { bookingId: labId},
+        { 
+          IsLabWillGoingOn: false, 
+          type: 'cancellation',
+          isRead:false
+        },
+        { new: true } // Return updated document
+    );
+
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
+
+    res.status(200).json({
+      message: ' cancel lab session successfully',
+      notification,
+      booking
+  });
+  } catch (error) {
+    console.error('Error cancel lab session:', error);
+    res.status(500).json({ message: 'Server error' });
+}
 });
 
 module.exports = router;
