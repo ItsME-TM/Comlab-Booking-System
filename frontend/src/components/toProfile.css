@@ -198,16 +198,10 @@ body {
   .changeButton-to{
     width: 90px;
     height: 40px;
-    border-radius: 0;
-    font-family: 'Roboto'; /* Corrected font-family property */
-    font-size: 18px; /* Corrected font-size property */
-    font-weight: 400; /* Corrected font-weight property */
-    line-height: 24px; /* Corrected line-height property */
-    text-align: center; /* Corrected text-align property */
-    background-color: #1A4350; /* Corrected background-color property */
+    padding-bottom: 20px;
     border: 2px solid white; /* Added border property */
-    color: white;
-    cursor: pointer;
+    text-align: center;
+ 
   }
 
   .button.active-button {

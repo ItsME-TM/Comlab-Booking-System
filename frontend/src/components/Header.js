@@ -34,7 +34,7 @@ export default function Header({ onUserIconClick, isProfileVisible }) {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto d-flex justify-content-center align-items-center w-100">
+          <Nav className="ml-auto justify-content-end w-100">
               <div className="buttons-container">
                 <Link to="/dashboard">
                   <Buttons

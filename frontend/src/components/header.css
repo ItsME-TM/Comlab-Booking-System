@@ -49,18 +49,21 @@
   width: 100%;
 }
 
+
+
 .buttons-container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .buttons-container > * {
   margin-right: 20px;
+
 }
 
 @media screen and (max-width: 1080px) {
   .d-flex{
-    margin-top: 60px;
+    justify-content: center;
 
   }
   .navbar-green .navbar-brand div h3 {
@@ -91,7 +94,7 @@
   .buttons-container {
     display: flex;
     align-items: start;
-    flex-direction: column;
+   
   }
 
   .userIcon,
@@ -105,4 +108,23 @@
     width: 20px;
     height: 20px;
   }
+}
+@media screen and (max-width: 530px) {
+  .d-flex{
+    margin-top: 45px;
+
+  }
+  .navbar-green .navbar-brand div h3 {
+    font-size: 20px;
+    white-space: wrap;
+  }
+
+  .navbar-green .navbar-brand div p {
+    font-size: 8px;
+    white-space: wrap;
+  }
+
+
+
+
 }

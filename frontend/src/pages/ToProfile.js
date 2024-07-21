@@ -138,7 +138,7 @@ export default function ToProfile() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     /><br />
-                    <button type="button" className="changeButton-to" onClick={handleChangeClick}>Change</button>
+                    <button type="button" style={{border:'solid,2px',padding:'5px'}}className="changeButton-to" onClick={handleChangeClick}>Change</button>
                   </div>
                   <label htmlFor="email" className="input-label-to">Email</label><br />
                   <input

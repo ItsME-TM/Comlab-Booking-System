@@ -17,7 +17,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow-y: auto;
+  flex-direction: column;
 }
 
 .home::before {
@@ -30,6 +31,8 @@
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
   z-index: 1;
+  pointer-events: none;
+  height: 150vh
 }
 
 .text-home {
@@ -133,3 +136,81 @@ button:active::after {
 .icon-button:hover .icon {
   transform: rotate(360deg);
 }
+@media screen and (max-width: 1200px) {
+  .home {
+
+    padding: 30px;
+  }
+  .text-home h1 {
+    margin: 0;
+    font-size: 4em;
+ 
+  }
+  
+  .text-home h3 {
+    font-size: 1.5em;
+    
+  }
+  
+  .text-home p {
+    font-size: 2.5em;
+    line-height: 1.0em;
+   
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .home {
+    padding: 30px;
+  }
+  .text-home h1 {
+    margin: 0;
+    font-size: 3em;
+ 
+  }
+  
+  .text-home h3 {
+    font-size: 1.0em;
+    
+  }
+  
+  .text-home p {
+    font-size: 2.0em;
+    line-height: 1.0em;
+   
+  }
+  
+
+
+}
+
+@media screen and (max-width: 480px) {
+  .hhh{
+    overflow: auto;
+  }
+  .home {
+    padding-top: 300px;
+  }
+  .text-home h1 {
+    margin: 0;
+    font-size: 2.5em;
+ 
+  }
+  
+  .text-home h3 {
+    font-size: 0.5em;
+    
+  }
+  
+  .text-home p {
+    font-size: 1.5em;
+    line-height: 0.8em;
+   
+  }
+
+
+
+}
+
+
+

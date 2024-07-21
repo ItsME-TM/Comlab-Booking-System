@@ -7,7 +7,7 @@ import Buttons from '../components/Buttons';
 export default function Home() {
   return (
     <div className='hhh'>
-      <NavBarBL />
+      <NavBarBL/>
       <div className='home'>
         <div className='text-home'>
           <h1>CO1 Lab Booking System</h1>

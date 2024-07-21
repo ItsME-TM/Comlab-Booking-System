@@ -71,7 +71,7 @@ export default function UserInputs({ userData }) {
               readOnly
             />
           )}
-          <button className="changeButton" onClick={handleChangeClick}>Change</button>
+          <button className="changeButton" style={{border:'solid,2px',padding:'5px'}}onClick={handleChangeClick}>Change</button>
         </div>
 
         <label htmlFor="email" className="input-label">Email</label><br />

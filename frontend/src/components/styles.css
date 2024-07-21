@@ -2,4 +2,21 @@
     background-color: #d5150b; 
     color: white; 
     width: 100%;
+    
+  }
+  @media screen and (max-width: 480px) {
+
+    .d-flex{
+      display: flex;
+      flex-direction: column;
+    }
+    .d-flex img{
+      width: 60px; 
+      height: 60px; 
+      margin-right: 20px; 
+      margin-left: 9px;
+
+
+    }
+
   }
