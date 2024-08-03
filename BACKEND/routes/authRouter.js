@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const moment = require('moment-timezone');
 
 // Login route
 router.post('/login', async (req, res) => {
@@ -23,6 +24,8 @@ router.post('/login', async (req, res) => {
       email: user.email
     }
   });
+  const currentTime = moment().tz('Asia/Colombo').format('YYYY-MM-DD HH:mm:ss');
+  console.log("Current time :", currentTime);
   console.log("Valid", user);
 });
 
