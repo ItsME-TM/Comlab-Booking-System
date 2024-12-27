@@ -97,5 +97,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-- **Project Maintainers:** udara anuranga (wanigasinghaofficial@gmail.com), Thushan ranasinghe (ranasinghe@gmail.com)
+- **Project Maintainers:** udara anuranga (wanigasinghaofficial@gmail.com), Thushan ranasinghe (thushanmalaka123@gmail.com)
 - **Project Link:** [https://github.com/Anuranga200/Comlab-Booking-System.git)
