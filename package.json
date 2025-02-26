@@ -1,4 +1,5 @@
 {
+  "homepage": "https://itsme-tm.github.io/Comlab-Booking-System",
   "dependencies": {
     "concurrently": "^8.2.2",
     "i": "^0.3.7",
@@ -11,9 +12,14 @@
   "heroku-postbuild": "cd frontend && npm install && npm run build",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"cd BACKEND && nodemon server.js\" \"cd frontend && npm start\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
 }
