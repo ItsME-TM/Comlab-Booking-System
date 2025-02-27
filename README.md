@@ -72,7 +72,7 @@ Then goto mongoDBCompass and add this mongoDB server to it -> mongodb+srv://comL
     ```cmd
     npm start
     ```
-Run this in CMD at BACKEND location -> npm install express mongoose dotenv cors nodemon
+Run this in CMD comlab-booking-system folder
 ###IF you still get an error due to nodemon run this -> npm install -g nodemon
 5.	In cmd navigate to BACKEND folder and run this command (npm run dev )to see if the application is successfully connect to the mongoDB server.
 
