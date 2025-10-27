@@ -1,0 +1,89 @@
+/* Authentication related styles */
+.page-container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.form-container-login {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group-login {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.input,
+.input-1 {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.input:focus,
+.input-1:focus {
+  outline: none;
+  border-color: #1A4350;
+  box-shadow: 0 0 0 2px rgba(26, 67, 80, 0.1);
+}
+
+.forgot-password,
+.forgot-password-1 {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.forgot-password a,
+.forgot-password-1 a {
+  color: #1A4350;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.forgot-password a:hover,
+.forgot-password-1 a:hover {
+  text-decoration: underline;
+}
+
+.buttonStyle,
+.buttons {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.error-message-login {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.image-container-login {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.EntranceUniImage,
+.FacultyImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

@@ -1,0 +1,5 @@
+/* Main styles entry point */
+@import './global.css';
+@import './auth.css';
+@import './common.css';
+@import './booking.css';

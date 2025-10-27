@@ -1,19 +1,19 @@
 // App.js
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { NotificationProvider } from './NotificationContext'; // Import the NotificationProvider
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+import { NotificationProvider } from './NotificationContext';
+import { UserProvider } from './components/UserContext';
+
+// Import organized components
+import { Home, Dashboard } from './pages/common';
+import { SignIn, UserSignIn, AdminLogin, ForgotPassword } from './pages/auth';
+import { LabBooking } from './pages/booking';
+
+// Import remaining pages (to be organized in future tasks)
 import User from './pages/User';
-import LoginForm from './pages/signIn';
-import LabBooking from './pages/booking';
 import CalendarView from './pages/View';
 import Errmsg from './pages/errmsg';
-import Notification from './pages/Notification'; // Import the Notification component
-import UserSingIn from './pages/userSingIn';
-import AdminLogin from './pages/AdminLogin';
-import { UserProvider } from './components/UserContext';
-import ForgotPassword from './pages/ForgotPassword';
+import Notification from './pages/Notification';
 import AdminHome from './pages/AdminHome';
 import AdminProfile from './pages/AdminProfile';
 import AddUser from './pages/AddUser';
@@ -27,6 +27,9 @@ import ToNotification from './pages/ToNotification';
 import LecturerInstructorProfile from './pages/LecturerInstructorProfile';
 import EditImg from './pages/EditImg';
 
+// Import centralized styles
+import './styles/index.css';
+
 function App() {
   return (
     <UserProvider>
@@ -37,12 +40,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/user" element={<User />} />
-            <Route path="/signin" element={<LoginForm />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/booking" element={<LabBooking />} />
             <Route path="/view" element={<CalendarView />} />
             <Route path="/errmsg" element={<Errmsg />} />
             <Route path="/notification" element={<Notification />} />
-            <Route path="/userSingIn" element={<UserSingIn />} />
+            <Route path="/userSingIn" element={<UserSignIn />} />
             <Route path="/adminlogin" element={<AdminLogin />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/adminhome" element={<AdminHome />} />

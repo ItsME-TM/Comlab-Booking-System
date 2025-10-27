@@ -1,0 +1,110 @@
+.input-label {
+  width: 228px; /* Set the width to 228px */
+height: 36px; /* Set the height to 36px */
+top: 376px; /* Set the top position to 376px */
+left: 1115px; /* Set the left position to 1115px */
+gap: 0px; /* Set the gap to 0px */
+opacity: 0px; /* Set the opacity to 0px */
+font-family: Roboto; /* Set the font family to Roboto */
+font-size: 18px; /* Set the font size to 24px */
+font-weight: 10; /* Set the font weight to 400 */
+line-height: 36px; /* Set the line height to 36px */
+text-align: left;
+color: #FFFFFF;
+border: none;
+}
+
+.input-field{
+  background-color: #6c95a1;
+  width: 600px; /* Adjust width as needed */
+  height: 36px; /* Set the height to 36px */
+top: 376px; /* Set the top position to 376px */
+left: 1115px; /* Set the left position to 1115px */
+gap: 0px; /* Set the gap to 0px */
+width: 100%;
+opacity: 0px; /* Set the opacity to 0px */
+font-family: Roboto; /* Set the font family to Roboto */
+font-size: 18px; /* Set the font size to 24px */
+font-weight: 10; /* Set the font weight to 400 */
+line-height: 36px; /* Set the line height to 36px */
+text-align: left;
+color: #FFFFFF;
+border: none;
+}
+
+.input-field:hover {
+  background-color: #FFFFFF; /* Change background color on hover */
+  color: #205464; /* Change font color on hover */
+  cursor: context-menu; /* Show cursor on hover */
+}
+
+.userInputs{
+  width: 100%;
+  margin-top: 40px;
+}
+
+.input-wrapper {
+  display: flex; /* Display children inline */
+  align-items: center; /* Align children vertically */
+}
+.input-field-password{
+  background-color: #6c95a1;
+  width: 500px; /* Adjust width as needed */
+  height: 36px; /* Set the height to 36px */
+top: 376px; /* Set the top position to 376px */
+left: 1115px; /* Set the left position to 1115px */
+gap: 0px; /* Set the gap to 0px */
+opacity: 0px; /* Set the opacity to 0px */
+width: calc(100% - 105px);
+font-family: Roboto; /* Set the font family to Roboto */
+font-size: 18px; /* Set the font size to 24px */
+font-weight: 10; /* Set the font weight to 400 */
+line-height: 36px; /* Set the line height to 36px */
+text-align: left;
+color: #FFFFFF;
+margin-right: 15px;
+border: none;
+}
+
+.input-field-password:hover {
+  background-color: #FFFFFF; /* Change background color on hover */
+  color: #205464; /* Change font color on hover */
+  cursor: context-menu; /* Show cursor on hover */
+}
+
+.button.active-button {
+color: white !important;
+background-color: #638793 !important;
+border-color: #1A4350 !important;
+}
+
+@media only screen and (max-width: 1050px) {
+.userInputs {
+  width: 100%; /* Full width for both containers */
+  margin-top: 20px; /* Add spacing between the elements */
+}
+
+.input-field{
+  width: 100%;
+  
+}
+
+
+}
+
+@media only screen and (max-width: 480px){
+.userInputs {
+  width: 100%; /* Full width for both containers */
+  margin-top: 20px; /* Add spacing between the elements */
+}
+.user-input-details{
+  width: 100%; /* Full width for both containers */
+      margin-top: 60px; /* Add spacing between the elements */
+     
+}
+
+.input-field{
+  width: 100%;
+  
+}
+}

@@ -1,0 +1,110 @@
+/* Common page styles */
+.hhh {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #A6BBC1 0%, #638793 100%);
+  padding: 2rem;
+}
+
+.text-home {
+  text-align: center;
+  color: white;
+  max-width: 600px;
+}
+
+.text-home h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.text-home h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.text-home p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Dashboard styles */
+.admin_home_main_container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin_home_body {
+  flex: 1;
+  position: relative;
+}
+
+.image-container-admin {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.frontOfAdminImage {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.text-container-admin-home {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+.text-h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  .text-home h1 {
+    font-size: 2rem;
+  }
+  
+  .text-home h3 {
+    font-size: 1.2rem;
+  }
+  
+  .text-h1 {
+    font-size: 2rem;
+  }
+  
+  .text-h3 {
+    font-size: 1.2rem;
+  }
+}

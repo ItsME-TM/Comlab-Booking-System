@@ -1,0 +1,17 @@
+.button{
+    border-radius: 0;
+    font-Family: 'Roboto';
+    font-Size: '18px';
+    font-Weight: 400;
+    line-Height: '24px';
+    text-Align: 'center';
+    background-Color: #1A4350;
+    border-width: 2px;
+    border-color: #638793;
+}
+
+.button.active-button {
+    color: white !important;
+    background-Color: #638793 !important;
+    border-color: #1A4350 !important;
+}
