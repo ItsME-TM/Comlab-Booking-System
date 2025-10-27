@@ -11,4 +11,9 @@ BACKEND/node_modules/
 FRONTEND/node_modules/
 node_modules
 
+# Log files
+backend/logs/*.log
+frontend/logs/*.log
+*.log
+
 .kiro
