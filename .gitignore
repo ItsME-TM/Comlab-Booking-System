@@ -1,9 +1,11 @@
-# Ignore all environment files
+# Ignore environment files
 .env
 .env.*
 *.env
+# But keep templates tracked
+!.env.example
+!*/.env.example
 
-# Ignore node modules
+# Node modules
 BACKEND/node_modules/
 FRONTEND/node_modules/
-BACKEND/.env
