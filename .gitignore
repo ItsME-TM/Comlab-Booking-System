@@ -9,3 +9,4 @@
 # Node modules
 BACKEND/node_modules/
 FRONTEND/node_modules/
+node_modules

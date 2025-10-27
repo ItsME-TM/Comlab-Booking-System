@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const mongoose = require('mongoose');
 const Image = require('../models/Image');
 
 const storage = multer.memoryStorage();
@@ -11,6 +12,10 @@ router.get('/get/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         console.log(`Received request for image with user ID: ${userId}`);
+
+        if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).send('Invalid or missing user ID');
+        }
 
         // Find the image by user ID
         const image = await Image.findOne({ userId: userId }).exec();

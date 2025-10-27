@@ -3,8 +3,7 @@
   "dependencies": {
     "concurrently": "^8.2.2",
     "i": "^0.3.7",
-    "nodemailer": "^6.9.13",
-    "nodeman": "^1.1.2"
+    "nodemailer": "^6.9.13"
   },
   "name": "comlab-booking-system",
   "version": "1.0.0",
@@ -15,7 +14,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd BACKEND && nodemon server.js\" \"cd frontend && npm start\""
+    "start": "concurrently \"cd BACKEND && npm run dev\" \"cd frontend && npm start\""
   },
   "author": "",
   "license": "ISC",

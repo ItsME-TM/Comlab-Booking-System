@@ -2,6 +2,7 @@ const app = require('./app');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const express = require('express');
 dotenv.config();
 
 const path = require('path');
@@ -17,10 +18,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-mongoose.connect(URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// With Mongoose v6+, no need for deprecated connection options
+mongoose.connect(URL);
 
 
 const connection = mongoose.connection;

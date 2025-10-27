@@ -5,7 +5,8 @@ const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const { setTimeout } = require('timers/promises');
+// Use promise-based timers without shadowing the global callback-style setTimeout
+const { setTimeout: delay } = require('timers/promises');
 require('dotenv').config();
 
 
@@ -171,11 +172,16 @@ router.get('/verify-email', async (req, res) => {
     console.log("user otp:", user.otp);
     await user.save();
 
-    setTimeout(async () => {
-      user.otp = '';
-      await user.save();
-      console.log(`OTP removed for ${email} after 5 minutes.`);
-    }, 5 * 60 * 1000);
+    // Schedule OTP removal after 5 minutes without blocking the request
+    delay(5 * 60 * 1000).then(async () => {
+      try {
+        user.otp = '';
+        await user.save();
+        console.log(`OTP removed for ${email} after 5 minutes.`);
+      } catch (e) {
+        console.error('Failed to remove OTP after delay:', e);
+      }
+    });
 
     await sendMails(email, otp);
     res.json({ message: 'Email found', otp, email });
