@@ -28,10 +28,10 @@ describe('User Flow Integration Tests', () => {
               email: 'test@example.com',
               firstName: 'Test',
               lastName: 'User',
-              role: 'student'
-            }
+              role: 'student',
+            },
           });
-        })
+        }),
       );
 
       render(<App />, {
@@ -41,8 +41,8 @@ describe('User Flow Integration Tests', () => {
           logout: jest.fn(),
           updateUser: jest.fn(),
           isAuthenticated: false,
-          loading: false
-        }
+          loading: false,
+        },
       });
 
       // Navigate to login page (assuming there's a login link)
@@ -73,11 +73,11 @@ describe('User Flow Integration Tests', () => {
           return HttpResponse.json(
             {
               success: false,
-              message: 'Invalid credentials'
+              message: 'Invalid credentials',
             },
-            { status: 401 }
+            { status: 401 },
           );
-        })
+        }),
       );
 
       render(<App />, {
@@ -87,8 +87,8 @@ describe('User Flow Integration Tests', () => {
           logout: jest.fn(),
           updateUser: jest.fn(),
           isAuthenticated: false,
-          loading: false
-        }
+          loading: false,
+        },
       });
 
       // Navigate to login page
@@ -128,10 +128,10 @@ describe('User Flow Integration Tests', () => {
               startTime: '2024-12-01T10:00:00Z',
               endTime: '2024-12-01T12:00:00Z',
               purpose: 'Research work',
-              status: 'pending'
-            }
+              status: 'pending',
+            },
           });
-        })
+        }),
       );
 
       render(<App />);
@@ -155,7 +155,9 @@ describe('User Flow Integration Tests', () => {
 
       // Wait for success message
       await waitFor(() => {
-        expect(screen.getByText(/booking created successfully/i)).toBeInTheDocument();
+        expect(
+          screen.getByText(/booking created successfully/i),
+        ).toBeInTheDocument();
       });
     });
 
@@ -168,11 +170,11 @@ describe('User Flow Integration Tests', () => {
           return HttpResponse.json(
             {
               success: false,
-              message: 'Lab is already booked for this time slot'
+              message: 'Lab is already booked for this time slot',
             },
-            { status: 409 }
+            { status: 409 },
           );
-        })
+        }),
       );
 
       render(<App />);
@@ -216,10 +218,10 @@ describe('User Flow Integration Tests', () => {
               email: 'updated@example.com',
               firstName: 'Updated',
               lastName: 'User',
-              role: 'student'
-            }
+              role: 'student',
+            },
           });
-        })
+        }),
       );
 
       render(<App />);
@@ -231,7 +233,9 @@ describe('User Flow Integration Tests', () => {
       // Update profile information
       const firstNameInput = screen.getByLabelText(/first name/i);
       const lastNameInput = screen.getByLabelText(/last name/i);
-      const updateButton = screen.getByRole('button', { name: /update profile/i });
+      const updateButton = screen.getByRole('button', {
+        name: /update profile/i,
+      });
 
       await user.clear(firstNameInput);
       await user.type(firstNameInput, 'Updated');
@@ -241,7 +245,9 @@ describe('User Flow Integration Tests', () => {
 
       // Wait for success message
       await waitFor(() => {
-        expect(screen.getByText(/profile updated successfully/i)).toBeInTheDocument();
+        expect(
+          screen.getByText(/profile updated successfully/i),
+        ).toBeInTheDocument();
       });
     });
   });
@@ -263,17 +269,17 @@ describe('User Flow Integration Tests', () => {
                 message: 'Your booking has been approved',
                 type: 'booking',
                 isRead: false,
-                createdAt: '2024-01-15T09:00:00Z'
-              }
-            ]
+                createdAt: '2024-01-15T09:00:00Z',
+              },
+            ],
           });
         }),
         http.put('/api/notifications/1/read', () => {
           return HttpResponse.json({
             success: true,
-            message: 'Notification marked as read'
+            message: 'Notification marked as read',
           });
-        })
+        }),
       );
 
       render(<App />);
@@ -288,7 +294,9 @@ describe('User Flow Integration Tests', () => {
       });
 
       // Mark notification as read
-      const markReadButton = screen.getByRole('button', { name: /mark as read/i });
+      const markReadButton = screen.getByRole('button', {
+        name: /mark as read/i,
+      });
       await user.click(markReadButton);
 
       // Wait for read status to update
@@ -306,7 +314,7 @@ describe('User Flow Integration Tests', () => {
       server.use(
         http.get('/api/bookings', () => {
           return HttpResponse.error();
-        })
+        }),
       );
 
       render(<App />);
@@ -330,11 +338,11 @@ describe('User Flow Integration Tests', () => {
           return HttpResponse.json(
             {
               success: false,
-              message: 'Internal server error'
+              message: 'Internal server error',
             },
-            { status: 500 }
+            { status: 500 },
           );
-        })
+        }),
       );
 
       render(<App />);

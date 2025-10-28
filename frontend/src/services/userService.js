@@ -100,7 +100,10 @@ class UserService {
    */
   async changePassword(passwordData) {
     try {
-      const response = await apiClient.put('/users/change-password', passwordData);
+      const response = await apiClient.put(
+        '/users/change-password',
+        passwordData,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to change password');
@@ -122,9 +125,9 @@ class UserService {
         body: formData,
         headers: {
           // Don't set Content-Type, let browser set it with boundary
-        }
+        },
       });
-      
+
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to upload avatar');
@@ -153,7 +156,9 @@ class UserService {
    */
   async setUserStatus(userId, isActive) {
     try {
-      const response = await apiClient.patch(`/users/${userId}/status`, { isActive });
+      const response = await apiClient.patch(`/users/${userId}/status`, {
+        isActive,
+      });
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to update user status');

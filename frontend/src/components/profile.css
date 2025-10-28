@@ -1,8 +1,90 @@
 .profile-container {
-    width: 300px;
+  width: 300px;
+  height: 383px;
+  top: 18%;
+  left: 73%;
+  gap: 0px;
+  border-radius: 15px 15px 15px 15px;
+  opacity: 1; /* Assuming you want it visible when toggled */
+  position: absolute; /* Assuming this based on the 'top' and 'left' properties */
+  background-color: #638793; /* Ensure this matches your intended design */
+  display: flex;
+  flex-direction: column; /* Ensures child containers are stacked vertically */
+  padding: 0px;
+}
+
+.containerProfile-2 {
+  display: flex;
+  flex-direction: column; /* Ensures child containers are stacked vertically */
+  align-items: center; /* Vertically centers the items */
+  justify-content: center; /* Horizontally centers the items */
+  padding: 10px; /* Add some padding for spacing */
+}
+
+.userIconProfile {
+  height: 130px;
+  width: 130px;
+  mix-blend-mode: darken;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.info {
+  flex-grow: 1;
+  margin-right: 20px;
+  color: white;
+}
+
+.info h4 {
+  margin: 5px 0;
+  color: white;
+}
+
+.settingIcon {
+  height: 25px;
+  width: 25px;
+  mix-blend-mode: darken;
+  margin-left: 60px;
+}
+
+.containerProfile-3 {
+  background-color: #a6bbc1; /* Added this background color */
+  width: 100%;
+  display: flex;
+  align-items: center; /* Vertically centers the items */
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 0px 0px 15px 15px;
+}
+
+.no-decoration {
+  text-decoration: none;
+  color: inherit; /* Optional: Ensure link inherits color from parent */
+}
+
+.no-decoration h4 {
+  text-decoration: none;
+}
+
+.profile-settings-text {
+  margin-right: 60px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.profile-settings-text:hover {
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Increased blur and opacity */
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  .profile-container {
+    width: 250px;
     height: 383px;
-    top: 18%;
-    left: 73%;
+    top: 25%;
+    left: 5%;
     gap: 0px;
     border-radius: 15px 15px 15px 15px;
     opacity: 1; /* Assuming you want it visible when toggled */
@@ -11,8 +93,10 @@
     display: flex;
     flex-direction: column; /* Ensures child containers are stacked vertically */
     padding: 0px;
+    white-space: wrap;
+    z-index: 2;
   }
-  
+
   .containerProfile-2 {
     display: flex;
     flex-direction: column; /* Ensures child containers are stacked vertically */
@@ -20,35 +104,39 @@
     justify-content: center; /* Horizontally centers the items */
     padding: 10px; /* Add some padding for spacing */
   }
-  
-  
-  .userIconProfile{
-    height: 130px;
-    width: 130px;
+
+  .userIconProfile {
+    height: 65px;
+    width: 65px;
     mix-blend-mode: darken;
-    margin-top: 20px;
-    margin-bottom: 20px
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
   .info {
-    flex-grow: 1;
-    margin-right: 20px;
     color: white;
+    white-space: wrap;
   }
-  
-  .info h4 {
-    margin: 5px 0;
-    color: white;
+  .infoh1 {
+    text-align: center;
+    font-weight: 400;
+    white-space: wrap;
   }
-  
+
+  .infoh2 {
+    text-align: center;
+    font-weight: 400;
+    white-space: wrap;
+  }
+
   .settingIcon {
     height: 25px;
     width: 25px;
     mix-blend-mode: darken;
     margin-left: 60px;
   }
-  
+
   .containerProfile-3 {
-    background-color: #A6BBC1; /* Added this background color */
+    background-color: #a6bbc1; /* Added this background color */
     width: 100%;
     display: flex;
     align-items: center; /* Vertically centers the items */
@@ -57,21 +145,21 @@
     margin-top: 8px;
     border-radius: 0px 0px 15px 15px;
   }
-  
+
   .no-decoration {
     text-decoration: none;
     color: inherit; /* Optional: Ensure link inherits color from parent */
   }
-  
+
   .no-decoration h4 {
     text-decoration: none;
   }
 
-  .profile-settings-text{
-    margin-right:60px;
-    font-size:18px;
-    line-height:24px;
-    font-weight:400;
+  .profile-settings-text {
+    margin-right: 60px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
@@ -79,124 +167,28 @@
     text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Increased blur and opacity */
     cursor: pointer;
   }
+  .profilebutton {
+    border-radius: 50px;
+    width: 175px;
+    height: 60px;
+    margin-top: 25px;
+  }
+}
 
-  @media screen and (max-width: 600px) {
-    .profile-container {
-      width: 250px;
-      height: 383px;
-      top: 25%;
-      left: 5%;
-      gap: 0px;
-      border-radius: 15px 15px 15px 15px;
-      opacity: 1; /* Assuming you want it visible when toggled */
-      position: absolute; /* Assuming this based on the 'top' and 'left' properties */
-      background-color: #638793; /* Ensure this matches your intended design */
-      display: flex;
-      flex-direction: column; /* Ensures child containers are stacked vertically */
-      padding: 0px;
-      white-space: wrap;
-      z-index: 2;
-    }
-    
-    .containerProfile-2 {
-      display: flex;
-      flex-direction: column; /* Ensures child containers are stacked vertically */
-      align-items: center; /* Vertically centers the items */
-      justify-content: center; /* Horizontally centers the items */
-      padding: 10px; /* Add some padding for spacing */
-    }
-    
-    
-    .userIconProfile{
-      height: 65px;
-      width: 65px;
-      mix-blend-mode: darken;
-      margin-top: 40px;
-      margin-bottom: 40px;
-  
-    }
-    .info {
-      color: white;
-      white-space: wrap;
-    }
-    .infoh1{
-      text-Align: center;
-      font-Weight: 400;
-      white-space: wrap;
-    }
-    
-    .infoh2 {
-      text-Align: center;
-      font-Weight: 400;
-      white-space: wrap;
-    }
-    
-    
-    .settingIcon {
-      height: 25px;
-      width: 25px;
-      mix-blend-mode: darken;
-      margin-left: 60px;
-    }
-    
-    .containerProfile-3 {
-      background-color: #A6BBC1; /* Added this background color */
-      width: 100%;
-      display: flex;
-      align-items: center; /* Vertically centers the items */
-      justify-content: space-between;
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 0px 0px 15px 15px;
-    }
-    
-    .no-decoration {
-      text-decoration: none;
-      color: inherit; /* Optional: Ensure link inherits color from parent */
-    }
-    
-    .no-decoration h4 {
-      text-decoration: none;
-    }
-  
-    .profile-settings-text{
-      margin-right:60px;
-      font-size:18px;
-      line-height:24px;
-      font-weight:400;
-      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-  
-    .profile-settings-text:hover {
-      text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Increased blur and opacity */
-      cursor: pointer;
-    }
-    .profilebutton{
-      border-radius:50px; 
-      width:175px;
-      height:60px;
-      margin-top:25px;
-    }
-    
-  
+@media screen and (max-width: 1105px) and (min-width: 607px) {
+  .profile-container {
+    width: 250px;
+    height: 383px;
+    top: 20%;
+    left: 60%;
+    gap: 0px;
+    border-radius: 15px 15px 15px 15px;
+    opacity: 1; /* Assuming you want it visible when toggled */
+    position: absolute; /* Assuming this based on the 'top' and 'left' properties */
+    background-color: #638793; /* Ensure this matches your intended design */
+    display: flex;
+    flex-direction: column; /* Ensures child containers are stacked vertically */
+    padding: 0px;
+    white-space: wrap;
   }
-  
-  @media screen and (max-width: 1105px) and (min-width: 607px) {
-    .profile-container {
-      width: 250px;
-      height: 383px;
-      top: 20%;
-      left: 60%;
-      gap: 0px;
-      border-radius: 15px 15px 15px 15px;
-      opacity: 1; /* Assuming you want it visible when toggled */
-      position: absolute; /* Assuming this based on the 'top' and 'left' properties */
-      background-color: #638793; /* Ensure this matches your intended design */
-      display: flex;
-      flex-direction: column; /* Ensures child containers are stacked vertically */
-      padding: 0px;
-      white-space: wrap;
-    }
-  
-  
-  }
+}

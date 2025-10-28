@@ -8,7 +8,7 @@ jest.mock('../../src/repositories/UserRepository');
 jest.mock('bcrypt');
 jest.mock('crypto');
 jest.mock('timers/promises', () => ({
-  setTimeout: jest.fn().mockResolvedValue()
+  setTimeout: jest.fn().mockResolvedValue(),
 }));
 
 describe('UserService', () => {
@@ -28,7 +28,7 @@ describe('UserService', () => {
         lastName: 'Doe',
         email: 'john@example.com',
         role: 'lecturer',
-        password: 'password123'
+        password: 'password123',
       };
 
       const errors = userService.validateUserData(userData);
@@ -41,14 +41,16 @@ describe('UserService', () => {
         lastName: '',
         email: 'invalid-email',
         role: 'invalid-role',
-        password: '123'
+        password: '123',
       };
 
       const errors = userService.validateUserData(userData);
       expect(errors).toContain('First name is required');
       expect(errors).toContain('Last name is required');
       expect(errors).toContain('Valid email is required');
-      expect(errors).toContain('Valid role is required (admin, lecturer, instructor, to)');
+      expect(errors).toContain(
+        'Valid role is required (admin, lecturer, instructor, to)',
+      );
       expect(errors).toContain('Password must be at least 6 characters long');
     });
   });
@@ -60,7 +62,7 @@ describe('UserService', () => {
         lastName: 'Doe',
         email: 'john@example.com',
         role: 'lecturer',
-        password: 'password123'
+        password: 'password123',
       };
 
       const mockCreatedUser = { _id: 'user123', ...userData };
@@ -70,7 +72,9 @@ describe('UserService', () => {
 
       const result = await userService.createUser(userData);
 
-      expect(mockUserRepository.findByEmail).toHaveBeenCalledWith('john@example.com');
+      expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(
+        'john@example.com',
+      );
       expect(mockUserRepository.create).toHaveBeenCalledWith(userData);
       expect(result).toEqual(mockCreatedUser);
     });
@@ -78,11 +82,12 @@ describe('UserService', () => {
     it('should throw error for invalid user data', async () => {
       const userData = {
         firstName: '',
-        email: 'invalid-email'
+        email: 'invalid-email',
       };
 
-      await expect(userService.createUser(userData))
-        .rejects.toThrow('Validation failed');
+      await expect(userService.createUser(userData)).rejects.toThrow(
+        'Validation failed',
+      );
     });
 
     it('should throw error if user already exists', async () => {
@@ -91,13 +96,16 @@ describe('UserService', () => {
         lastName: 'Doe',
         email: 'john@example.com',
         role: 'lecturer',
-        password: 'password123'
+        password: 'password123',
       };
 
-      mockUserRepository.findByEmail.mockResolvedValue({ email: 'john@example.com' });
+      mockUserRepository.findByEmail.mockResolvedValue({
+        email: 'john@example.com',
+      });
 
-      await expect(userService.createUser(userData))
-        .rejects.toThrow('User with this email already exists');
+      await expect(userService.createUser(userData)).rejects.toThrow(
+        'User with this email already exists',
+      );
     });
   });
 
@@ -115,13 +123,15 @@ describe('UserService', () => {
     it('should throw error when user not found', async () => {
       mockUserRepository.findById.mockResolvedValue(null);
 
-      await expect(userService.getUserById('user123'))
-        .rejects.toThrow('User not found');
+      await expect(userService.getUserById('user123')).rejects.toThrow(
+        'User not found',
+      );
     });
 
     it('should throw error when ID is not provided', async () => {
-      await expect(userService.getUserById(''))
-        .rejects.toThrow('User ID is required');
+      await expect(userService.getUserById('')).rejects.toThrow(
+        'User ID is required',
+      );
     });
   });
 
@@ -129,7 +139,11 @@ describe('UserService', () => {
     it('should successfully update user with valid data', async () => {
       const updateData = { firstName: 'Jane', lastName: 'Smith' };
       const existingUser = { _id: 'user123', email: 'john@example.com' };
-      const updatedUser = { _id: 'user123', firstName: 'Jane', lastName: 'Smith' };
+      const updatedUser = {
+        _id: 'user123',
+        firstName: 'Jane',
+        lastName: 'Smith',
+      };
 
       mockUserRepository.findById.mockResolvedValue(existingUser);
       mockUserRepository.update.mockResolvedValue(updatedUser);
@@ -137,7 +151,10 @@ describe('UserService', () => {
       const result = await userService.updateUser('user123', updateData);
 
       expect(mockUserRepository.findById).toHaveBeenCalledWith('user123');
-      expect(mockUserRepository.update).toHaveBeenCalledWith('user123', updateData);
+      expect(mockUserRepository.update).toHaveBeenCalledWith(
+        'user123',
+        updateData,
+      );
       expect(result).toEqual(updatedUser);
     });
 
@@ -153,7 +170,9 @@ describe('UserService', () => {
       await userService.updateUser('user123', updateData);
 
       expect(bcrypt.hash).toHaveBeenCalledWith('newpassword123', 10);
-      expect(mockUserRepository.update).toHaveBeenCalledWith('user123', { password: hashedPassword });
+      expect(mockUserRepository.update).toHaveBeenCalledWith('user123', {
+        password: hashedPassword,
+      });
     });
 
     it('should check email uniqueness when email is updated', async () => {
@@ -163,8 +182,9 @@ describe('UserService', () => {
       mockUserRepository.findById.mockResolvedValue(existingUser);
       mockUserRepository.findByEmail.mockResolvedValue({ _id: 'other123' });
 
-      await expect(userService.updateUser('user123', updateData))
-        .rejects.toThrow('Email already exists');
+      await expect(
+        userService.updateUser('user123', updateData),
+      ).rejects.toThrow('Email already exists');
     });
   });
 
@@ -184,8 +204,9 @@ describe('UserService', () => {
     it('should throw error when user not found', async () => {
       mockUserRepository.findById.mockResolvedValue(null);
 
-      await expect(userService.deleteUser('user123'))
-        .rejects.toThrow('User not found');
+      await expect(userService.deleteUser('user123')).rejects.toThrow(
+        'User not found',
+      );
     });
   });
 
@@ -208,15 +229,17 @@ describe('UserService', () => {
     });
 
     it('should throw error for invalid email', async () => {
-      await expect(userService.generateAndSaveOtp('invalid-email'))
-        .rejects.toThrow('Valid email is required');
+      await expect(
+        userService.generateAndSaveOtp('invalid-email'),
+      ).rejects.toThrow('Valid email is required');
     });
 
     it('should throw error when user not found', async () => {
       mockUserRepository.findByEmail.mockResolvedValue(null);
 
-      await expect(userService.generateAndSaveOtp('john@example.com'))
-        .rejects.toThrow('User not found');
+      await expect(
+        userService.generateAndSaveOtp('john@example.com'),
+      ).rejects.toThrow('User not found');
     });
   });
 

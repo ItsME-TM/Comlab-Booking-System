@@ -8,7 +8,7 @@ export default function UserInputs({ userData }) {
     lastName: '',
     email: '',
     password: '',
-    role: 'Lecturer' // Assuming role is static
+    role: 'Lecturer', // Assuming role is static
   });
 
   useEffect(() => {
@@ -16,15 +16,15 @@ export default function UserInputs({ userData }) {
     setUserDetails(userData);
   }, [userData]);
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = event => {
     const { value } = event.target;
-    setUserDetails((prevDetails) => ({
+    setUserDetails(prevDetails => ({
       ...prevDetails,
-      password: value
+      password: value,
     }));
   };
 
-  const handleChangeClick = (event) => {
+  const handleChangeClick = event => {
     event.preventDefault(); // Prevent form submission
     setEditMode(true);
   };
@@ -37,25 +37,32 @@ export default function UserInputs({ userData }) {
 
   return (
     <div className='userInputs'>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor="name" className="input-label">Name</label><br />
+      <form onSubmit={e => e.preventDefault()}>
+        <label htmlFor='name' className='input-label'>
+          Name
+        </label>
+        <br />
         <input
-          type="text"
-          id="name"
-          name="name"
-          className="input-field"
+          type='text'
+          id='name'
+          name='name'
+          className='input-field'
           value={`${userDetails.firstName} ${userDetails.lastName}`}
           readOnly
-        /><br />
+        />
+        <br />
 
-        <label htmlFor="password" className="input-label">Password</label><br />
-        <div className="input-wrapper">
+        <label htmlFor='password' className='input-label'>
+          Password
+        </label>
+        <br />
+        <div className='input-wrapper'>
           {editMode ? (
             <input
-              type="password"
-              id="password"
-              name="password"
-              className="input-field-password"
+              type='password'
+              id='password'
+              name='password'
+              className='input-field-password'
               value={userDetails.password}
               onChange={handlePasswordChange}
               onBlur={handlePasswordBlur} // Save password on blur
@@ -63,36 +70,54 @@ export default function UserInputs({ userData }) {
             />
           ) : (
             <input
-              type="password"
-              id="password"
-              name="password"
-              className="input-field-password"
-              value={userDetails.password ? userDetails.password.replace(/./g, '*') : ''}
+              type='password'
+              id='password'
+              name='password'
+              className='input-field-password'
+              value={
+                userDetails.password
+                  ? userDetails.password.replace(/./g, '*')
+                  : ''
+              }
               readOnly
             />
           )}
-          <button className="changeButton" style={{border:'solid, 2px', padding:'3px'}} onClick={handleChangeClick}>Change</button>
+          <button
+            className='changeButton'
+            style={{ border: 'solid, 2px', padding: '3px' }}
+            onClick={handleChangeClick}
+          >
+            Change
+          </button>
         </div>
 
-        <label htmlFor="email" className="input-label">Email</label><br />
+        <label htmlFor='email' className='input-label'>
+          Email
+        </label>
+        <br />
         <input
-          type="text"
-          id="email"
-          name="email"
-          className="input-field"
+          type='text'
+          id='email'
+          name='email'
+          className='input-field'
           value={userDetails.email}
           readOnly
-        /><br />
+        />
+        <br />
 
-        <label htmlFor="role" className="input-label">Role</label><br />
+        <label htmlFor='role' className='input-label'>
+          Role
+        </label>
+        <br />
         <input
-          type="text"
-          id="role"
-          name="role"
-          className="input-field"
+          type='text'
+          id='role'
+          name='role'
+          className='input-field'
           value={userDetails.role}
           readOnly
-        /><br />
+        />
+        <br />
       </form>
     </div>
   );

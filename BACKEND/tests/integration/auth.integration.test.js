@@ -17,7 +17,7 @@ describe('Authentication Integration Tests', () => {
         firstName: 'Test',
         lastName: 'User',
         role: 'student',
-        department: 'Computer Science'
+        department: 'Computer Science',
       };
 
       const response = await request(app)
@@ -44,7 +44,7 @@ describe('Authentication Integration Tests', () => {
         password: 'password123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
       // Create first user
@@ -64,7 +64,7 @@ describe('Authentication Integration Tests', () => {
       const response = await request(app)
         .post('/api/auth/register')
         .send({
-          email: 'test@example.com'
+          email: 'test@example.com',
           // Missing required fields
         })
         .expect(400);
@@ -82,18 +82,16 @@ describe('Authentication Integration Tests', () => {
         password: 'password123',
         firstName: 'Login',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
-      await request(app)
-        .post('/api/auth/register')
-        .send(userData);
+      await request(app).post('/api/auth/register').send(userData);
     });
 
     it('should login with valid credentials', async () => {
       const loginData = {
         email: 'login@example.com',
-        password: 'password123'
+        password: 'password123',
       };
 
       const response = await request(app)
@@ -109,7 +107,7 @@ describe('Authentication Integration Tests', () => {
     it('should not login with invalid credentials', async () => {
       const loginData = {
         email: 'login@example.com',
-        password: 'wrongpassword'
+        password: 'wrongpassword',
       };
 
       const response = await request(app)
@@ -124,7 +122,7 @@ describe('Authentication Integration Tests', () => {
     it('should not login with non-existent user', async () => {
       const loginData = {
         email: 'nonexistent@example.com',
-        password: 'password123'
+        password: 'password123',
       };
 
       const response = await request(app)
@@ -146,12 +144,10 @@ describe('Authentication Integration Tests', () => {
         password: 'password123',
         firstName: 'Refresh',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
-      await request(app)
-        .post('/api/auth/register')
-        .send(userData);
+      await request(app).post('/api/auth/register').send(userData);
 
       const loginResponse = await request(app)
         .post('/api/auth/login')
@@ -172,9 +168,7 @@ describe('Authentication Integration Tests', () => {
     });
 
     it('should not refresh token without authorization header', async () => {
-      const response = await request(app)
-        .post('/api/auth/refresh')
-        .expect(401);
+      const response = await request(app).post('/api/auth/refresh').expect(401);
 
       expect(response.body.success).toBe(false);
     });
@@ -191,7 +185,7 @@ describe('Authentication Integration Tests', () => {
         password: 'password123',
         firstName: 'Logout',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
       const registerResponse = await request(app)

@@ -11,53 +11,62 @@ class UserService {
   // User validation methods
   validateUserData(userData) {
     const errors = [];
-    
+
     if (!userData.firstName || userData.firstName.trim().length === 0) {
       errors.push('First name is required');
     }
-    
+
     if (!userData.lastName || userData.lastName.trim().length === 0) {
       errors.push('Last name is required');
     }
-    
+
     if (!userData.email || !this.isValidEmail(userData.email)) {
       errors.push('Valid email is required');
     }
-    
+
     if (!userData.role || !this.isValidRole(userData.role)) {
       errors.push('Valid role is required (admin, lecturer, instructor, to)');
     }
-    
+
     if (!userData.password || userData.password.length < 6) {
       errors.push('Password must be at least 6 characters long');
     }
-    
+
     return errors;
   }
 
   validateUpdateData(updateData) {
     const errors = [];
-    
-    if (updateData.firstName !== undefined && updateData.firstName.trim().length === 0) {
+
+    if (
+      updateData.firstName !== undefined &&
+      updateData.firstName.trim().length === 0
+    ) {
       errors.push('First name cannot be empty');
     }
-    
-    if (updateData.lastName !== undefined && updateData.lastName.trim().length === 0) {
+
+    if (
+      updateData.lastName !== undefined &&
+      updateData.lastName.trim().length === 0
+    ) {
       errors.push('Last name cannot be empty');
     }
-    
-    if (updateData.email !== undefined && !this.isValidEmail(updateData.email)) {
+
+    if (
+      updateData.email !== undefined &&
+      !this.isValidEmail(updateData.email)
+    ) {
       errors.push('Valid email is required');
     }
-    
+
     if (updateData.role !== undefined && !this.isValidRole(updateData.role)) {
       errors.push('Valid role is required (admin, lecturer, instructor, to)');
     }
-    
+
     if (updateData.password !== undefined && updateData.password.length < 6) {
       errors.push('Password must be at least 6 characters long');
     }
-    
+
     return errors;
   }
 
@@ -149,7 +158,9 @@ class UserService {
 
     // Check for email uniqueness if email is being updated
     if (updateData.email && updateData.email !== existingUser.email) {
-      const emailExists = await this.userRepository.findByEmail(updateData.email);
+      const emailExists = await this.userRepository.findByEmail(
+        updateData.email,
+      );
       if (emailExists) {
         throw new Error('Email already exists');
       }
@@ -199,7 +210,9 @@ class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    return await this.userRepository.updateByEmail(email, { password: hashedPassword });
+    return await this.userRepository.updateByEmail(email, {
+      password: hashedPassword,
+    });
   }
 
   async deleteUser(id) {
@@ -265,7 +278,7 @@ class UserService {
 
   // Authorization helpers
   async checkUserExists(id) {
-    return await this.userRepository.findById(id) !== null;
+    return (await this.userRepository.findById(id)) !== null;
   }
 
   async getUserCount(role = null) {

@@ -11,12 +11,12 @@ import axios from 'axios';
 export default function ToProfile() {
   const [id, setId] = useState('');
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [textContainerText, setTextContainerText] = useState("Your Account");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [textContainerText, setTextContainerText] = useState('Your Account');
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -34,8 +34,8 @@ export default function ToProfile() {
         try {
           const response = await axios.get(`/api/users/getDetails/${id}`, {
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
           const user = response.data;
           setFirstName(user.firstName);
@@ -43,7 +43,7 @@ export default function ToProfile() {
           setEmail(user.email);
           setRole(user.role);
           console.log('Fetched user:', user.data);
-          setTextContainerText("Edit User Details");
+          setTextContainerText('Edit User Details');
         } catch (error) {
           console.error('Error fetching user:', error);
         }
@@ -56,11 +56,11 @@ export default function ToProfile() {
     setIsBoxVisible(!isBoxVisible);
   };
 
-  const handleSave = async (event) => {
+  const handleSave = async event => {
     event.preventDefault();
     const userData = {
       firstName,
-      lastName
+      lastName,
     };
     console.log('data', userData);
     try {
@@ -69,8 +69,8 @@ export default function ToProfile() {
         response = await axios.post(`/api/users/updateName/${id}`, userData, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         console.log(response.data);
         alert('User updated successfully!');
@@ -92,66 +92,124 @@ export default function ToProfile() {
 
   return (
     <div className='main-container'>
-      <ToHeader onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
+      <ToHeader
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
       <div className='container-1-to'>
         <div className='container-2-to'>
           <div className='user-logo-details-to'>
-            <h3 className='text-1' style={{whiteSpace:'nowrap'}}>{textContainerText}</h3>
+            <h3 className='text-1' style={{ whiteSpace: 'nowrap' }}>
+              {textContainerText}
+            </h3>
             <img
               src={`/api/images/get/${id}`}
-              alt="user-photograph"
+              alt='user-photograph'
               className='userImage-to'
-              onError={(e) => { e.target.onerror = null; e.target.src = userImage; }}
+              onError={e => {
+                e.target.onerror = null;
+                e.target.src = userImage;
+              }}
             />
-            <button className='buttons1' style={{borderRadius:'50px', width:'125px' ,height:'50px',  paddingTop:'10px' , borderColor:'white', borderWidth:'10px'}} onClick={handleEditClick}>Edit</button>
+            <button
+              className='buttons1'
+              style={{
+                borderRadius: '50px',
+                width: '125px',
+                height: '50px',
+                paddingTop: '10px',
+                borderColor: 'white',
+                borderWidth: '10px',
+              }}
+              onClick={handleEditClick}
+            >
+              Edit
+            </button>
           </div>
 
           <div className='user-input-details-to'>
-            <div className="inputs-wrapper-to">
+            <div className='inputs-wrapper-to'>
               <div className='userInputs-to'>
                 <form onSubmit={handleSave} className='form-container-to'>
-                  <label htmlFor="name" className="input-label-to">Name</label><br />
+                  <label htmlFor='name' className='input-label-to'>
+                    Name
+                  </label>
+                  <br />
                   <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="input-field-to"
+                    type='text'
+                    id='name'
+                    name='name'
+                    className='input-field-to'
                     value={`${firstName} ${lastName}`}
-                    onChange={(e) => {
-                      const [first, ...last] = e.target.value.split(" ");
+                    onChange={e => {
+                      const [first, ...last] = e.target.value.split(' ');
                       setFirstName(first);
-                      setLastName(last.join(" "));
+                      setLastName(last.join(' '));
                     }}
-                  /><br />
-                  <label htmlFor="password" className="input-label-to">Password</label><br />
-                  <div className="input-wrapper-to">
+                  />
+                  <br />
+                  <label htmlFor='password' className='input-label-to'>
+                    Password
+                  </label>
+                  <br />
+                  <div className='input-wrapper-to'>
                     <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      className="input-field-password-to"
+                      type='password'
+                      id='password'
+                      name='password'
+                      className='input-field-password-to'
                       value={password}
-                    /><br />
-                    <button type="button" className="changeButton-to" style={{border:'solid, 2px', padding:'3px'}} onClick={handleChangeClick}>Change</button>
+                    />
+                    <br />
+                    <button
+                      type='button'
+                      className='changeButton-to'
+                      style={{ border: 'solid, 2px', padding: '3px' }}
+                      onClick={handleChangeClick}
+                    >
+                      Change
+                    </button>
                   </div>
-                  <label htmlFor="email" className="input-label-to">Email</label><br />
+                  <label htmlFor='email' className='input-label-to'>
+                    Email
+                  </label>
+                  <br />
                   <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    className="input-field-to"
+                    type='text'
+                    id='email'
+                    name='email'
+                    className='input-field-to'
                     value={email}
-                  /><br />
-                  <label htmlFor="role" className="input-label-to">Role</label><br />
+                  />
+                  <br />
+                  <label htmlFor='role' className='input-label-to'>
+                    Role
+                  </label>
+                  <br />
                   <input
-                    type="text"
-                    id="role"
-                    name="role"
-                    className="input-field-to"
+                    type='text'
+                    id='role'
+                    name='role'
+                    className='input-field-to'
                     value={role}
-                  /><br />
-                  <div className="button-save-to">
-                    <button type="submit" className='button' style={{borderRadius:'50px', width:'125px' ,height:'50px', marginTop:'20px', paddingTop:'10px' , borderColor:'#638793',borderWidth:'2px'}}>Save</button>
+                  />
+                  <br />
+                  <div className='button-save-to'>
+                    <button
+                      type='submit'
+                      className='button'
+                      style={{
+                        borderRadius: '50px',
+                        width: '125px',
+                        height: '50px',
+                        marginTop: '20px',
+                        paddingTop: '10px',
+                        borderColor: '#638793',
+                        borderWidth: '2px',
+                      }}
+                    >
+                      Save
+                    </button>
                   </div>
                 </form>
               </div>

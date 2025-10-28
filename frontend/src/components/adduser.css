@@ -5,9 +5,8 @@ body {
   flex-direction: column;
 }
 
-
 .main-container-admin {
-  background-color: #A6BBC1; 
+  background-color: #a6bbc1;
   width: 100%;
   height: 100vh; /* Make the main container full height of viewport */
   display: flex;
@@ -16,40 +15,36 @@ body {
   padding: 0; /* Remove any padding */
   box-sizing: border-box;
   overflow-y: auto;
-  
 }
 
-.container-1-admin{
+.container-1-admin {
   display: flex;
   flex-direction: row;
-  justify-content: center ;
+  justify-content: center;
   align-items: center;
   flex-grow: 1;
   width: 100%;
   margin: 0; /* Remove any margin */
   padding: 0;
   box-sizing: border-box;
-
 }
 
-.container-3-main-admin{
+.container-3-main-admin {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width:100%;
-  height:70%;
-
+  width: 100%;
+  height: 70%;
 }
 
 .container-3-admin {
-margin: 20px 20px; 
-width: 65%;
-height: 100%;
-background-color: #205464;
-border-radius: 20px;
-position: relative;
-
+  margin: 20px 20px;
+  width: 65%;
+  height: 100%;
+  background-color: #205464;
+  border-radius: 20px;
+  position: relative;
 }
 
 .container-2-admin {
@@ -60,20 +55,19 @@ position: relative;
   flex-direction: column; /* Display children in a column */
   align-items: flex-start;
   box-sizing: border-box;
-  
-} 
+}
 
-.text-container-admin{
+.text-container-admin {
   line-height: 48px;
   font-size: 43px;
   margin-top: 15px;
   font-weight: 700;
-  color: #1D4C5A;
+  color: #1d4c5a;
   white-space: nowrap; /* Prevent text from breaking into multiple lines */
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Add drop shadow */
 }
 
-.input-label-admin{
+.input-label-admin {
   width: 228px; /* Set the width to 228px */
   height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
@@ -85,14 +79,14 @@ position: relative;
   font-weight: 400; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #1A4350;
+  color: #1a4350;
   border: none;
   margin-top: 10px; /* Add some space between label and input */
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.input-field-admin{
-  background-color: #FFFFFF;
+.input-field-admin {
+  background-color: #ffffff;
   width: 600px; /* Adjust width as needed */
   height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
@@ -104,13 +98,9 @@ position: relative;
   font-weight: 380; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #1D4C5A;
+  color: #1d4c5a;
   border: none;
 }
-
-
-
-
 
 .user-logo-details-admin {
   display: flex;
@@ -118,22 +108,20 @@ position: relative;
   justify-content: center;
   align-items: center;
   height: 100%;
-  
 }
- 
-.userImageAdmin{
-  mix-blend-mode:lighten;
-  opacity: 0.8; 
+
+.userImageAdmin {
+  mix-blend-mode: lighten;
+  opacity: 0.8;
   width: 50%;
-  height: auto; 
+  height: auto;
   border-radius: 350px;
 }
 
 .buttons {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   gap: 50px;
-  
 }
 
 hr {
@@ -151,39 +139,31 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    
   }
 
   .container-2-admin {
     padding-top: 20px;
     width: 100%; /* Full width for container-2 */
-    
-    
   }
 
   .container-3-admin {
     width: 100%; /* Full width for container-3 */
     margin-top: 40px; /* Add space between container-2 and container-3 */
-    
-   
+
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 40px;
-    
-  
-   
   }
 
-  .input-field-admin{
-      width: 100%;
-      
-  }
-
-  .user-input-details-admin{
+  .input-field-admin {
     width: 100%;
   }
 
-  .buttons{
+  .user-input-details-admin {
+    width: 100%;
+  }
+
+  .buttons {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -199,24 +179,21 @@ hr {
 
   .container-2-admin {
     width: 100%; /* Half width for container-2 */
-   
   }
 
   .container-3-admin {
     width: 100%; /* Half width for container-3 */
     margin-top: 0; /* Remove margin from the top */
-   
   }
 
-  .input-field-admin{
+  .input-field-admin {
     width: 100%;
-}
+  }
 
-.user-input-details-admin{
-  width: 100%;
+  .user-input-details-admin {
+    width: 100%;
+  }
 }
-}
-
 
 @media only screen and (min-width: 991px) and (max-width: 1200px) {
   .container-1-admin {

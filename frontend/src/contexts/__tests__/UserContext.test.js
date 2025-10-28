@@ -9,7 +9,7 @@ describe('UserContext', () => {
 
   test('provides initial state', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     expect(result.current.user).toBeNull();
@@ -24,7 +24,7 @@ describe('UserContext', () => {
     localStorage.setItem('token', 'mock-token');
 
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     expect(result.current.user).toEqual(mockUser);
@@ -36,7 +36,7 @@ describe('UserContext', () => {
     localStorage.setItem('token', 'mock-token');
 
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     expect(result.current.user).toBeNull();
@@ -47,7 +47,7 @@ describe('UserContext', () => {
 
   test('setUser updates state and localStorage', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     const mockUser = { id: 1, email: 'test@example.com' };
@@ -65,7 +65,7 @@ describe('UserContext', () => {
 
   test('updateUser merges updates with existing user', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     const initialUser = { id: 1, email: 'test@example.com', name: 'John' };
@@ -79,14 +79,19 @@ describe('UserContext', () => {
       result.current.updateUser(updates);
     });
 
-    const expectedUser = { id: 1, email: 'test@example.com', name: 'Jane', role: 'admin' };
+    const expectedUser = {
+      id: 1,
+      email: 'test@example.com',
+      name: 'Jane',
+      role: 'admin',
+    };
     expect(result.current.user).toEqual(expectedUser);
     expect(JSON.parse(localStorage.getItem('user'))).toEqual(expectedUser);
   });
 
   test('clearUser resets state and clears localStorage', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     const mockUser = { id: 1, email: 'test@example.com' };
@@ -107,7 +112,7 @@ describe('UserContext', () => {
 
   test('setLoading updates loading state', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     act(() => {
@@ -125,7 +130,7 @@ describe('UserContext', () => {
 
   test('setError updates error state and stops loading', () => {
     const { result } = renderHook(() => useUser(), {
-      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>
+      wrapper: ({ children }) => <UserProvider>{children}</UserProvider>,
     });
 
     act(() => {

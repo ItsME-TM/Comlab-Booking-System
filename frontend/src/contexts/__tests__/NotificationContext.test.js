@@ -1,11 +1,17 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react';
-import { NotificationProvider, useNotification, NOTIFICATION_TYPES } from '../NotificationContext';
+import {
+  NotificationProvider,
+  useNotification,
+  NOTIFICATION_TYPES,
+} from '../NotificationContext';
 
 describe('NotificationContext', () => {
   test('provides initial state', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     expect(result.current.notifications).toEqual([]);
@@ -16,13 +22,15 @@ describe('NotificationContext', () => {
 
   test('addNotification adds notification and updates unread count', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     const notification = {
       type: NOTIFICATION_TYPES.INFO,
       title: 'Test',
-      message: 'Test message'
+      message: 'Test message',
     };
 
     act(() => {
@@ -39,13 +47,15 @@ describe('NotificationContext', () => {
 
   test('removeNotification removes notification and updates unread count', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     const notification = {
       type: NOTIFICATION_TYPES.INFO,
       title: 'Test',
-      message: 'Test message'
+      message: 'Test message',
     };
 
     let notificationId;
@@ -64,13 +74,15 @@ describe('NotificationContext', () => {
 
   test('markAsRead marks notification as read and updates unread count', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     const notification = {
       type: NOTIFICATION_TYPES.INFO,
       title: 'Test',
-      message: 'Test message'
+      message: 'Test message',
     };
 
     let notificationId;
@@ -89,12 +101,22 @@ describe('NotificationContext', () => {
 
   test('markAllAsRead marks all notifications as read', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
-      result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'Test 1', message: 'Message 1' });
-      result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'Test 2', message: 'Message 2' });
+      result.current.addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 1',
+        message: 'Message 1',
+      });
+      result.current.addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 2',
+        message: 'Message 2',
+      });
     });
 
     expect(result.current.unreadCount).toBe(2);
@@ -109,12 +131,22 @@ describe('NotificationContext', () => {
 
   test('clearAll removes all notifications', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
-      result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'Test 1', message: 'Message 1' });
-      result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'Test 2', message: 'Message 2' });
+      result.current.addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 1',
+        message: 'Message 1',
+      });
+      result.current.addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 2',
+        message: 'Message 2',
+      });
     });
 
     act(() => {
@@ -127,13 +159,33 @@ describe('NotificationContext', () => {
 
   test('setNotifications sets notifications and calculates unread count', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     const notifications = [
-      { id: '1', type: NOTIFICATION_TYPES.INFO, title: 'Test 1', message: 'Message 1', isRead: false },
-      { id: '2', type: NOTIFICATION_TYPES.INFO, title: 'Test 2', message: 'Message 2', isRead: true },
-      { id: '3', type: NOTIFICATION_TYPES.INFO, title: 'Test 3', message: 'Message 3', isRead: false }
+      {
+        id: '1',
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 1',
+        message: 'Message 1',
+        isRead: false,
+      },
+      {
+        id: '2',
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 2',
+        message: 'Message 2',
+        isRead: true,
+      },
+      {
+        id: '3',
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'Test 3',
+        message: 'Message 3',
+        isRead: false,
+      },
     ];
 
     act(() => {
@@ -146,7 +198,9 @@ describe('NotificationContext', () => {
 
   test('convenience methods create notifications with correct types', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
@@ -157,15 +211,21 @@ describe('NotificationContext', () => {
     });
 
     expect(result.current.notifications).toHaveLength(4);
-    expect(result.current.notifications[3].type).toBe(NOTIFICATION_TYPES.SUCCESS);
+    expect(result.current.notifications[3].type).toBe(
+      NOTIFICATION_TYPES.SUCCESS,
+    );
     expect(result.current.notifications[2].type).toBe(NOTIFICATION_TYPES.ERROR);
-    expect(result.current.notifications[1].type).toBe(NOTIFICATION_TYPES.WARNING);
+    expect(result.current.notifications[1].type).toBe(
+      NOTIFICATION_TYPES.WARNING,
+    );
     expect(result.current.notifications[0].type).toBe(NOTIFICATION_TYPES.INFO);
   });
 
   test('setLoading updates loading state', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
@@ -177,7 +237,9 @@ describe('NotificationContext', () => {
 
   test('setError updates error state and stops loading', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
@@ -206,17 +268,27 @@ describe('NotificationContext', () => {
 
   test('notifications are ordered by timestamp (newest first)', () => {
     const { result } = renderHook(() => useNotification(), {
-      wrapper: ({ children }) => <NotificationProvider>{children}</NotificationProvider>
+      wrapper: ({ children }) => (
+        <NotificationProvider>{children}</NotificationProvider>
+      ),
     });
 
     act(() => {
-      result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'First', message: 'First message' });
+      result.current.addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title: 'First',
+        message: 'First message',
+      });
     });
 
     // Small delay to ensure different timestamps
     setTimeout(() => {
       act(() => {
-        result.current.addNotification({ type: NOTIFICATION_TYPES.INFO, title: 'Second', message: 'Second message' });
+        result.current.addNotification({
+          type: NOTIFICATION_TYPES.INFO,
+          title: 'Second',
+          message: 'Second message',
+        });
       });
     }, 1);
 

@@ -9,12 +9,12 @@ import axios from 'axios';
 
 export default function AddUser() {
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState('');
   const [image, setImage] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(""); 
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const profileRef = useRef(null);
 
   const token = localStorage.getItem('token');
@@ -22,7 +22,7 @@ export default function AddUser() {
   const handleUserIconClick = () => {
     setIsBoxVisible(!isBoxVisible);
   };
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (profileRef.current && !profileRef.current.contains(event.target)) {
       setIsBoxVisible(false);
     }
@@ -39,14 +39,15 @@ export default function AddUser() {
     };
   }, [isBoxVisible]);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = e => {
     const file = e.target.files[0];
     setImage(file);
-    setImagePreviewUrl(URL.createObjectURL(file)); 
+    setImagePreviewUrl(URL.createObjectURL(file));
   };
 
   const generateRandomPassword = () => {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$*&';
+    const characters =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$*&';
     let password = '';
     for (let i = 0; i < 8; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
@@ -55,7 +56,7 @@ export default function AddUser() {
     return password;
   };
 
-  const handleSave = async (event) => {
+  const handleSave = async event => {
     event.preventDefault();
     const password = generateRandomPassword();
     const userData = {
@@ -63,7 +64,7 @@ export default function AddUser() {
       lastName,
       email,
       password,
-      role
+      role,
     };
 
     console.log('Attempting to add user with:', userData);
@@ -71,15 +72,15 @@ export default function AddUser() {
       await axios.post('/api/users/add', userData, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       alert('User added successfully!');
 
       const response = await axios.get('/api/users/getall', {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const foundUser = response.data.find(u => u.email === email);
@@ -96,8 +97,8 @@ export default function AddUser() {
         const res = await axios.post('/api/images/edit', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         alert(res.data.msg);
       } catch (err) {
@@ -112,60 +113,93 @@ export default function AddUser() {
 
   return (
     <div className='main-container-admin'>
-      <HeaderAdmin onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
+      <HeaderAdmin
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
       <hr />
       <div className='container-1-admin'>
         <div className='container-2-admin'>
           <h3 className='text-container-admin'>Add User Details</h3>
           <div className='user-input-details-admin'>
             <form onSubmit={handleSave}>
-              <label htmlFor="firstName" className="input-label-admin">First Name</label><br />
+              <label htmlFor='firstName' className='input-label-admin'>
+                First Name
+              </label>
+              <br />
               <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                className="input-field-admin"
-                onChange={(e) => setFirstName(e.target.value)}
-              /><br />
+                type='text'
+                id='firstName'
+                name='firstName'
+                className='input-field-admin'
+                onChange={e => setFirstName(e.target.value)}
+              />
+              <br />
 
-              <label htmlFor="lastName" className="input-label-admin">Last Name</label><br />
+              <label htmlFor='lastName' className='input-label-admin'>
+                Last Name
+              </label>
+              <br />
               <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                className="input-field-admin"
-                onChange={(e) => setLastName(e.target.value)}
-              /><br />
+                type='text'
+                id='lastName'
+                name='lastName'
+                className='input-field-admin'
+                onChange={e => setLastName(e.target.value)}
+              />
+              <br />
 
-              <label htmlFor="email" className="input-label-admin">Email</label><br />
+              <label htmlFor='email' className='input-label-admin'>
+                Email
+              </label>
+              <br />
               <input
-                type="text"
-                id="email"
-                name="email"
-                className="input-field-admin"
-                onChange={(e) => setEmail(e.target.value)}
-              /><br />
+                type='text'
+                id='email'
+                name='email'
+                className='input-field-admin'
+                onChange={e => setEmail(e.target.value)}
+              />
+              <br />
 
-              <label htmlFor="role" className="input-label-admin">Role</label><br />
+              <label htmlFor='role' className='input-label-admin'>
+                Role
+              </label>
+              <br />
               <select
-                id="role"
-                name="role"
-                className="input-field-admin"
+                id='role'
+                name='role'
+                className='input-field-admin'
                 value={role}
-                onChange={(e) => setRole(e.target.value)}
+                onChange={e => setRole(e.target.value)}
               >
-                <option value=""></option>
-                <option value="to">To</option>
-                <option value="lecturer">Lecturer</option>
-                <option value="instructor">Instructor</option>
-              </select><br />
-              <input type="file" onChange={handleImageChange} required /><br />
+                <option value=''></option>
+                <option value='to'>To</option>
+                <option value='lecturer'>Lecturer</option>
+                <option value='instructor'>Instructor</option>
+              </select>
+              <br />
+              <input type='file' onChange={handleImageChange} required />
+              <br />
               {imagePreviewUrl && <p>Selected image: {imagePreviewUrl}</p>}
 
-              <div className="buttons">
-                <Buttons type="submit" text="Save" borderRadius="50px" width="125px" height="50px" marginTop="20px" />
+              <div className='buttons'>
+                <Buttons
+                  type='submit'
+                  text='Save'
+                  borderRadius='50px'
+                  width='125px'
+                  height='50px'
+                  marginTop='20px'
+                />
                 <Link to='/adminhome'>
-                  <Buttons text="Cancel" borderRadius="50px" width="125px" height="50px" marginTop="20px" />
+                  <Buttons
+                    text='Cancel'
+                    borderRadius='50px'
+                    width='125px'
+                    height='50px'
+                    marginTop='20px'
+                  />
                 </Link>
               </div>
             </form>
@@ -175,9 +209,17 @@ export default function AddUser() {
           <div className='container-3-admin'>
             <div className='user-logo-details-admin'>
               {imagePreviewUrl ? (
-                <img src={imagePreviewUrl} alt="Selected user" className='userImageAdmin' />
+                <img
+                  src={imagePreviewUrl}
+                  alt='Selected user'
+                  className='userImageAdmin'
+                />
               ) : (
-                <img src={UserImageAdmin} alt="user-photograph" className='userImageAdmin' />
+                <img
+                  src={UserImageAdmin}
+                  alt='user-photograph'
+                  className='userImageAdmin'
+                />
               )}
             </div>
           </div>

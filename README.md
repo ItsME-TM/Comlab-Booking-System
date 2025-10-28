@@ -1,6 +1,8 @@
 # Lab Booking System
 
-Welcome to the Lab Booking System project! This project is developed as part of our final year computer engineering project. The Lab Booking System allows users to book labs for various purposes efficiently.
+Welcome to the Lab Booking System project! This project is developed as part of our final year
+computer engineering project. The Lab Booking System allows users to book labs for various purposes
+efficiently.
 
 ## Table of Contents
 
@@ -15,7 +17,9 @@ Welcome to the Lab Booking System project! This project is developed as part of 
 
 ## Introduction
 
-The Lab Booking System is designed to help students, faculty, and staff at the university to book labs easily and efficiently. The system provides a user-friendly interface and various functionalities to manage lab bookings, check availability, and handle cancellations.
+The Lab Booking System is designed to help students, faculty, and staff at the university to book
+labs easily and efficiently. The system provides a user-friendly interface and various
+functionalities to manage lab bookings, check availability, and handle cancellations.
 
 ## Features
 
@@ -36,43 +40,47 @@ The Lab Booking System is designed to help students, faculty, and staff at the u
 ## Installation
 
 To get a local copy up and running, follow these simple steps.
-1.	Create a .env file and add this line to it -> MONGODB_URL = 
-2.	Run this in CMD at BACKEND location -> npm install express mongoose dotenv cors nodemon
-###IF you still get an error due to nodemon run this -> npm install -g nodemon
-4.	In cmd navigate to BACKEND folder and run this command (npm run dev )to see if the application is successfully connect to the mongoDB server.
 
-1. **Clone the repository:**
+1.  Create a .env file and add this line to it -> MONGODB_URL =
+2.  Run this in CMD at BACKEND location -> npm install express mongoose dotenv cors nodemon ###IF
+    you still get an error due to nodemon run this -> npm install -g nodemon
+3.  In cmd navigate to BACKEND folder and run this command (npm run dev )to see if the application
+    is successfully connect to the mongoDB server.
+
+4.  **Clone the repository:**
 
     ```bash
     git clone https://github.com/Anuranga200/Comlab-Booking-System.git
     cd lab-booking-system
     ```
 
-2. **Install dependencies:**
+5.  **Install dependencies:**
 
     ```cmd
     cd frontend
     npm install
-    cd backend 
+    cd backend
     npm install
     ```
 
-3. **Set up environment variables:**
+6.  **Set up environment variables:**
 
-    Create a `.env` file in the root directory and add the following:
+        Create a `.env` file in the root directory and add the following:
 
-    ```env
-    MONGO_URI=
-    ```
-Then goto mongoDBCompass and add this mongoDB server to it -> mongodb+srv://comLab:comLab123@cluster0.mdfezgy.mongodb.net/
+        ```env
+        MONGO_URI=
+        ```
 
+    Then goto mongoDBCompass and add this mongoDB server to it ->
+    mongodb+srv://comLab:comLab123@cluster0.mdfezgy.mongodb.net/
 
-4. **Start the development server:**
+7.  **Start the development server:**
 
-    ```cmd
-    npm start
-    ```
-Run this in CMD comlab-booking-system folder
+        ```cmd
+        npm start
+        ```
+
+    Run this in CMD comlab-booking-system folder
 
 ## Usage
 

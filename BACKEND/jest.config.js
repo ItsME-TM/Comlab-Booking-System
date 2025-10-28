@@ -4,7 +4,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.js',
     '!src/config/logger.js', // Exclude logger from coverage (complex winston setup)
-    '!src/models/**'
+    '!src/models/**',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html', 'json'],
@@ -13,8 +13,8 @@ module.exports = {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: 80
-    }
+      statements: 80,
+    },
   },
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   testTimeout: 30000,

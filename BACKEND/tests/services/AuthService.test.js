@@ -22,7 +22,7 @@ describe('AuthService', () => {
         firstName: 'John',
         lastName: 'Doe',
         role: 'student',
-        password: 'hashedPassword'
+        password: 'hashedPassword',
       };
 
       User.findOne.mockResolvedValue(mockUser);
@@ -32,7 +32,10 @@ describe('AuthService', () => {
       const result = await AuthService.login('test@example.com', 'password123');
 
       expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
-      expect(bcrypt.compare).toHaveBeenCalledWith('password123', 'hashedPassword');
+      expect(bcrypt.compare).toHaveBeenCalledWith(
+        'password123',
+        'hashedPassword',
+      );
       expect(result).toEqual({
         token: 'mock-token',
         user: {
@@ -40,35 +43,41 @@ describe('AuthService', () => {
           email: 'test@example.com',
           firstName: 'John',
           lastName: 'Doe',
-          role: 'student'
-        }
+          role: 'student',
+        },
       });
     });
 
     it('should throw error when email or password is missing', async () => {
-      await expect(AuthService.login('', 'password')).rejects.toThrow('Email and password are required');
-      await expect(AuthService.login('email@test.com', '')).rejects.toThrow('Email and password are required');
+      await expect(AuthService.login('', 'password')).rejects.toThrow(
+        'Email and password are required',
+      );
+      await expect(AuthService.login('email@test.com', '')).rejects.toThrow(
+        'Email and password are required',
+      );
     });
 
     it('should throw error when user is not found', async () => {
       User.findOne.mockResolvedValue(null);
 
-      await expect(AuthService.login('test@example.com', 'password123'))
-        .rejects.toThrow('Invalid email or password');
+      await expect(
+        AuthService.login('test@example.com', 'password123'),
+      ).rejects.toThrow('Invalid email or password');
     });
 
     it('should throw error when password is invalid', async () => {
       const mockUser = {
         _id: 'user123',
         email: 'test@example.com',
-        password: 'hashedPassword'
+        password: 'hashedPassword',
       };
 
       User.findOne.mockResolvedValue(mockUser);
       bcrypt.compare.mockResolvedValue(false);
 
-      await expect(AuthService.login('test@example.com', 'wrongpassword'))
-        .rejects.toThrow('Invalid email or password');
+      await expect(
+        AuthService.login('test@example.com', 'wrongpassword'),
+      ).rejects.toThrow('Invalid email or password');
     });
   });
 
@@ -79,13 +88,13 @@ describe('AuthService', () => {
         lastName: 'Doe',
         email: 'test@example.com',
         password: 'password123',
-        role: 'student'
+        role: 'student',
       };
 
       const mockUser = {
         _id: 'user123',
         ...userData,
-        save: jest.fn().mockResolvedValue(true)
+        save: jest.fn().mockResolvedValue(true),
       };
 
       User.findOne.mockResolvedValue(null); // No existing user
@@ -103,20 +112,21 @@ describe('AuthService', () => {
           email: 'test@example.com',
           firstName: 'John',
           lastName: 'Doe',
-          role: 'student'
-        }
+          role: 'student',
+        },
       });
     });
 
     it('should throw error when required fields are missing', async () => {
       const incompleteData = {
         firstName: 'John',
-        email: 'test@example.com'
+        email: 'test@example.com',
         // Missing lastName, password, role
       };
 
-      await expect(AuthService.register(incompleteData))
-        .rejects.toThrow('All fields are required');
+      await expect(AuthService.register(incompleteData)).rejects.toThrow(
+        'All fields are required',
+      );
     });
 
     it('should throw error when user already exists', async () => {
@@ -125,13 +135,14 @@ describe('AuthService', () => {
         lastName: 'Doe',
         email: 'test@example.com',
         password: 'password123',
-        role: 'student'
+        role: 'student',
       };
 
       User.findOne.mockResolvedValue({ email: 'test@example.com' }); // Existing user
 
-      await expect(AuthService.register(userData))
-        .rejects.toThrow('User with this email already exists');
+      await expect(AuthService.register(userData)).rejects.toThrow(
+        'User with this email already exists',
+      );
     });
   });
 
@@ -143,7 +154,7 @@ describe('AuthService', () => {
         email: 'test@example.com',
         firstName: 'John',
         lastName: 'Doe',
-        role: 'student'
+        role: 'student',
       };
 
       jwt.verify.mockReturnValue(mockDecoded);
@@ -161,8 +172,8 @@ describe('AuthService', () => {
           email: 'test@example.com',
           firstName: 'John',
           lastName: 'Doe',
-          role: 'student'
-        }
+          role: 'student',
+        },
       });
     });
 
@@ -171,25 +182,27 @@ describe('AuthService', () => {
         throw new Error('Invalid token');
       });
 
-      await expect(AuthService.refreshToken('invalid-token'))
-        .rejects.toThrow('Invalid or expired token');
+      await expect(AuthService.refreshToken('invalid-token')).rejects.toThrow(
+        'Invalid or expired token',
+      );
     });
 
     it('should throw error when user is not found', async () => {
       const mockDecoded = { _id: 'user123' };
-      
+
       jwt.verify.mockReturnValue(mockDecoded);
       User.findById.mockResolvedValue(null);
 
-      await expect(AuthService.refreshToken('valid-token'))
-        .rejects.toThrow('User not found');
+      await expect(AuthService.refreshToken('valid-token')).rejects.toThrow(
+        'User not found',
+      );
     });
   });
 
   describe('logout', () => {
     it('should return success message', async () => {
       const result = await AuthService.logout('user123');
-      
+
       expect(result).toEqual({ message: 'Logged out successfully' });
     });
   });
@@ -199,7 +212,7 @@ describe('AuthService', () => {
       const mockUser = {
         _id: 'user123',
         email: 'test@example.com',
-        role: 'student'
+        role: 'student',
       };
 
       jwt.sign.mockReturnValue('generated-token');
@@ -210,10 +223,10 @@ describe('AuthService', () => {
         {
           _id: 'user123',
           email: 'test@example.com',
-          role: 'student'
+          role: 'student',
         },
         'test-secret',
-        { expiresIn: '3d' }
+        { expiresIn: '3d' },
       );
       expect(token).toBe('generated-token');
     });
@@ -235,8 +248,9 @@ describe('AuthService', () => {
         throw new Error('Invalid token');
       });
 
-      expect(() => AuthService.verifyToken('invalid-token'))
-        .toThrow('Invalid or expired token');
+      expect(() => AuthService.verifyToken('invalid-token')).toThrow(
+        'Invalid or expired token',
+      );
     });
   });
 });

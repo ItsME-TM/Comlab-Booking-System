@@ -6,9 +6,8 @@ body {
   flex-direction: column;
 }
 
-
 .main-container {
-  background-color:#638793;
+  background-color: #638793;
   width: 100%;
   height: 100vh; /* Make the main container full height of viewport */
   display: flex;
@@ -19,11 +18,10 @@ body {
   overflow-y: auto;
 }
 
-
 .container-1 {
   display: flex;
   flex-direction: row;
-  justify-content: center ;
+  justify-content: center;
   align-items: center;
   flex-grow: 1;
   width: 100%;
@@ -42,8 +40,6 @@ body {
   align-items: center; /* Center align vertically */
 }
 
-
-
 .user-logo-details {
   width: 40%; /* Adjust width as needed */
   height: 100%;
@@ -51,29 +47,23 @@ body {
   flex-direction: column; /* Stack children vertically */
   justify-content: center; /* Center content vertically */
   align-items: center;
-  
- 
-
 }
 
-.user-input-details{
-width: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-
-
+.user-input-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.inputs-wrapper{
-width: 80%;
-
+.inputs-wrapper {
+  width: 80%;
 }
 
-.text-1{
+.text-1 {
   margin-top: 0px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-family: Roboto;
   font-size: 43px;
   font-weight: 700;
@@ -87,7 +77,7 @@ width: 80%;
   opacity: 0px;
 }
 
-.userImage{
+.userImage {
   margin-top: 20px;
   margin-bottom: 15px;
   align-items: center;
@@ -97,26 +87,21 @@ width: 80%;
   left: 190px; /* Set the left position to 190px */
   gap: 0px; /* Set the gap to 0px */
   opacity: 10px;
-  border-radius: 50%
+  border-radius: 50%;
 }
 
-.user-input-details{
-
-width: 60%;
-width: 60%;
-height: 100%;
-display: flex; /* Use flexbox */
-flex-direction: column; /* Stack children vertically */
+.user-input-details {
+  width: 60%;
+  width: 60%;
+  height: 100%;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack children vertically */
 }
 
 .button-save {
   display: flex;
   justify-content: flex-end;
- 
- 
 }
-
-
 
 @media only screen and (max-width: 1050px) {
   .container-2 {
@@ -127,35 +112,29 @@ flex-direction: column; /* Stack children vertically */
     overflow-y: auto;
   }
 
-  .container-1{
-      overflow-y: auto;
-
+  .container-1 {
+    overflow-y: auto;
   }
-  
-  .user-logo-details{
+
+  .user-logo-details {
     width: 100%; /* Full width for both containers */
     margin-top: 400px; /* Add spacing between the elements */
+  }
 
-}
-
- .button-save{
+  .button-save {
     margin-bottom: 10px;
- }
+  }
 
-
-.input-field{
+  .input-field {
     width: 100%;
-    
+  }
+
+  .button-save {
+    margin-bottom: 10px;
+  }
 }
 
- 
-   .button-save{
-      margin-bottom: 10px;
-   }
-
-}
-
-@media only screen and (max-width: 480px){
+@media only screen and (max-width: 480px) {
   .container-2 {
     flex-direction: column; /* Stack container-2 and container-3 vertically */
     display: flex;
@@ -164,47 +143,22 @@ flex-direction: column; /* Stack children vertically */
     overflow-y: auto;
   }
 
-  .container-1{
-      overflow-y: auto;
-
+  .container-1 {
+    overflow-y: auto;
   }
-  
+
   .user-logo-details {
-      width: 100%; /* Full width for both containers */
-      margin-top: 450px; /* Add spacing between the elements */
-
+    width: 100%; /* Full width for both containers */
+    margin-top: 450px; /* Add spacing between the elements */
   }
 
-  
-   .button-save{
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: flex-start; 
-
-   }
-  
-
-  .input-field{
-      width: 100%;
-      
+  .button-save {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
   }
 
-  
-
+  .input-field {
+    width: 100%;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -18,7 +18,7 @@ describe('ApiClient', () => {
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve(mockResponse)
+        json: () => Promise.resolve(mockResponse),
       });
 
       const result = await apiClient.get('/test');
@@ -26,8 +26,8 @@ describe('ApiClient', () => {
       expect(fetch).toHaveBeenCalledWith('/api/test', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
       expect(result).toEqual(mockResponse);
     });
@@ -35,12 +35,12 @@ describe('ApiClient', () => {
     test('makes successful POST request with data', async () => {
       const mockResponse = { success: true };
       const requestData = { name: 'test' };
-      
+
       fetch.mockResolvedValue({
         ok: true,
         status: 201,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve(mockResponse)
+        json: () => Promise.resolve(mockResponse),
       });
 
       const result = await apiClient.post('/test', requestData);
@@ -48,21 +48,21 @@ describe('ApiClient', () => {
       expect(fetch).toHaveBeenCalledWith('/api/test', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify(requestData),
       });
       expect(result).toEqual(mockResponse);
     });
 
     test('includes authorization header when token exists', async () => {
       localStorage.setItem('token', 'test-token');
-      
+
       fetch.mockResolvedValue({
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
 
       await apiClient.get('/test');
@@ -71,8 +71,8 @@ describe('ApiClient', () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer test-token'
-        }
+          Authorization: 'Bearer test-token',
+        },
       });
     });
 
@@ -83,7 +83,7 @@ describe('ApiClient', () => {
         status: 404,
         statusText: 'Not Found',
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve(errorResponse)
+        json: () => Promise.resolve(errorResponse),
       });
 
       await expect(apiClient.get('/test')).rejects.toThrow('Not found');
@@ -101,7 +101,7 @@ describe('ApiClient', () => {
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'text/plain']]),
-        text: () => Promise.resolve(textResponse)
+        text: () => Promise.resolve(textResponse),
       });
 
       const result = await apiClient.get('/test');
@@ -115,7 +115,7 @@ describe('ApiClient', () => {
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({ success: true })
+        json: () => Promise.resolve({ success: true }),
       });
     });
 
@@ -126,9 +126,9 @@ describe('ApiClient', () => {
       expect(fetch).toHaveBeenCalledWith('/api/test/1', {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
     });
 
@@ -138,8 +138,8 @@ describe('ApiClient', () => {
       expect(fetch).toHaveBeenCalledWith('/api/test/1', {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
     });
 
@@ -150,27 +150,27 @@ describe('ApiClient', () => {
       expect(fetch).toHaveBeenCalledWith('/api/test/1', {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
     });
   });
 
   describe('interceptors', () => {
     test('applies request interceptors', async () => {
-      const testClient = new (apiClient.constructor)();
-      
-      testClient.addRequestInterceptor((config) => ({
+      const testClient = new apiClient.constructor();
+
+      testClient.addRequestInterceptor(config => ({
         ...config,
-        headers: { ...config.headers, 'X-Custom': 'test' }
+        headers: { ...config.headers, 'X-Custom': 'test' },
       }));
 
       fetch.mockResolvedValue({
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
 
       await testClient.get('/test');
@@ -179,24 +179,24 @@ describe('ApiClient', () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'X-Custom': 'test'
-        }
+          'X-Custom': 'test',
+        },
       });
     });
 
     test('applies response interceptors', async () => {
-      const testClient = new (apiClient.constructor)();
-      
+      const testClient = new apiClient.constructor();
+
       testClient.addResponseInterceptor((response, data) => ({
         ...data,
-        intercepted: true
+        intercepted: true,
       }));
 
       fetch.mockResolvedValue({
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({ original: true })
+        json: () => Promise.resolve({ original: true }),
       });
 
       const result = await testClient.get('/test');
@@ -204,9 +204,9 @@ describe('ApiClient', () => {
     });
 
     test('applies error interceptors', async () => {
-      const testClient = new (apiClient.constructor)();
-      
-      testClient.addErrorInterceptor((error) => {
+      const testClient = new apiClient.constructor();
+
+      testClient.addErrorInterceptor(error => {
         error.intercepted = true;
         return error;
       });
@@ -225,7 +225,7 @@ describe('ApiClient', () => {
     test('clears storage and redirects on 401 error', async () => {
       localStorage.setItem('token', 'invalid-token');
       localStorage.setItem('user', JSON.stringify({ id: 1 }));
-      
+
       // Mock window.location
       delete window.location;
       window.location = { pathname: '/dashboard', href: '' };
@@ -235,11 +235,11 @@ describe('ApiClient', () => {
         status: 401,
         statusText: 'Unauthorized',
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({ message: 'Unauthorized' })
+        json: () => Promise.resolve({ message: 'Unauthorized' }),
       });
 
       await expect(apiClient.get('/test')).rejects.toThrow();
-      
+
       expect(localStorage.getItem('token')).toBeNull();
       expect(localStorage.getItem('user')).toBeNull();
       expect(window.location.href).toBe('/signin');
@@ -247,7 +247,7 @@ describe('ApiClient', () => {
 
     test('does not redirect if already on signin page', async () => {
       localStorage.setItem('token', 'invalid-token');
-      
+
       // Mock window.location
       delete window.location;
       window.location = { pathname: '/signin', href: '/signin' };
@@ -257,11 +257,11 @@ describe('ApiClient', () => {
         status: 401,
         statusText: 'Unauthorized',
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({ message: 'Unauthorized' })
+        json: () => Promise.resolve({ message: 'Unauthorized' }),
       });
 
       await expect(apiClient.get('/test')).rejects.toThrow();
-      
+
       expect(localStorage.getItem('token')).toBeNull();
       expect(window.location.href).toBe('/signin'); // Should remain unchanged
     });

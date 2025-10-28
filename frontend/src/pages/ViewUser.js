@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import HeaderAdmin from '../components/HeaderAdmin';
 import '../components/viewuser.css';
 import Profile from '../components/Profile';
@@ -6,11 +6,10 @@ import Buttons from '../components/editButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {BeatLoader} from "react-spinners/BeatLoader";
+import { BeatLoader } from 'react-spinners/BeatLoader';
 
 const token = localStorage.getItem('token');
 console.log('token from viewuser.js:', token);
-
 
 export default function ViewUser() {
   const [user_id, setUserId] = useState('');
@@ -19,7 +18,8 @@ export default function ViewUser() {
   const [users, setUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState('lecturer');
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-  const [textContainerText, setTextContainerText] = useState("Add User Details");
+  const [textContainerText, setTextContainerText] =
+    useState('Add User Details');
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const navigate = useNavigate();
   const profileRef = useRef(null);
@@ -30,8 +30,8 @@ export default function ViewUser() {
       try {
         const response = await axios.get('/api/users/getall', {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         setUsers(response.data);
         console.log('users from viewuser.js:', response.data);
@@ -43,14 +43,14 @@ export default function ViewUser() {
     fetchUsers();
   }, [token]);
 
-  const handleRoleClick = (role) => {
+  const handleRoleClick = role => {
     setSelectedRole(role);
   };
 
   const handleUserIconClick = () => {
     setIsBoxVisible(!isBoxVisible);
   };
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (profileRef.current && !profileRef.current.contains(event.target)) {
       setIsBoxVisible(false);
     }
@@ -67,14 +67,13 @@ export default function ViewUser() {
     };
   }, [isBoxVisible]);
 
-
-  const handleEditButtonClick = (edituser_id) => {
+  const handleEditButtonClick = edituser_id => {
     console.log('edit user button clicked for user:', edituser_id);
-    setTextContainerText("Edit User Details");
-    navigate("/editUser", {state: {id : edituser_id}});
+    setTextContainerText('Edit User Details');
+    navigate('/editUser', { state: { id: edituser_id } });
   };
 
-  const handleRemoveButtonClick = (user) => {
+  const handleRemoveButtonClick = user => {
     console.log('handleRemoveButtonClick function:', user);
     setDeleteUser(user);
     setShowConfirmationDialog(true);
@@ -86,10 +85,10 @@ export default function ViewUser() {
       try {
         await axios.delete(`/api/users/${deleteUser._id}`, {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        setUsers(users.filter(user => user._id !== deleteUser._id)); 
+        setUsers(users.filter(user => user._id !== deleteUser._id));
       } catch (error) {
         console.error('Error deleting user:', error);
         alert('Error deleting user');
@@ -108,26 +107,45 @@ export default function ViewUser() {
 
   return (
     <div>
-      <HeaderAdmin onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
-      <hr style={{height: '1px', backgroundColor: 'black', borderStyle: 'none', margin: 0}}/>
-      <div className="viewuser-container">
-        <div className="left-side-admin">
-          <h2 className="title-admin">Users</h2>
-          <ul className="role-list">
-            <li onClick={() => handleRoleClick('lecturer')} className={selectedRole === 'lecturer' ? 'selected' : ''}>
+      <HeaderAdmin
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
+      <hr
+        style={{
+          height: '1px',
+          backgroundColor: 'black',
+          borderStyle: 'none',
+          margin: 0,
+        }}
+      />
+      <div className='viewuser-container'>
+        <div className='left-side-admin'>
+          <h2 className='title-admin'>Users</h2>
+          <ul className='role-list'>
+            <li
+              onClick={() => handleRoleClick('lecturer')}
+              className={selectedRole === 'lecturer' ? 'selected' : ''}
+            >
               Lecturers
             </li>
-            <li onClick={() => handleRoleClick('instructor')} className={selectedRole === 'instructor' ? 'selected' : ''}>
+            <li
+              onClick={() => handleRoleClick('instructor')}
+              className={selectedRole === 'instructor' ? 'selected' : ''}
+            >
               Instructors
             </li>
-            <li onClick={() => handleRoleClick('to')} className={selectedRole === 'to' ? 'selected' : ''}>
+            <li
+              onClick={() => handleRoleClick('to')}
+              className={selectedRole === 'to' ? 'selected' : ''}
+            >
               TO
             </li>
           </ul>
         </div>
-        <div className="right-side-admin">
-          <h3 className="role-title">{selectedRole}</h3>
-          <table className="user-table">
+        <div className='right-side-admin'>
+          <h3 className='role-title'>{selectedRole}</h3>
+          <table className='user-table'>
             <thead>
               <tr>
                 <th>Name</th>
@@ -139,28 +157,28 @@ export default function ViewUser() {
                 <tr key={user._id}>
                   <td>{user.firstName}</td>
                   <td>{user.email}</td>
-                  <div className="button-row">
+                  <div className='button-row'>
                     <Buttons
-                      text="Edit"
-                      borderRadius="20px"
-                      width="65px"
-                      height="42px"
-                      marginTop="20px"
+                      text='Edit'
+                      borderRadius='20px'
+                      width='65px'
+                      height='42px'
+                      marginTop='20px'
                       onClick={() => {
                         handleEditButtonClick(user._id);
-                        console.log("Hit the edit button");
+                        console.log('Hit the edit button');
                       }}
                     />
                     <Buttons
-                      text="Remove"
-                      borderRadius="20px"
-                      width="100px"
-                      height="42px"
-                      marginTop="20px"
-                      marginLeft="50px"
+                      text='Remove'
+                      borderRadius='20px'
+                      width='100px'
+                      height='42px'
+                      marginTop='20px'
+                      marginLeft='50px'
                       onClick={() => {
                         handleRemoveButtonClick(user);
-                        console.log("Hit the remove button", user);
+                        console.log('Hit the remove button', user);
                       }}
                     />
                   </div>
@@ -169,7 +187,7 @@ export default function ViewUser() {
             </tbody>
           </table>
         </div>
-        {isBoxVisible && <Profile profileRef={profileRef}/>}
+        {isBoxVisible && <Profile profileRef={profileRef} />}
         {showConfirmationDialog && (
           <ConfirmationDialog
             onConfirm={handleRemoveConfirmation}

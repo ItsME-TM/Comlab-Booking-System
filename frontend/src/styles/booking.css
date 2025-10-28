@@ -6,7 +6,7 @@
 }
 
 .booking-container h1 {
-  color: #1A4350;
+  color: #1a4350;
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -45,7 +45,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #1A4350;
+  border-color: #1a4350;
   box-shadow: 0 0 0 2px rgba(26, 67, 80, 0.1);
 }
 
@@ -60,11 +60,11 @@
   .booking-container {
     padding: 1rem;
   }
-  
+
   .booking-form {
     padding: 1rem;
   }
-  
+
   .form-actions {
     flex-direction: column;
   }

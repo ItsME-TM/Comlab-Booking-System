@@ -10,16 +10,14 @@ jest.mock('../../services', () => ({
   authService: {
     login: jest.fn(),
     logout: jest.fn(),
-    register: jest.fn()
-  }
+    register: jest.fn(),
+  },
 }));
 
 // Test wrapper component
 const TestWrapper = ({ children }) => (
   <NotificationProvider>
-    <UserProvider>
-      {children}
-    </UserProvider>
+    <UserProvider>{children}</UserProvider>
   </NotificationProvider>
 );
 
@@ -42,21 +40,24 @@ describe('useAuth Hook', () => {
   describe('login', () => {
     test('successful login', async () => {
       const mockUser = { id: 1, email: 'test@example.com', role: 'student' };
-      authService.login.mockResolvedValue({ user: mockUser, token: 'mock-token' });
+      authService.login.mockResolvedValue({
+        user: mockUser,
+        token: 'mock-token',
+      });
 
       const { result } = renderHook(() => useAuth(), { wrapper: TestWrapper });
 
       let loginResult;
       await act(async () => {
-        loginResult = await result.current.login({ 
-          email: 'test@example.com', 
-          password: 'password' 
+        loginResult = await result.current.login({
+          email: 'test@example.com',
+          password: 'password',
         });
       });
 
       expect(authService.login).toHaveBeenCalledWith({
         email: 'test@example.com',
-        password: 'password'
+        password: 'password',
       });
       expect(loginResult.success).toBe(true);
       expect(loginResult.user).toEqual(mockUser);
@@ -72,9 +73,9 @@ describe('useAuth Hook', () => {
 
       let loginResult;
       await act(async () => {
-        loginResult = await result.current.login({ 
-          email: 'test@example.com', 
-          password: 'wrong' 
+        loginResult = await result.current.login({
+          email: 'test@example.com',
+          password: 'wrong',
         });
       });
 
@@ -130,7 +131,7 @@ describe('useAuth Hook', () => {
         password: 'password',
         firstName: 'John',
         lastName: 'Doe',
-        role: 'student'
+        role: 'student',
       };
 
       let registerResult;
@@ -153,7 +154,7 @@ describe('useAuth Hook', () => {
       await act(async () => {
         registerResult = await result.current.register({
           email: 'test@example.com',
-          password: 'password'
+          password: 'password',
         });
       });
 

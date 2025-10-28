@@ -18,43 +18,55 @@ export const useApi = (apiFunction, options = {}) => {
     showErrorMessage = true,
     successMessage = 'Operation completed successfully',
     onSuccess,
-    onError
+    onError,
   } = options;
 
-  const execute = useCallback(async (...args) => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const result = await apiFunction(...args);
-      setData(result);
-      
-      if (showSuccessMessage) {
-        showSuccess(successMessage);
+  const execute = useCallback(
+    async (...args) => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const result = await apiFunction(...args);
+        setData(result);
+
+        if (showSuccessMessage) {
+          showSuccess(successMessage);
+        }
+
+        if (onSuccess) {
+          onSuccess(result);
+        }
+
+        return { success: true, data: result };
+      } catch (err) {
+        const errorMessage = err.message || 'An error occurred';
+        setError(errorMessage);
+
+        if (showErrorMessage) {
+          showError(errorMessage);
+        }
+
+        if (onError) {
+          onError(err);
+        }
+
+        return { success: false, error: errorMessage };
+      } finally {
+        setLoading(false);
       }
-      
-      if (onSuccess) {
-        onSuccess(result);
-      }
-      
-      return { success: true, data: result };
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred';
-      setError(errorMessage);
-      
-      if (showErrorMessage) {
-        showError(errorMessage);
-      }
-      
-      if (onError) {
-        onError(err);
-      }
-      
-      return { success: false, error: errorMessage };
-    } finally {
-      setLoading(false);
-    }
-  }, [apiFunction, showSuccessMessage, showErrorMessage, successMessage, onSuccess, onError, showError, showSuccess]);
+    },
+    [
+      apiFunction,
+      showSuccessMessage,
+      showErrorMessage,
+      successMessage,
+      onSuccess,
+      onError,
+      showError,
+      showSuccess,
+    ],
+  );
 
   const reset = useCallback(() => {
     setData(null);
@@ -67,6 +79,6 @@ export const useApi = (apiFunction, options = {}) => {
     loading,
     error,
     execute,
-    reset
+    reset,
   };
 };

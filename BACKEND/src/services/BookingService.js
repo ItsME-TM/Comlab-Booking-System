@@ -8,89 +8,104 @@ class BookingService {
   // Validation methods
   validateBookingData(bookingData) {
     const errors = [];
-    
+
     if (!bookingData.title || bookingData.title.trim().length === 0) {
       errors.push('Title is required');
     }
-    
+
     if (!bookingData.startTime) {
       errors.push('Start time is required');
     }
-    
+
     if (!bookingData.endTime) {
       errors.push('End time is required');
     }
-    
+
     if (bookingData.startTime && bookingData.endTime) {
       const startTime = new Date(bookingData.startTime);
       const endTime = new Date(bookingData.endTime);
-      
+
       if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
         errors.push('Invalid date format for start time or end time');
       } else {
         if (startTime >= endTime) {
           errors.push('End time must be after start time');
         }
-        
+
         if (startTime < new Date()) {
           errors.push('Start time cannot be in the past');
         }
-        
+
         // Check if booking duration is reasonable (max 8 hours)
         const durationHours = (endTime - startTime) / (1000 * 60 * 60);
         if (durationHours > 8) {
           errors.push('Booking duration cannot exceed 8 hours');
         }
-        
+
         if (durationHours < 0.5) {
           errors.push('Booking duration must be at least 30 minutes');
         }
       }
     }
-    
+
     if (bookingData.attendees && Array.isArray(bookingData.attendees)) {
       if (bookingData.attendees.length === 0) {
         errors.push('At least one attendee is required');
       }
-      
+
       // Validate attendee emails
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       bookingData.attendees.forEach((attendee, index) => {
         if (attendee && !emailRegex.test(attendee)) {
-          errors.push(`Invalid email format for attendee ${index + 1}: ${attendee}`);
+          errors.push(
+            `Invalid email format for attendee ${index + 1}: ${attendee}`,
+          );
         }
       });
     }
-    
+
     if (bookingData.status && !this.isValidStatus(bookingData.status)) {
-      errors.push('Invalid status. Must be one of: pending, confirmed, cancelled');
+      errors.push(
+        'Invalid status. Must be one of: pending, confirmed, cancelled',
+      );
     }
-    
+
     return errors;
   }
 
   validateUpdateData(updateData) {
     const errors = [];
-    
-    if (updateData.title !== undefined && updateData.title.trim().length === 0) {
+
+    if (
+      updateData.title !== undefined &&
+      updateData.title.trim().length === 0
+    ) {
       errors.push('Title cannot be empty');
     }
-    
-    if (updateData.startTime !== undefined && updateData.endTime !== undefined) {
+
+    if (
+      updateData.startTime !== undefined &&
+      updateData.endTime !== undefined
+    ) {
       const startTime = new Date(updateData.startTime);
       const endTime = new Date(updateData.endTime);
-      
+
       if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
         errors.push('Invalid date format for start time or end time');
       } else if (startTime >= endTime) {
         errors.push('End time must be after start time');
       }
     }
-    
-    if (updateData.status !== undefined && !this.isValidStatus(updateData.status)) {
-      errors.push('Invalid status. Must be one of: pending, confirmed, cancelled');
+
+    if (
+      updateData.status !== undefined &&
+      !this.isValidStatus(updateData.status)
+    ) {
+      errors.push(
+        'Invalid status. Must be one of: pending, confirmed, cancelled',
+      );
     }
-    
+
     return errors;
   }
 
@@ -108,7 +123,10 @@ class BookingService {
     }
 
     // Check availability
-    const isAvailable = await this.checkAvailability(bookingData.startTime, bookingData.endTime);
+    const isAvailable = await this.checkAvailability(
+      bookingData.startTime,
+      bookingData.endTime,
+    );
     if (!isAvailable.available) {
       throw new Error(`Time slot is not available: ${isAvailable.reason}`);
     }
@@ -120,7 +138,9 @@ class BookingService {
 
     // Filter out empty attendees
     if (bookingData.attendees) {
-      bookingData.attendees = bookingData.attendees.filter(attendee => attendee && attendee.trim().length > 0);
+      bookingData.attendees = bookingData.attendees.filter(
+        attendee => attendee && attendee.trim().length > 0,
+      );
     }
 
     return await this.bookingRepository.create(bookingData);
@@ -199,7 +219,7 @@ class BookingService {
     if (updateData.startTime || updateData.endTime) {
       const startTime = updateData.startTime || existingBooking.startTime;
       const endTime = updateData.endTime || existingBooking.endTime;
-      
+
       const isAvailable = await this.checkAvailability(startTime, endTime, id);
       if (!isAvailable.available) {
         throw new Error(`Time slot is not available: ${isAvailable.reason}`);
@@ -208,7 +228,9 @@ class BookingService {
 
     // Filter out empty attendees if provided
     if (updateData.attendees) {
-      updateData.attendees = updateData.attendees.filter(attendee => attendee && attendee.trim().length > 0);
+      updateData.attendees = updateData.attendees.filter(
+        attendee => attendee && attendee.trim().length > 0,
+      );
     }
 
     return await this.bookingRepository.update(id, updateData);
@@ -250,7 +272,11 @@ class BookingService {
     }
 
     // Check if the time slot is still available
-    const isAvailable = await this.checkAvailability(booking.startTime, booking.endTime, id);
+    const isAvailable = await this.checkAvailability(
+      booking.startTime,
+      booking.endTime,
+      id,
+    );
     if (!isAvailable.available) {
       throw new Error(`Cannot confirm booking: ${isAvailable.reason}`);
     }
@@ -276,7 +302,7 @@ class BookingService {
     if (!startTime || !endTime) {
       return {
         available: false,
-        reason: 'Start time and end time are required'
+        reason: 'Start time and end time are required',
       };
     }
 
@@ -286,70 +312,79 @@ class BookingService {
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       return {
         available: false,
-        reason: 'Invalid date format'
+        reason: 'Invalid date format',
       };
     }
 
     if (start >= end) {
       return {
         available: false,
-        reason: 'End time must be after start time'
+        reason: 'End time must be after start time',
       };
     }
 
     if (start < new Date()) {
       return {
         available: false,
-        reason: 'Start time cannot be in the past'
+        reason: 'Start time cannot be in the past',
       };
     }
 
     // Find overlapping bookings
-    const overlappingBookings = await this.bookingRepository.findOverlappingBookings(startTime, endTime);
-    
+    const overlappingBookings =
+      await this.bookingRepository.findOverlappingBookings(startTime, endTime);
+
     // Filter out the current booking if we're updating
-    const conflictingBookings = overlappingBookings.filter(booking => 
-      booking._id.toString() !== excludeBookingId
+    const conflictingBookings = overlappingBookings.filter(
+      booking => booking._id.toString() !== excludeBookingId,
     );
 
     if (conflictingBookings.length > 0) {
-      const activeConflicts = conflictingBookings.filter(booking => booking.status !== 'cancelled');
-      
+      const activeConflicts = conflictingBookings.filter(
+        booking => booking.status !== 'cancelled',
+      );
+
       if (activeConflicts.length > 0) {
         const conflictDetails = activeConflicts.map(booking => ({
           id: booking._id,
           title: booking.title,
           status: booking.status,
           startTime: booking.startTime,
-          endTime: booking.endTime
+          endTime: booking.endTime,
         }));
 
         return {
           available: false,
           reason: 'Time slot conflicts with existing bookings',
-          conflicts: conflictDetails
+          conflicts: conflictDetails,
         };
       }
     }
 
     return {
       available: true,
-      reason: 'Time slot is available'
+      reason: 'Time slot is available',
     };
   }
 
   // Statistics and reporting
   async getBookingStats() {
     const totalBookings = await this.bookingRepository.count();
-    const pendingBookings = await this.bookingRepository.count({ status: 'pending' });
-    const confirmedBookings = await this.bookingRepository.count({ status: 'confirmed' });
-    const cancelledBookings = await this.bookingRepository.count({ status: 'cancelled' });
+    const pendingBookings = await this.bookingRepository.count({
+      status: 'pending',
+    });
+    const confirmedBookings = await this.bookingRepository.count({
+      status: 'confirmed',
+    });
+    const cancelledBookings = await this.bookingRepository.count({
+      status: 'cancelled',
+    });
 
     return {
       total: totalBookings,
       pending: pendingBookings,
       confirmed: confirmedBookings,
-      cancelled: cancelledBookings
+      cancelled: cancelledBookings,
     };
   }
 
@@ -357,7 +392,7 @@ class BookingService {
     const now = new Date();
     const upcomingBookings = await this.bookingRepository.findAll({
       startTime: { $gte: now },
-      status: { $ne: 'cancelled' }
+      status: { $ne: 'cancelled' },
     });
 
     return upcomingBookings

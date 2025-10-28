@@ -17,7 +17,7 @@ describe('Database Operations Integration Tests', () => {
         firstName: 'Test',
         lastName: 'User',
         role: 'student',
-        department: 'Computer Science'
+        department: 'Computer Science',
       };
 
       const user = await DbHelper.createTestData(User, userData);
@@ -39,26 +39,24 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
       // Create first user
       await DbHelper.createTestData(User, userData);
 
       // Try to create duplicate
-      await expect(
-        DbHelper.createTestData(User, userData)
-      ).rejects.toThrow();
+      await expect(DbHelper.createTestData(User, userData)).rejects.toThrow();
     });
 
     it('should validate required fields', async () => {
       const incompleteUserData = {
-        email: 'incomplete@example.com'
+        email: 'incomplete@example.com',
         // Missing required fields
       };
 
       await expect(
-        DbHelper.createTestData(User, incompleteUserData)
+        DbHelper.createTestData(User, incompleteUserData),
       ).rejects.toThrow();
     });
 
@@ -68,11 +66,11 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       };
 
       await expect(
-        DbHelper.createTestData(User, invalidEmailData)
+        DbHelper.createTestData(User, invalidEmailData),
       ).rejects.toThrow();
     });
 
@@ -82,11 +80,11 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'invalid-role'
+        role: 'invalid-role',
       };
 
       await expect(
-        DbHelper.createTestData(User, invalidRoleData)
+        DbHelper.createTestData(User, invalidRoleData),
       ).rejects.toThrow();
     });
   });
@@ -100,7 +98,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Booking',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       });
     });
 
@@ -111,7 +109,7 @@ describe('Database Operations Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'Research work',
-        status: 'pending'
+        status: 'pending',
       };
 
       const booking = await DbHelper.createTestData(Booking, bookingData);
@@ -134,11 +132,13 @@ describe('Database Operations Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'Research work',
-        status: 'pending'
+        status: 'pending',
       };
 
       const booking = await DbHelper.createTestData(Booking, bookingData);
-      const populatedBooking = await Booking.findById(booking._id).populate('userId');
+      const populatedBooking = await Booking.findById(booking._id).populate(
+        'userId',
+      );
 
       expect(populatedBooking.userId.email).toBe(testUser.email);
       expect(populatedBooking.userId.firstName).toBe(testUser.firstName);
@@ -148,12 +148,12 @@ describe('Database Operations Integration Tests', () => {
     it('should validate required fields', async () => {
       const incompleteBookingData = {
         userId: testUser._id,
-        labId: 'lab-001'
+        labId: 'lab-001',
         // Missing required fields
       };
 
       await expect(
-        DbHelper.createTestData(Booking, incompleteBookingData)
+        DbHelper.createTestData(Booking, incompleteBookingData),
       ).rejects.toThrow();
     });
 
@@ -164,11 +164,11 @@ describe('Database Operations Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'Research work',
-        status: 'invalid-status'
+        status: 'invalid-status',
       };
 
       await expect(
-        DbHelper.createTestData(Booking, invalidStatusData)
+        DbHelper.createTestData(Booking, invalidStatusData),
       ).rejects.toThrow();
     });
 
@@ -179,13 +179,15 @@ describe('Database Operations Integration Tests', () => {
         startTime: new Date('2024-12-01T12:00:00Z'),
         endTime: new Date('2024-12-01T10:00:00Z'), // End before start
         purpose: 'Research work',
-        status: 'pending'
+        status: 'pending',
       };
 
       // This would need custom validation in the model
       // For now, we'll just create the booking and check manually
       const booking = await DbHelper.createTestData(Booking, invalidTimeData);
-      expect(booking.startTime.getTime()).toBeGreaterThan(booking.endTime.getTime());
+      expect(booking.startTime.getTime()).toBeGreaterThan(
+        booking.endTime.getTime(),
+      );
     });
   });
 
@@ -198,7 +200,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Notification',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       });
     });
 
@@ -208,10 +210,13 @@ describe('Database Operations Integration Tests', () => {
         title: 'Test Notification',
         message: 'This is a test notification',
         type: 'booking',
-        isRead: false
+        isRead: false,
       };
 
-      const notification = await DbHelper.createTestData(Notification, notificationData);
+      const notification = await DbHelper.createTestData(
+        Notification,
+        notificationData,
+      );
 
       expect(notification._id).toBeTruthy();
       expect(notification.userId.toString()).toBe(testUser._id.toString());
@@ -227,11 +232,16 @@ describe('Database Operations Integration Tests', () => {
         userId: testUser._id,
         title: 'Test Notification',
         message: 'This is a test notification',
-        type: 'booking'
+        type: 'booking',
       };
 
-      const notification = await DbHelper.createTestData(Notification, notificationData);
-      const populatedNotification = await Notification.findById(notification._id).populate('userId');
+      const notification = await DbHelper.createTestData(
+        Notification,
+        notificationData,
+      );
+      const populatedNotification = await Notification.findById(
+        notification._id,
+      ).populate('userId');
 
       expect(populatedNotification.userId.email).toBe(testUser.email);
       expect(populatedNotification.userId.firstName).toBe(testUser.firstName);
@@ -242,11 +252,11 @@ describe('Database Operations Integration Tests', () => {
         userId: testUser._id,
         title: 'Test Notification',
         message: 'This is a test notification',
-        type: 'invalid-type'
+        type: 'invalid-type',
       };
 
       await expect(
-        DbHelper.createTestData(Notification, invalidTypeData)
+        DbHelper.createTestData(Notification, invalidTypeData),
       ).rejects.toThrow();
     });
   });
@@ -261,7 +271,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Complex',
         lastName: 'User',
-        role: 'student'
+        role: 'student',
       });
 
       testBooking = await DbHelper.createTestData(Booking, {
@@ -270,7 +280,7 @@ describe('Database Operations Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'Research work',
-        status: 'pending'
+        status: 'pending',
       });
     });
 
@@ -280,7 +290,7 @@ describe('Database Operations Integration Tests', () => {
         userId: testUser._id,
         title: 'Booking Created',
         message: `Your booking for ${testBooking.labId} has been created`,
-        type: 'booking'
+        type: 'booking',
       });
 
       // Verify relationships
@@ -297,23 +307,28 @@ describe('Database Operations Integration Tests', () => {
     it('should handle transaction-like operations', async () => {
       // Simulate updating booking status and creating notification
       const session = await mongoose.startSession();
-      
+
       try {
         await session.withTransaction(async () => {
           // Update booking status
           await Booking.findByIdAndUpdate(
             testBooking._id,
             { status: 'approved' },
-            { session }
+            { session },
           );
 
           // Create approval notification
-          await Notification.create([{
-            userId: testUser._id,
-            title: 'Booking Approved',
-            message: 'Your booking has been approved',
-            type: 'booking'
-          }], { session });
+          await Notification.create(
+            [
+              {
+                userId: testUser._id,
+                title: 'Booking Approved',
+                message: 'Your booking has been approved',
+                type: 'booking',
+              },
+            ],
+            { session },
+          );
         });
 
         // Verify both operations completed
@@ -337,7 +352,7 @@ describe('Database Operations Integration Tests', () => {
           startTime: new Date('2024-12-02T10:00:00Z'),
           endTime: new Date('2024-12-02T12:00:00Z'),
           purpose: 'Bulk booking 1',
-          status: 'pending'
+          status: 'pending',
         },
         {
           userId: testUser._id,
@@ -345,22 +360,25 @@ describe('Database Operations Integration Tests', () => {
           startTime: new Date('2024-12-03T10:00:00Z'),
           endTime: new Date('2024-12-03T12:00:00Z'),
           purpose: 'Bulk booking 2',
-          status: 'pending'
-        }
+          status: 'pending',
+        },
       ];
 
-      const createdBookings = await DbHelper.createMultipleTestData(Booking, bookingsData);
+      const createdBookings = await DbHelper.createMultipleTestData(
+        Booking,
+        bookingsData,
+      );
       expect(createdBookings).toHaveLength(2);
 
       // Bulk update all bookings to approved
       await Booking.updateMany(
         { userId: testUser._id },
-        { status: 'approved' }
+        { status: 'approved' },
       );
 
-      const approvedBookings = await Booking.find({ 
-        userId: testUser._id, 
-        status: 'approved' 
+      const approvedBookings = await Booking.find({
+        userId: testUser._id,
+        status: 'approved',
       });
       expect(approvedBookings).toHaveLength(3); // Including the one from beforeEach
     });
@@ -376,7 +394,7 @@ describe('Database Operations Integration Tests', () => {
           password: 'hashedpassword123',
           firstName: `User${i}`,
           lastName: 'Test',
-          role: 'student'
+          role: 'student',
         });
       }
 
@@ -398,7 +416,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Large',
         lastName: 'Dataset',
-        role: 'student'
+        role: 'student',
       });
 
       // Create many bookings
@@ -407,10 +425,14 @@ describe('Database Operations Integration Tests', () => {
         bookings.push({
           userId: testUser._id,
           labId: `lab-${String(i).padStart(3, '0')}`,
-          startTime: new Date(`2024-12-${String((i % 30) + 1).padStart(2, '0')}T10:00:00Z`),
-          endTime: new Date(`2024-12-${String((i % 30) + 1).padStart(2, '0')}T12:00:00Z`),
+          startTime: new Date(
+            `2024-12-${String((i % 30) + 1).padStart(2, '0')}T10:00:00Z`,
+          ),
+          endTime: new Date(
+            `2024-12-${String((i % 30) + 1).padStart(2, '0')}T12:00:00Z`,
+          ),
           purpose: `Booking ${i}`,
-          status: i % 3 === 0 ? 'approved' : 'pending'
+          status: i % 3 === 0 ? 'approved' : 'pending',
         });
       }
 
@@ -434,12 +456,14 @@ describe('Database Operations Integration Tests', () => {
       // Aggregate query
       const statusCounts = await Booking.aggregate([
         { $match: { userId: testUser._id } },
-        { $group: { _id: '$status', count: { $sum: 1 } } }
+        { $group: { _id: '$status', count: { $sum: 1 } } },
       ]);
 
       expect(statusCounts).toHaveLength(2);
-      const approvedCount = statusCounts.find(s => s._id === 'approved')?.count || 0;
-      const pendingCount = statusCounts.find(s => s._id === 'pending')?.count || 0;
+      const approvedCount =
+        statusCounts.find(s => s._id === 'approved')?.count || 0;
+      const pendingCount =
+        statusCounts.find(s => s._id === 'pending')?.count || 0;
       expect(approvedCount + pendingCount).toBe(50);
     });
   });

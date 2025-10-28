@@ -1,120 +1,107 @@
 /* user.css */
 body {
-    margin: 0; /* Remove default body margin */
-    height: 100vh; /* Ensure body height is 100% of the viewport height */
-    display: flex;
-    flex-direction: column;
-  }
- 
-  
-  .main-container-to {
-    background-color:#638793;
-    width: 100%;
-    height: 100vh; /* Make the main container full height of viewport */
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    margin: 0; /* Remove any margin */
-    padding: 0; /* Remove any padding */
-    box-sizing: border-box;
-    overflow-y: auto;
-  }
-  
-  
-  .container-1-to {
-    display: flex;
-    flex-direction: row;
-    justify-content: center ;
-    align-items: center;
-    flex-grow: 1;
-    width: 100%;
-    margin: 0; /* Remove any margin */
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .container-2-to {
-    background-color: #205464;
-    width: 94%; /* Expand the width to 100% */
-    /* max-width: 1125px; Limit the maximum width of the container */
-    height: 85%; /* Adjust the height as needed */
-    display: flex;
-    justify-content: flex-start; /* Center align horizontally */
-    align-items: center; /* Center align vertically */
-  }
-
-  .input-field-to{
-    width: 50%;
-  }
-
-  .user-logo-details-to {
-    width: 40%; /* Adjust width as needed */
-    height: 100%;
-    display: flex; /* Use flexbox */
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center;
-    
-    
-   
-
+  margin: 0; /* Remove default body margin */
+  height: 100vh; /* Ensure body height is 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
 }
-.user-input-details{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  
-  .inputs-wrapper-to{
-    width: 90%;
-   
-  }
 
+.main-container-to {
+  background-color: #638793;
+  width: 100%;
+  height: 100vh; /* Make the main container full height of viewport */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
 
+.container-1-to {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  margin: 0; /* Remove any margin */
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .text-1{
-    margin-top: 0px;
-    color: #FFFFFF;
-    font-family: Roboto;
-    font-size: 43px;
-    font-weight: 700;
-    line-height: 48px;
-    text-align: center;
-    width: 261px; /* Set the width to 261px */
-    height: 48px; /* Set the height to 48px */
-    top: 219px; /* Set the top position to 219px */
-    left: 184px; /* Set the left position to 184px */
-    opacity: 0px;
-  }
+.container-2-to {
+  background-color: #205464;
+  width: 94%; /* Expand the width to 100% */
+  /* max-width: 1125px; Limit the maximum width of the container */
+  height: 85%; /* Adjust the height as needed */
+  display: flex;
+  justify-content: flex-start; /* Center align horizontally */
+  align-items: center; /* Center align vertically */
+}
 
-  .userImage-to{
-    margin-top: 20px;
-    margin-bottom: 15px;
-    align-items: center;
-    width: 200px; /* Set the width to 250px */
-    height: 200px; /* Set the height to 250px */
-    top: 297px; /* Set the top position to 297px */
-    left: 190px; /* Set the left position to 190px */
-    gap: 0px; /* Set the gap to 0px */
-    opacity: 10px;
-    border-radius: 50%
-  }
+.input-field-to {
+  width: 50%;
+}
 
-  .user-input-details-to{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-   
-  }
+.user-logo-details-to {
+  width: 40%; /* Adjust width as needed */
+  height: 100%;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center;
+}
+.user-input-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  
+.inputs-wrapper-to {
+  width: 90%;
+}
 
-  .input-label-to {
-    width: 228px; /* Set the width to 228px */
+.text-1 {
+  margin-top: 0px;
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 48px;
+  text-align: center;
+  width: 261px; /* Set the width to 261px */
+  height: 48px; /* Set the height to 48px */
+  top: 219px; /* Set the top position to 219px */
+  left: 184px; /* Set the left position to 184px */
+  opacity: 0px;
+}
+
+.userImage-to {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  align-items: center;
+  width: 200px; /* Set the width to 250px */
+  height: 200px; /* Set the height to 250px */
+  top: 297px; /* Set the top position to 297px */
+  left: 190px; /* Set the left position to 190px */
+  gap: 0px; /* Set the gap to 0px */
+  opacity: 10px;
+  border-radius: 50%;
+}
+
+.user-input-details-to {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-label-to {
+  width: 228px; /* Set the width to 228px */
   height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
   left: 1115px; /* Set the left position to 1115px */
@@ -125,14 +112,14 @@ body {
   font-weight: 20; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
-  }
-  
-  .input-field-to{
-    background-color: #6c95a1;
-    width: 600px; /* Adjust width as needed */
-    height: 36px; /* Set the height to 36px */
+}
+
+.input-field-to {
+  background-color: #6c95a1;
+  width: 600px; /* Adjust width as needed */
+  height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
   left: 1115px; /* Set the left position to 1115px */
   gap: 0px; /* Set the gap to 0px */
@@ -142,38 +129,36 @@ body {
   font-weight: 10; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
-  }
-
-  .input-field-to{
-    width: 100%;
-    
 }
 
-  .input-field-to:hover {
-    background-color: #FFFFFF; /* Change background color on hover */
-    color: #205464; /* Change font color on hover */
-    cursor: context-menu; /* Show cursor on hover */
-  }
+.input-field-to {
+  width: 100%;
+}
 
-  .userInputs-to{
-    width: 100%;
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.input-field-to:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #205464; /* Change font color on hover */
+  cursor: context-menu; /* Show cursor on hover */
+}
 
-  }
+.userInputs-to {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .input-wrapper-to {
-    display: flex; /* Display children inline */
-    align-items: center; /* Align children vertically */
-  }
-  .input-field-password-to{
-    background-color: #6c95a1;
-    width: 500px; /* Adjust width as needed */
-    height: 36px; /* Set the height to 36px */
+.input-wrapper-to {
+  display: flex; /* Display children inline */
+  align-items: center; /* Align children vertically */
+}
+.input-field-password-to {
+  background-color: #6c95a1;
+  width: 500px; /* Adjust width as needed */
+  height: 36px; /* Set the height to 36px */
   top: 376px; /* Set the top position to 376px */
   left: 1115px; /* Set the left position to 1115px */
   gap: 0px; /* Set the gap to 0px */
@@ -184,165 +169,115 @@ body {
   font-weight: 10; /* Set the font weight to 400 */
   line-height: 36px; /* Set the line height to 36px */
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-right: 15px;
   border: none;
-  }
+}
 
-  .input-field-password-to:hover {
-    background-color: #FFFFFF; /* Change background color on hover */
-    color: #205464; /* Change font color on hover */
-    cursor: context-menu; /* Show cursor on hover */
-  }
+.input-field-password-to:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #205464; /* Change font color on hover */
+  cursor: context-menu; /* Show cursor on hover */
+}
 
-  
-
-  .button.active-button {
+.button.active-button {
   color: white !important;
   background-color: #638793 !important;
-  border-color: #1A4350 !important;
+  border-color: #1a4350 !important;
 }
 
-.form-container-to{
-    width: 80%;
-    
+.form-container-to {
+  width: 80%;
 }
-  
+
 .button-save-to {
-    display: flex;
-    justify-content: flex-end; 
-    
-
-    
-  }
-
-
+  display: flex;
+  justify-content: flex-end;
+}
 
 @media only screen and (max-width: 1050px) {
-    .container-2-to {
-      flex-direction: column; /* Stack container-2 and container-3 vertically */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-y: auto;
-    }
-  
-    .container-1-to{
-        overflow-y: auto;
-
-    }
-    
-    .user-logo-details-to, .userInputs-to {
-        width: 100%; /* Full width for both containers */
-        margin-top: 20px; /* Add spacing between the elements */
-
-    }
-
-    .user-logo-details-to{
-        margin-top: 400px;
-    }
-    
-     .button-save-to{
-        margin-bottom: 10px;
-     }
-    
-  
-    .input-field-to{
-        width: 100%;
-        
-    }
-  
-    
-  
+  .container-2-to {
+    flex-direction: column; /* Stack container-2 and container-3 vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
   }
 
-
-  @media only screen and (max-width: 480px) {
-    .container-2-to {
-      flex-direction: column; /* Stack container-2 and container-3 vertically */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-y: auto;
-    }
-  
-    .container-1-to{
-        overflow-y: auto;
-
-    }
-    
-    .user-logo-details-to {
-        width: 100%; /* Full width for both containers */
-        margin-top: 450px; /* Add spacing between the elements */
-
-    }
-    .userInputs-to {
-        width: 100%; /* Full width for both containers */
-        margin-top: 20px; /* Add spacing between the elements */
-
-    }
-
-    
-     .button-save-to{
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: flex-start; 
-
-     }
-    
-  
-    .input-field-to{
-        width: 100%;
-        
-    }
-  
-    
-  
+  .container-1-to {
+    overflow-y: auto;
   }
 
-  .buttons1 {
-    border-radius: 0;
-    font-family: 'Roboto';
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: center;
-    background-color: #1A4350;
-    border-width: 2px;
-    border-color: #638793;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
+  .user-logo-details-to,
+  .userInputs-to {
+    width: 100%; /* Full width for both containers */
+    margin-top: 20px; /* Add spacing between the elements */
+  }
+
+  .user-logo-details-to {
+    margin-top: 400px;
+  }
+
+  .button-save-to {
+    margin-bottom: 10px;
+  }
+
+  .input-field-to {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container-2-to {
+    flex-direction: column; /* Stack container-2 and container-3 vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .container-1-to {
+    overflow-y: auto;
+  }
+
+  .user-logo-details-to {
+    width: 100%; /* Full width for both containers */
+    margin-top: 450px; /* Add spacing between the elements */
+  }
+  .userInputs-to {
+    width: 100%; /* Full width for both containers */
+    margin-top: 20px; /* Add spacing between the elements */
+  }
+
+  .button-save-to {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .input-field-to {
+    width: 100%;
+  }
+}
+
+.buttons1 {
+  border-radius: 0;
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  background-color: #1a4350;
+  border-width: 2px;
+  border-color: #638793;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
 }
 
 .buttons1.active-button {
-    color: white !important;
-    background-color: #638793 !important;
-    border-color: #1A4350 !important;
+  color: white !important;
+  background-color: #638793 !important;
+  border-color: #1a4350 !important;
 }
-  
-
-  
-  
-  
-
-  
-
-
-  
-  
-  
-
-  
-
-  
-  
-  
-
-  
-
-
-  
-  
-  

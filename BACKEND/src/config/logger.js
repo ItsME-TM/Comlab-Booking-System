@@ -15,13 +15,15 @@ try {
   // Fallback configuration if environment config is not available
   config = {
     logging: {
-      level: process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'warn' : 'debug'),
+      level:
+        process.env.LOG_LEVEL ||
+        (process.env.NODE_ENV === 'production' ? 'warn' : 'debug'),
       maxFiles: 5,
       maxSize: '20m',
     },
     app: {
-      env: process.env.NODE_ENV || 'development'
-    }
+      env: process.env.NODE_ENV || 'development',
+    },
   };
 }
 
@@ -50,20 +52,20 @@ winston.addColors(colors);
 const consoleFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.colorize({ all: true }),
-  winston.format.printf(
-    (info) => {
-      const { timestamp, level, message, ...meta } = info;
-      const metaStr = Object.keys(meta).length ? JSON.stringify(meta, null, 2) : '';
-      return `${timestamp} ${level}: ${message} ${metaStr}`;
-    }
-  ),
+  winston.format.printf(info => {
+    const { timestamp, level, message, ...meta } = info;
+    const metaStr = Object.keys(meta).length
+      ? JSON.stringify(meta, null, 2)
+      : '';
+    return `${timestamp} ${level}: ${message} ${metaStr}`;
+  }),
 );
 
 // Define log format for files
 const fileFormat = winston.format.combine(
   winston.format.timestamp(),
   winston.format.errors({ stack: true }),
-  winston.format.json()
+  winston.format.json(),
 );
 
 // Create transports array
@@ -75,7 +77,7 @@ if (config.app.env === 'development') {
     new winston.transports.Console({
       format: consoleFormat,
       level: config.logging.level,
-    })
+    }),
   );
 }
 
@@ -89,7 +91,7 @@ if (config.app.env !== 'test') {
       format: fileFormat,
       maxsize: config.logging.maxSize,
       maxFiles: config.logging.maxFiles,
-    })
+    }),
   );
 
   // Combined log file
@@ -99,7 +101,7 @@ if (config.app.env !== 'test') {
       format: fileFormat,
       maxsize: config.logging.maxSize,
       maxFiles: config.logging.maxFiles,
-    })
+    }),
   );
 }
 
@@ -110,23 +112,29 @@ const logger = winston.createLogger({
   transports,
   exitOnError: false,
   // Handle exceptions and rejections
-  exceptionHandlers: config.app.env !== 'test' ? [
-    new winston.transports.File({
-      filename: path.join(__dirname, '../../logs/exceptions.log'),
-      format: fileFormat,
-    })
-  ] : [],
-  rejectionHandlers: config.app.env !== 'test' ? [
-    new winston.transports.File({
-      filename: path.join(__dirname, '../../logs/rejections.log'),
-      format: fileFormat,
-    })
-  ] : [],
+  exceptionHandlers:
+    config.app.env !== 'test'
+      ? [
+          new winston.transports.File({
+            filename: path.join(__dirname, '../../logs/exceptions.log'),
+            format: fileFormat,
+          }),
+        ]
+      : [],
+  rejectionHandlers:
+    config.app.env !== 'test'
+      ? [
+          new winston.transports.File({
+            filename: path.join(__dirname, '../../logs/rejections.log'),
+            format: fileFormat,
+          }),
+        ]
+      : [],
 });
 
 // Create a stream object for HTTP request logging
 logger.stream = {
-  write: (message) => {
+  write: message => {
     logger.http(message.trim());
   },
 };

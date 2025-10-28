@@ -59,10 +59,10 @@ beforeAll(() => {
 afterEach(() => {
   // Reset any request handlers that are declared as a part of our tests
   server.resetHandlers();
-  
+
   // Clear all mocks
   jest.clearAllMocks();
-  
+
   // Clear localStorage and sessionStorage
   localStorageMock.clear();
   sessionStorageMock.clear();
@@ -80,7 +80,7 @@ beforeAll(() => {
     if (
       typeof args[0] === 'string' &&
       (args[0].includes('Warning: ReactDOM.render is no longer supported') ||
-       args[0].includes('Warning: React.createFactory() is deprecated'))
+        args[0].includes('Warning: React.createFactory() is deprecated'))
     ) {
       return;
     }

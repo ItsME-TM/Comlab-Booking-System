@@ -1,70 +1,69 @@
 .dashboard_body {
-    background-color: #1A4350;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .homebox {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    flex: 1;
-  }
-  
-  .image-container {
-    display: flex;
-    justify-content: center; /* Center align horizontally */
-    width: 100%;  
-  }
-  
-  .uniImage {
-    width: 100%;
-    height: auto;
-    border: 0px 0px 1px 0px;
-  }
-  
-  .text-container {
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center align horizontally */
-    align-items: center; /* Center align vertically */
-    margin: 20px 0;
-    font-family: 'Roboto', serif;
-    text-align: center;
-    color: white;
-  }
-  
+  background-color: #1a4350;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.homebox {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Center align horizontally */
+  width: 100%;
+}
+
+.uniImage {
+  width: 100%;
+  height: auto;
+  border: 0px 0px 1px 0px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center align horizontally */
+  align-items: center; /* Center align vertically */
+  margin: 20px 0;
+  font-family: 'Roboto', serif;
+  text-align: center;
+  color: white;
+}
+
+.text-container h1 {
+  font-size: 68px;
+  font-weight: 400;
+  line-height: 88px;
+  margin: 0;
+}
+
+.text-container h3 {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  margin: 0;
+}
+
+@media screen and (max-width: 620px) {
   .text-container h1 {
-    font-size: 68px; 
+    font-size: 34px;
     font-weight: 400;
-    line-height: 88px; 
-    margin: 0;
+    line-height: 44px;
   }
-  
+
   .text-container h3 {
-    font-size: 32px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 40px;
-    margin: 0;
+    line-height: 24px;
   }
-  
-  @media screen and (max-width: 620px) {
-    .text-container h1 {
-      font-size: 34px; 
-      font-weight: 400;
-      line-height: 44px; 
-    }
-  
-    .text-container h3 {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-    }
-  
-    .homebox {
-      padding: 10px;
-    }
+
+  .homebox {
+    padding: 10px;
   }
-  
+}

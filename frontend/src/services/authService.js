@@ -14,12 +14,12 @@ class AuthService {
   async login(credentials) {
     try {
       const response = await apiClient.post('/auth/login', credentials);
-      
+
       // Store token if provided
       if (response.token) {
         localStorage.setItem('token', response.token);
       }
-      
+
       return response;
     } catch (error) {
       throw new Error(error.message || 'Login failed');
@@ -52,11 +52,11 @@ class AuthService {
   async logout() {
     try {
       const response = await apiClient.post('/auth/logout');
-      
+
       // Clear local storage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
+
       return response;
     } catch (error) {
       // Even if API call fails, clear local data
@@ -73,11 +73,11 @@ class AuthService {
   async refreshToken() {
     try {
       const response = await apiClient.post('/auth/refresh');
-      
+
       if (response.token) {
         localStorage.setItem('token', response.token);
       }
-      
+
       return response;
     } catch (error) {
       throw new Error(error.message || 'Token refresh failed');

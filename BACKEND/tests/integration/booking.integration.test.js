@@ -18,7 +18,7 @@ describe('Booking Integration Tests', () => {
       password: 'password123',
       firstName: 'Booking',
       lastName: 'User',
-      role: 'student'
+      role: 'student',
     };
 
     const registerResponse = await request(app)
@@ -40,7 +40,7 @@ describe('Booking Integration Tests', () => {
         labId: 'lab-001',
         startTime: '2024-12-01T10:00:00Z',
         endTime: '2024-12-01T12:00:00Z',
-        purpose: 'Research work'
+        purpose: 'Research work',
       };
 
       const response = await request(app)
@@ -66,7 +66,7 @@ describe('Booking Integration Tests', () => {
         labId: 'lab-001',
         startTime: '2024-12-01T10:00:00Z',
         endTime: '2024-12-01T12:00:00Z',
-        purpose: 'Research work'
+        purpose: 'Research work',
       };
 
       const response = await request(app)
@@ -82,7 +82,7 @@ describe('Booking Integration Tests', () => {
         .post('/api/bookings')
         .set('Authorization', `Bearer ${authToken}`)
         .send({
-          labId: 'lab-001'
+          labId: 'lab-001',
           // Missing required fields
         })
         .expect(400);
@@ -96,7 +96,7 @@ describe('Booking Integration Tests', () => {
         labId: 'lab-001',
         startTime: '2024-12-01T10:00:00Z',
         endTime: '2024-12-01T12:00:00Z',
-        purpose: 'First booking'
+        purpose: 'First booking',
       };
 
       // Create first booking
@@ -111,7 +111,7 @@ describe('Booking Integration Tests', () => {
         ...bookingData,
         startTime: '2024-12-01T11:00:00Z',
         endTime: '2024-12-01T13:00:00Z',
-        purpose: 'Overlapping booking'
+        purpose: 'Overlapping booking',
       };
 
       const response = await request(app)
@@ -135,7 +135,7 @@ describe('Booking Integration Tests', () => {
           startTime: new Date('2024-12-01T10:00:00Z'),
           endTime: new Date('2024-12-01T12:00:00Z'),
           purpose: 'Booking 1',
-          status: 'approved'
+          status: 'approved',
         },
         {
           userId: testUser.id,
@@ -143,8 +143,8 @@ describe('Booking Integration Tests', () => {
           startTime: new Date('2024-12-02T14:00:00Z'),
           endTime: new Date('2024-12-02T16:00:00Z'),
           purpose: 'Booking 2',
-          status: 'pending'
-        }
+          status: 'pending',
+        },
       ];
 
       await DbHelper.createMultipleTestData(Booking, bookings);
@@ -174,9 +174,7 @@ describe('Booking Integration Tests', () => {
     });
 
     it('should not get bookings without authentication', async () => {
-      const response = await request(app)
-        .get('/api/bookings')
-        .expect(401);
+      const response = await request(app).get('/api/bookings').expect(401);
 
       expect(response.body.success).toBe(false);
     });
@@ -192,7 +190,7 @@ describe('Booking Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'Original purpose',
-        status: 'pending'
+        status: 'pending',
       });
       bookingId = booking._id.toString();
     });
@@ -201,7 +199,7 @@ describe('Booking Integration Tests', () => {
       const updateData = {
         purpose: 'Updated purpose',
         startTime: '2024-12-01T11:00:00Z',
-        endTime: '2024-12-01T13:00:00Z'
+        endTime: '2024-12-01T13:00:00Z',
       };
 
       const response = await request(app)
@@ -242,7 +240,7 @@ describe('Booking Integration Tests', () => {
         startTime: new Date('2024-12-01T10:00:00Z'),
         endTime: new Date('2024-12-01T12:00:00Z'),
         purpose: 'To be deleted',
-        status: 'pending'
+        status: 'pending',
       });
       bookingId = booking._id.toString();
     });

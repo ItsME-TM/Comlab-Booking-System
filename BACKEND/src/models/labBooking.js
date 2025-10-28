@@ -8,9 +8,9 @@ const bookingSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['pending', 'confirmed', 'cancelled'],
-    default: 'pending'
+    default: 'pending',
   },
-  attendees: [{ type: String, ref: 'User' }]
+  attendees: [{ type: String, ref: 'User' }],
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

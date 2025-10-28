@@ -17,24 +17,28 @@ export default function CalendarViewTo() {
   const [attendeeTypes, setAttendeeTypes] = useState({});
   const profileRef = useRef(null);
   const token = localStorage.getItem('token');
-  const [selectedMonth, setSelectedMonth] = useState(moment().format('YYYY-MM'));
+  const [selectedMonth, setSelectedMonth] = useState(
+    moment().format('YYYY-MM'),
+  );
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get('/api/bookings', {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        setEvents(response.data.map(booking => ({
-          id: booking._id, // Add booking ID for deletion
-          title: booking.title,
-          start: new Date(booking.startTime),
-          end: new Date(booking.endTime),
-          description: booking.description,
-          attendees: booking.attendees // Assuming attendees is an array of strings
-        })));
+        setEvents(
+          response.data.map(booking => ({
+            id: booking._id, // Add booking ID for deletion
+            title: booking.title,
+            start: new Date(booking.startTime),
+            end: new Date(booking.endTime),
+            description: booking.description,
+            attendees: booking.attendees, // Assuming attendees is an array of strings
+          })),
+        );
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -43,21 +47,24 @@ export default function CalendarViewTo() {
     fetchBookings();
   }, [token]);
 
-  const handleSelectEvent = async (event) => {
+  const handleSelectEvent = async event => {
     setSelectedEvent(event);
     try {
-      const response = await axios.get(`/api/notification/attendeesAndTypeByBookingId/${event.id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.get(
+        `/api/notification/attendeesAndTypeByBookingId/${event.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       const attendeeTypesData = response.data.reduce((acc, obj) => {
         const [email, type] = Object.entries(obj)[0];
         acc[email] = type;
         return acc;
       }, {});
       setAttendeeTypes(attendeeTypesData);
-      console.log(attendeeTypesData)
+      console.log(attendeeTypesData);
     } catch (error) {
       console.error('Error fetching attendee types:', error);
     }
@@ -65,12 +72,22 @@ export default function CalendarViewTo() {
 
   const CustomToolbar = () => {
     return (
-      <div className="rbc-toolbar" style={{ backgroundColor: '#A6BBC1', padding: '10px' }}>
-        <div style={{ color: 'red', display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+      <div
+        className='rbc-toolbar'
+        style={{ backgroundColor: '#A6BBC1', padding: '10px' }}
+      >
+        <div
+          style={{
+            color: 'red',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            width: '100%',
+          }}
+        >
           <div style={{ marginLeft: '20px' }}>
             <select
               value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
+              onChange={e => setSelectedMonth(e.target.value)}
               style={{ padding: '5px', fontSize: '16px' }}
             >
               {Array.from({ length: 12 }).map((_, i) => {
@@ -92,7 +109,7 @@ export default function CalendarViewTo() {
     setIsBoxVisible(!isBoxVisible);
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (profileRef.current && !profileRef.current.contains(event.target)) {
       setIsBoxVisible(false);
     }
@@ -117,18 +134,21 @@ export default function CalendarViewTo() {
 
   return (
     <div>
-      <ToHeader onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible}/>
+      <ToHeader
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
       <div className='view_body'>
         <div style={{ padding: '50px' }}>
           <div style={{ backgroundColor: 'white' }}>
             <Calendar
               localizer={localizer}
               events={events}
-              startAccessor="start"
-              endAccessor="end"
+              startAccessor='start'
+              endAccessor='end'
               style={{ height: '600px' }}
               date={currentDate}
-              onNavigate={(date) => setCurrentDate(date)}
+              onNavigate={date => setCurrentDate(date)}
               eventPropGetter={(event, start, end, isSelected) => ({
                 style: {
                   backgroundColor: '#00B528', // Green color
@@ -141,14 +161,20 @@ export default function CalendarViewTo() {
             />
           </div>
           {selectedEvent && (
-            <div className="event-details">
-              <div className="view-close-button" onClick={() => setSelectedEvent(null)}>&times;</div> {/* Add close button */}
+            <div className='event-details'>
+              <div
+                className='view-close-button'
+                onClick={() => setSelectedEvent(null)}
+              >
+                &times;
+              </div>{' '}
+              {/* Add close button */}
               <h3>{selectedEvent.title}</h3>
               <p>{selectedEvent.description}</p>
               <p>Start: {selectedEvent.start.toLocaleString()}</p>
               <p>End: {selectedEvent.end.toLocaleString()}</p>
               <p>Attendees:</p>
-              <div className="attendees-list">
+              <div className='attendees-list'>
                 {selectedEvent.attendees.map((attendee, index) => (
                   <div
                     key={index}

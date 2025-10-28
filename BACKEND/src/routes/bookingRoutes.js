@@ -14,7 +14,6 @@ router.post('/check-availability', auth, checkRole, (req, res) => {
   bookingController.checkAvailability(req, res);
 });
 
-
 // Create a new booking
 router.post('/', auth, checkRole, (req, res) => {
   bookingController.createBooking(req, res);
@@ -78,6 +77,5 @@ router.post('/cancelLabSession/:bookingId', auth, checkRole, (req, res) => {
 router.put('/editLabSession/:bookingId', auth, checkRole, (req, res) => {
   bookingController.editLabSession(req, res);
 });
-
 
 module.exports = router;

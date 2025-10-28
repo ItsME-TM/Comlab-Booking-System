@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+} from 'react';
 
 // Notification action types
 const NOTIFICATION_ACTIONS = {
@@ -9,7 +14,7 @@ const NOTIFICATION_ACTIONS = {
   CLEAR_ALL: 'CLEAR_ALL',
   SET_NOTIFICATIONS: 'SET_NOTIFICATIONS',
   SET_LOADING: 'SET_LOADING',
-  SET_ERROR: 'SET_ERROR'
+  SET_ERROR: 'SET_ERROR',
 };
 
 // Notification types
@@ -19,7 +24,7 @@ export const NOTIFICATION_TYPES = {
   WARNING: 'warning',
   INFO: 'info',
   BOOKING: 'booking',
-  SYSTEM: 'system'
+  SYSTEM: 'system',
 };
 
 // Initial state
@@ -27,7 +32,7 @@ const initialState = {
   notifications: [],
   unreadCount: 0,
   isLoading: false,
-  error: null
+  error: null,
 };
 
 // Notification reducer
@@ -38,42 +43,44 @@ const notificationReducer = (state, action) => {
         id: Date.now().toString(),
         timestamp: new Date().toISOString(),
         isRead: false,
-        ...action.payload
+        ...action.payload,
       };
       return {
         ...state,
         notifications: [newNotification, ...state.notifications],
-        unreadCount: state.unreadCount + 1
+        unreadCount: state.unreadCount + 1,
       };
 
     case NOTIFICATION_ACTIONS.REMOVE_NOTIFICATION:
       const filteredNotifications = state.notifications.filter(
-        notification => notification.id !== action.payload
+        notification => notification.id !== action.payload,
       );
       const removedNotification = state.notifications.find(
-        notification => notification.id === action.payload
+        notification => notification.id === action.payload,
       );
       return {
         ...state,
         notifications: filteredNotifications,
-        unreadCount: removedNotification && !removedNotification.isRead 
-          ? state.unreadCount - 1 
-          : state.unreadCount
+        unreadCount:
+          removedNotification && !removedNotification.isRead
+            ? state.unreadCount - 1
+            : state.unreadCount,
       };
 
     case NOTIFICATION_ACTIONS.MARK_AS_READ:
       const updatedNotifications = state.notifications.map(notification =>
         notification.id === action.payload
           ? { ...notification, isRead: true }
-          : notification
+          : notification,
       );
       const wasUnread = state.notifications.find(
-        notification => notification.id === action.payload && !notification.isRead
+        notification =>
+          notification.id === action.payload && !notification.isRead,
       );
       return {
         ...state,
         notifications: updatedNotifications,
-        unreadCount: wasUnread ? state.unreadCount - 1 : state.unreadCount
+        unreadCount: wasUnread ? state.unreadCount - 1 : state.unreadCount,
       };
 
     case NOTIFICATION_ACTIONS.MARK_ALL_AS_READ:
@@ -81,37 +88,39 @@ const notificationReducer = (state, action) => {
         ...state,
         notifications: state.notifications.map(notification => ({
           ...notification,
-          isRead: true
+          isRead: true,
         })),
-        unreadCount: 0
+        unreadCount: 0,
       };
 
     case NOTIFICATION_ACTIONS.CLEAR_ALL:
       return {
         ...state,
         notifications: [],
-        unreadCount: 0
+        unreadCount: 0,
       };
 
     case NOTIFICATION_ACTIONS.SET_NOTIFICATIONS:
-      const unreadCount = action.payload.filter(notification => !notification.isRead).length;
+      const unreadCount = action.payload.filter(
+        notification => !notification.isRead,
+      ).length;
       return {
         ...state,
         notifications: action.payload,
-        unreadCount
+        unreadCount,
       };
 
     case NOTIFICATION_ACTIONS.SET_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        isLoading: action.payload,
       };
 
     case NOTIFICATION_ACTIONS.SET_ERROR:
       return {
         ...state,
         error: action.payload,
-        isLoading: false
+        isLoading: false,
       };
 
     default:
@@ -127,15 +136,18 @@ export const NotificationProvider = ({ children }) => {
   const [state, dispatch] = useReducer(notificationReducer, initialState);
 
   // Actions
-  const addNotification = useCallback((notification) => {
-    dispatch({ type: NOTIFICATION_ACTIONS.ADD_NOTIFICATION, payload: notification });
+  const addNotification = useCallback(notification => {
+    dispatch({
+      type: NOTIFICATION_ACTIONS.ADD_NOTIFICATION,
+      payload: notification,
+    });
   }, []);
 
-  const removeNotification = useCallback((id) => {
+  const removeNotification = useCallback(id => {
     dispatch({ type: NOTIFICATION_ACTIONS.REMOVE_NOTIFICATION, payload: id });
   }, []);
 
-  const markAsRead = useCallback((id) => {
+  const markAsRead = useCallback(id => {
     dispatch({ type: NOTIFICATION_ACTIONS.MARK_AS_READ, payload: id });
   }, []);
 
@@ -147,50 +159,65 @@ export const NotificationProvider = ({ children }) => {
     dispatch({ type: NOTIFICATION_ACTIONS.CLEAR_ALL });
   }, []);
 
-  const setNotifications = useCallback((notifications) => {
-    dispatch({ type: NOTIFICATION_ACTIONS.SET_NOTIFICATIONS, payload: notifications });
+  const setNotifications = useCallback(notifications => {
+    dispatch({
+      type: NOTIFICATION_ACTIONS.SET_NOTIFICATIONS,
+      payload: notifications,
+    });
   }, []);
 
-  const setLoading = useCallback((loading) => {
+  const setLoading = useCallback(loading => {
     dispatch({ type: NOTIFICATION_ACTIONS.SET_LOADING, payload: loading });
   }, []);
 
-  const setError = useCallback((error) => {
+  const setError = useCallback(error => {
     dispatch({ type: NOTIFICATION_ACTIONS.SET_ERROR, payload: error });
   }, []);
 
   // Convenience methods for different notification types
-  const showSuccess = useCallback((message, title = 'Success') => {
-    addNotification({
-      type: NOTIFICATION_TYPES.SUCCESS,
-      title,
-      message
-    });
-  }, [addNotification]);
+  const showSuccess = useCallback(
+    (message, title = 'Success') => {
+      addNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        title,
+        message,
+      });
+    },
+    [addNotification],
+  );
 
-  const showError = useCallback((message, title = 'Error') => {
-    addNotification({
-      type: NOTIFICATION_TYPES.ERROR,
-      title,
-      message
-    });
-  }, [addNotification]);
+  const showError = useCallback(
+    (message, title = 'Error') => {
+      addNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        title,
+        message,
+      });
+    },
+    [addNotification],
+  );
 
-  const showWarning = useCallback((message, title = 'Warning') => {
-    addNotification({
-      type: NOTIFICATION_TYPES.WARNING,
-      title,
-      message
-    });
-  }, [addNotification]);
+  const showWarning = useCallback(
+    (message, title = 'Warning') => {
+      addNotification({
+        type: NOTIFICATION_TYPES.WARNING,
+        title,
+        message,
+      });
+    },
+    [addNotification],
+  );
 
-  const showInfo = useCallback((message, title = 'Info') => {
-    addNotification({
-      type: NOTIFICATION_TYPES.INFO,
-      title,
-      message
-    });
-  }, [addNotification]);
+  const showInfo = useCallback(
+    (message, title = 'Info') => {
+      addNotification({
+        type: NOTIFICATION_TYPES.INFO,
+        title,
+        message,
+      });
+    },
+    [addNotification],
+  );
 
   const value = {
     ...state,
@@ -205,7 +232,7 @@ export const NotificationProvider = ({ children }) => {
     showSuccess,
     showError,
     showWarning,
-    showInfo
+    showInfo,
   };
 
   return (
@@ -219,7 +246,9 @@ export const NotificationProvider = ({ children }) => {
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (!context) {
-    throw new Error('useNotification must be used within a NotificationProvider');
+    throw new Error(
+      'useNotification must be used within a NotificationProvider',
+    );
   }
   return context;
 };

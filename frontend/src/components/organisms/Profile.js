@@ -17,11 +17,11 @@ export default function Profile({ profileRef }) {
       try {
         const response = await axios.get('/api/users/tokenUser', {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         setUser(response.data);
-        console.log("setUserdata", response.data);
+        console.log('setUserdata', response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -40,13 +40,12 @@ export default function Profile({ profileRef }) {
     if (userData.role === 'admin') {
       navigate('/adminprofile', { state: { id: userData._id } });
     } else if (userData.role === 'to') {
-      navigate('/toProfile', { state: { id: userData._id } })
+      navigate('/toProfile', { state: { id: userData._id } });
     } else if (userData.role === 'lecturer') {
-      navigate('/lecturerInstructorProfile', { state: { id: userData._id } })
+      navigate('/lecturerInstructorProfile', { state: { id: userData._id } });
     } else if (userData.role === 'instructor') {
-      navigate('/lecturerInstructorProfile', { state: { id: userData._id } })
-    }
-    else {
+      navigate('/lecturerInstructorProfile', { state: { id: userData._id } });
+    } else {
       navigate('/');
     }
   };
@@ -61,25 +60,52 @@ export default function Profile({ profileRef }) {
       <div className='containerProfile-2'>
         <img
           src={`/api/images/get/${userData._id}`}
-          alt="user-icon"
+          alt='user-icon'
           className='userIconProfile'
-          onError={(e) => { e.target.onerror = null; e.target.src = userIconProfile; }}
+          onError={e => {
+            e.target.onerror = null;
+            e.target.src = userIconProfile;
+          }}
         />
         <div className='info'>
-          <h4 style={{ fontSize: '24px', lineHeight: '36px', textAlign: 'center', fontWeight: '400' }}>
+          <h4
+            style={{
+              fontSize: '24px',
+              lineHeight: '36px',
+              textAlign: 'center',
+              fontWeight: '400',
+            }}
+          >
             {`${userData.firstName} ${userData.lastName}`}
           </h4>
-          <h4 style={{ fontSize: '18px', lineHeight: '24px', textAlign: 'center', fontWeight: '400' }}>
+          <h4
+            style={{
+              fontSize: '18px',
+              lineHeight: '24px',
+              textAlign: 'center',
+              fontWeight: '400',
+            }}
+          >
             {userData.email}
           </h4>
         </div>
-        <Link to="/" >
-          <Button text="Sign out" borderRadius="50px" width="175px" height="60px" marginTop="25px" onClick={handleSignOut} />
+        <Link to='/'>
+          <Button
+            text='Sign out'
+            borderRadius='50px'
+            width='175px'
+            height='60px'
+            marginTop='25px'
+            onClick={handleSignOut}
+          />
         </Link>
       </div>
       <div className='containerProfile-3'>
-        <img src={settingIcon} alt="setting-icon" className='settingIcon' />
-        <span className='profile-settings-text' onClick={handleProfileSettingsClick}>
+        <img src={settingIcon} alt='setting-icon' className='settingIcon' />
+        <span
+          className='profile-settings-text'
+          onClick={handleProfileSettingsClick}
+        >
           Profile settings
         </span>
       </div>

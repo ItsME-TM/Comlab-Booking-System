@@ -8,31 +8,31 @@ const User = require('../models/user');
 const auth = async (req, res, next) => {
   try {
     const authHeader = req.header('Authorization');
-    
+
     if (!authHeader) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         success: false,
-        message: 'Access denied. No token provided.' 
+        message: 'Access denied. No token provided.',
       });
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         success: false,
-        message: 'Access denied. Invalid token format.' 
+        message: 'Access denied. Invalid token format.',
       });
     }
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
+
     // Optionally verify user still exists
     const user = await User.findById(decoded._id).select('-password');
     if (!user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         success: false,
-        message: 'Access denied. User not found.' 
+        message: 'Access denied. User not found.',
       });
     }
 
@@ -40,9 +40,9 @@ const auth = async (req, res, next) => {
     req.userDetails = user;
     next();
   } catch (error) {
-    res.status(401).json({ 
+    res.status(401).json({
       success: false,
-      message: 'Invalid or expired token' 
+      message: 'Invalid or expired token',
     });
   }
 };
@@ -54,16 +54,16 @@ const auth = async (req, res, next) => {
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         success: false,
-        message: 'Access denied. Authentication required.' 
+        message: 'Access denied. Authentication required.',
       });
     }
 
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         success: false,
-        message: 'Access denied. Insufficient permissions.' 
+        message: 'Access denied. Insufficient permissions.',
       });
     }
 
@@ -75,10 +75,10 @@ const authorize = (...roles) => {
  * Request Validation Middleware
  * Validates request body against required fields
  */
-const validateRequest = (requiredFields) => {
+const validateRequest = requiredFields => {
   return (req, res, next) => {
     const missingFields = [];
-    
+
     for (const field of requiredFields) {
       if (!req.body[field]) {
         missingFields.push(field);
@@ -88,7 +88,7 @@ const validateRequest = (requiredFields) => {
     if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: `Missing required fields: ${missingFields.join(', ')}`
+        message: `Missing required fields: ${missingFields.join(', ')}`,
       });
     }
 
@@ -101,17 +101,17 @@ const validateRequest = (requiredFields) => {
  */
 const validateEmail = (req, res, next) => {
   const { email } = req.body;
-  
+
   if (email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid email format'
+        message: 'Invalid email format',
       });
     }
   }
-  
+
   next();
 };
 
@@ -120,16 +120,16 @@ const validateEmail = (req, res, next) => {
  */
 const validatePassword = (req, res, next) => {
   const { password } = req.body;
-  
+
   if (password) {
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 6 characters long'
+        message: 'Password must be at least 6 characters long',
       });
     }
   }
-  
+
   next();
 };
 
@@ -138,5 +138,5 @@ module.exports = {
   authorize,
   validateRequest,
   validateEmail,
-  validatePassword
+  validatePassword,
 };

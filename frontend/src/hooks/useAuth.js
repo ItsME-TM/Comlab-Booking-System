@@ -6,19 +6,20 @@ import { authService } from '../services';
  * Custom hook for authentication-related operations
  */
 export const useAuth = () => {
-  const { user, isAuthenticated, setUser, clearUser, setLoading, setError } = useUser();
+  const { user, isAuthenticated, setUser, clearUser, setLoading, setError } =
+    useUser();
   const { showSuccess, showError } = useNotification();
 
-  const login = async (credentials) => {
+  const login = async credentials => {
     try {
       setLoading(true);
       setError(null);
 
       const data = await authService.login(credentials);
-      
+
       // Set user data
       setUser(data.user);
-      
+
       showSuccess('Login successful');
       return { success: true, user: data.user };
     } catch (error) {
@@ -34,7 +35,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       setLoading(true);
-      
+
       await authService.logout();
       clearUser();
       showSuccess('Logged out successfully');
@@ -49,13 +50,13 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (userData) => {
+  const register = async userData => {
     try {
       setLoading(true);
       setError(null);
 
       const data = await authService.register(userData);
-      
+
       showSuccess('Registration successful');
       return { success: true, user: data.user };
     } catch (error) {
@@ -71,7 +72,7 @@ export const useAuth = () => {
   const checkAuthStatus = () => {
     const token = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
-    
+
     if (token && savedUser && !isAuthenticated) {
       try {
         const user = JSON.parse(savedUser);
@@ -83,15 +84,15 @@ export const useAuth = () => {
         return false;
       }
     }
-    
+
     return isAuthenticated;
   };
 
-  const hasRole = (requiredRole) => {
+  const hasRole = requiredRole => {
     return user?.role === requiredRole;
   };
 
-  const hasAnyRole = (roles) => {
+  const hasAnyRole = roles => {
     return roles.includes(user?.role);
   };
 
@@ -103,6 +104,6 @@ export const useAuth = () => {
     register,
     checkAuthStatus,
     hasRole,
-    hasAnyRole
+    hasAnyRole,
   };
 };

@@ -11,13 +11,13 @@ const mockUserContextValue = {
     email: 'test@example.com',
     firstName: 'Test',
     lastName: 'User',
-    role: 'student'
+    role: 'student',
   },
   login: jest.fn(),
   logout: jest.fn(),
   updateUser: jest.fn(),
   isAuthenticated: true,
-  loading: false
+  loading: false,
 };
 
 // Mock notification context value
@@ -27,7 +27,7 @@ const mockNotificationContextValue = {
   removeNotification: jest.fn(),
   markAsRead: jest.fn(),
   clearNotifications: jest.fn(),
-  unreadCount: 0
+  unreadCount: 0,
 };
 
 // Custom render function that includes providers
@@ -62,7 +62,7 @@ export const createMockUser = (overrides = {}) => ({
   isActive: true,
   createdAt: '2024-01-01T00:00:00Z',
   updatedAt: '2024-01-01T00:00:00Z',
-  ...overrides
+  ...overrides,
 });
 
 // Create mock booking data
@@ -76,7 +76,7 @@ export const createMockBooking = (overrides = {}) => ({
   status: 'approved',
   createdAt: '2024-01-01T00:00:00Z',
   updatedAt: '2024-01-01T00:00:00Z',
-  ...overrides
+  ...overrides,
 });
 
 // Create mock notification data
@@ -88,23 +88,27 @@ export const createMockNotification = (overrides = {}) => ({
   type: 'booking',
   isRead: false,
   createdAt: '2024-01-01T00:00:00Z',
-  ...overrides
+  ...overrides,
 });
 
 // Wait for async operations to complete
-export const waitForAsync = () => new Promise(resolve => setTimeout(resolve, 0));
+export const waitForAsync = () =>
+  new Promise(resolve => setTimeout(resolve, 0));
 
 // Mock API responses
 export const mockApiResponse = (data, success = true) => ({
   success,
-  ...data
+  ...data,
 });
 
 // Mock error response
-export const mockErrorResponse = (message = 'An error occurred', status = 500) => ({
+export const mockErrorResponse = (
+  message = 'An error occurred',
+  status = 500,
+) => ({
   success: false,
   message,
-  status
+  status,
 });
 
 // Export everything including the custom render

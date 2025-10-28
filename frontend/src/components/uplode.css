@@ -1,71 +1,71 @@
 .unique-body-background {
-    background-color: #19434f;
-    color: white;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  background-color: #19434f;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .unique-upload-container {
-    padding: 20px;
-    background-color: #1a1a1a;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 20px auto;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
 .unique-header {
-    color: white;
+  color: white;
 }
 
 .unique-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .unique-image-preview {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .unique-file-input {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #444;
-    background-color: #333;
-    color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
 }
 
 .unique-button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .unique-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .unique-button-submit {
-    background-color: #004080;
+  background-color: #004080;
 }
 
 .unique-button-cancel {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .unique-button-disabled {
-    background-color: #666;
-    cursor: not-allowed;
+  background-color: #666;
+  cursor: not-allowed;
 }
 
 .unique-image-preview-img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }

@@ -1,4 +1,3 @@
-
 .nnn {
   display: flex;
   flex-direction: column;
@@ -7,131 +6,129 @@
   overflow-y: auto;
 }
 .notification-container {
-    display: flex;
-    height: 100vh; 
-    width: 100vw; 
-  }
-  
-  .left-side {
-    flex: 0.3;
-    background-color: #205464;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  
-  .toolbars {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-  }
-  
-  .toolbar-button {
-    width: 100%;
-    padding: 15px 50px;
-    margin-bottom: 5px;
-    background-color: #366574;
-    border: none;
-    color: white;
-    text-align: left;
-    cursor: pointer;
-    font-size: large;
-  }
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
 
-  .toolbar-button:hover {
-    background-color: #638793; 
+.left-side {
+  flex: 0.3;
+  background-color: #205464;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.toolbars {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.toolbar-button {
+  width: 100%;
+  padding: 15px 50px;
+  margin-bottom: 5px;
+  background-color: #366574;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: large;
+}
+
+.toolbar-button:hover {
+  background-color: #638793;
+}
+
+.right-side {
+  flex: 1;
+  padding: 10px;
+  background-color: white;
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.title {
+  color: white;
+  text-align: center;
+  margin-top: 50px;
+  padding: 10px 0;
+}
+
+.preview-list {
+  list-style: none;
+  padding: 50px;
+}
+
+.preview-list li {
+  background-color: #a6bbc1;
+  padding: 10px;
+  margin-bottom: 0px;
+  border: 0.1px solid white;
+  cursor: pointer;
+}
+.preview-list li:hover {
+  background-color: #638793;
+}
+.preview-list li.selected {
+  background-color: white;
+  color: #366574;
+  border: 2px solid #205464;
+}
+
+.lab-details-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+}
+
+.ok-button {
+  background-color: #366574;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 5px;
+}
+.ok-button:hover {
+  background-color: #638793;
+}
+.close-button {
+  background-color: #366574;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 5px;
+  width: 10px;
+}
+
+@media screen and (max-width: 762px) {
+  .notification-container {
+    flex-direction: column;
+    justify-content: start;
   }
-  
   .right-side {
-    flex: 1;
-    padding: 10px;
-    background-color: white;
-    position: relative; 
-    height: 100vh;
-    overflow-y: auto;
+    width: 100%;
+    white-space: wrap;
+    overflow: auto;
   }
-  
-  .title {
-    color: white; 
-    text-align: center; 
-    margin-top: 50px; 
-    padding: 10px 0; 
+  .scroll-container {
+    overflow: auto;
   }
-  
-  .preview-list {
-    list-style: none;
-    padding: 50px; 
-  }
-  
-  .preview-list li {
-    background-color: #A6BBC1;
-    padding: 10px; 
-    margin-bottom: 0px;
-    border: 0.1px solid white;
-    cursor: pointer;
-  }
-  .preview-list li:hover {
-    background-color: #638793; 
-  }
-  .preview-list li.selected {
-    background-color: white;
-    color: #366574;
-    border: 2px solid #205464;
-  }
-  
-  .lab-details-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    max-width: 400px;
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    z-index: 100; 
-    text-align: center; 
-  }
-  
-  .ok-button {
-    background-color: #366574;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: medium;
-    border-radius: 5px;
-  }
-  .ok-button:hover {
-    background-color: #638793; 
-  }
-  .close-button{
-    background-color: #366574;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: medium;
-    border-radius: 5px;
-    width: 10px;
-  }
-  
-  @media screen and (max-width: 762px){
-    .notification-container{
-      flex-direction: column;
-      justify-content: start;
-    }
-    .right-side{
-      width: 100%;
-      white-space: wrap;
-      overflow: auto;
-    }
-    .scroll-container{
-      overflow: auto;
-    }
-    
-    
-  }
+}

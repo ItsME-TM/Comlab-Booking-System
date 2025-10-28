@@ -18,21 +18,25 @@ class BookingRepository {
     return await Booking.find({ status: { $ne: 'cancelled' } });
   }
 
-  async findOverlappingBookings(startTime, endTime, excludeStatuses = ['cancelled']) {
+  async findOverlappingBookings(
+    startTime,
+    endTime,
+    excludeStatuses = ['cancelled'],
+  ) {
     return await Booking.find({
       $or: [
         { startTime: { $lt: endTime, $gte: startTime } },
         { endTime: { $gt: startTime, $lte: endTime } },
-        { startTime: { $lte: startTime }, endTime: { $gte: endTime } }
+        { startTime: { $lte: startTime }, endTime: { $gte: endTime } },
       ],
-      status: { $nin: excludeStatuses }
+      status: { $nin: excludeStatuses },
     });
   }
 
   async findByDateRange(startDate, endDate) {
     return await Booking.find({
       startTime: { $gte: startDate },
-      endTime: { $lte: endDate }
+      endTime: { $lte: endDate },
     });
   }
 

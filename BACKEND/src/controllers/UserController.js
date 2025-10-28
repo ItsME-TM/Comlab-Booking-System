@@ -177,17 +177,28 @@ LBS Administrator
   async addUser(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const { firstName, lastName, email, role, password } = req.body;
-      const user = await this.userService.createUser({ firstName, lastName, email, role, password });
-      
+      const user = await this.userService.createUser({
+        firstName,
+        lastName,
+        email,
+        role,
+        password,
+      });
+
       await this.sendNewUserEmail(firstName, lastName, email, role, password);
       res.json({ message: 'User added successfully' });
     } catch (error) {
       console.error('Add user error:', error);
-      if (error.message.includes('Validation failed') || error.message.includes('already exists')) {
+      if (
+        error.message.includes('Validation failed') ||
+        error.message.includes('already exists')
+      ) {
         return res.status(400).json({ error: error.message });
       }
       res.status(500).json({ error: 'Server error' });
@@ -197,7 +208,9 @@ LBS Administrator
   async getAllUsers(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const users = await this.userService.getAllUsers(false);
@@ -211,7 +224,9 @@ LBS Administrator
   async getUserNames(req, res) {
     try {
       if (req.user.role !== 'lecturer' && req.user.role !== 'instructor') {
-        return res.status(403).json({ error: 'Access denied. You are not authorized.' });
+        return res
+          .status(403)
+          .json({ error: 'Access denied. You are not authorized.' });
       }
 
       const users = await this.userService.getAllUsers(false);
@@ -225,7 +240,9 @@ LBS Administrator
   async getLecturers(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const lecturers = await this.userService.getLecturers();
@@ -239,7 +256,9 @@ LBS Administrator
   async getTechnicalOfficers(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const tos = await this.userService.getTechnicalOfficers();
@@ -253,7 +272,9 @@ LBS Administrator
   async getInstructors(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const instructors = await this.userService.getInstructors();
@@ -278,7 +299,9 @@ LBS Administrator
   async getUserById(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const user = await this.userService.getUserById(req.params.id);
@@ -308,14 +331,20 @@ LBS Administrator
   async deleteUser(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       // Get user details before deletion for email notification
       const user = await this.userService.getUserById(req.params.id);
       await this.userService.deleteUser(req.params.id);
-      
-      await this.sendDeleteNotification(user.firstName, user.lastName, user.email);
+
+      await this.sendDeleteNotification(
+        user.firstName,
+        user.lastName,
+        user.email,
+      );
       console.log('User deleted successfully:', user);
       res.json({ message: 'User deleted successfully' });
     } catch (error) {
@@ -330,25 +359,34 @@ LBS Administrator
   async updateUser(req, res) {
     try {
       if (req.user.role !== 'admin') {
-        return res.status(403).json({ error: "Access denied. You're not an admin." });
+        return res
+          .status(403)
+          .json({ error: "Access denied. You're not an admin." });
       }
 
       const { firstName, lastName, email, role, password } = req.body;
       const updateData = { firstName, lastName, email, role };
-      
+
       if (password) {
         updateData.password = password;
       }
 
       const user = await this.userService.updateUser(req.params.id, updateData);
-      await this.sendEditNotification(user.firstName, user.lastName, user.email, user.role);
-      
+      await this.sendEditNotification(
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.role,
+      );
+
       res.json({ message: 'User updated successfully', user });
     } catch (error) {
       console.error('Update user error:', error);
-      if (error.message.includes('Validation failed') || 
-          error.message.includes('User not found') || 
-          error.message.includes('Email already exists')) {
+      if (
+        error.message.includes('Validation failed') ||
+        error.message.includes('User not found') ||
+        error.message.includes('Email already exists')
+      ) {
         return res.status(400).json({ error: error.message });
       }
       res.status(500).json({ error: 'Server error' });
@@ -358,16 +396,28 @@ LBS Administrator
   async updateUserName(req, res) {
     try {
       const { firstName, lastName } = req.body;
-      
+
       // Get original user details for email notification
       const originalUser = await this.userService.getUserById(req.params.id);
-      const user = await this.userService.updateUserName(req.params.id, firstName, lastName);
-      
-      await this.sendEditNotification(originalUser.firstName, originalUser.lastName, originalUser.email, originalUser.role);
+      const user = await this.userService.updateUserName(
+        req.params.id,
+        firstName,
+        lastName,
+      );
+
+      await this.sendEditNotification(
+        originalUser.firstName,
+        originalUser.lastName,
+        originalUser.email,
+        originalUser.role,
+      );
       res.json({ message: 'User updated successfully', user });
     } catch (error) {
       console.error('Update user name error:', error);
-      if (error.message.includes('required') || error.message === 'User not found') {
+      if (
+        error.message.includes('required') ||
+        error.message === 'User not found'
+      ) {
         return res.status(400).json({ error: error.message });
       }
       res.status(500).json({ error: 'Server error' });
@@ -377,16 +427,23 @@ LBS Administrator
   async updatePassword(req, res) {
     try {
       const { email, password } = req.body;
-      
+
       const user = await this.userService.updatePassword(email, password);
-      await this.sendPasswordChangeNotification(user.firstName, user.lastName, user.email, user.role);
-      
+      await this.sendPasswordChangeNotification(
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.role,
+      );
+
       res.json({ message: 'Password updated successfully' });
     } catch (error) {
       console.error('Update password error:', error);
-      if (error.message.includes('required') || 
-          error.message === 'User not found' || 
-          error.message.includes('Password must be')) {
+      if (
+        error.message.includes('required') ||
+        error.message === 'User not found' ||
+        error.message.includes('Password must be')
+      ) {
         return res.status(400).json({ error: error.message });
       }
       res.status(500).json({ error: 'Server error' });

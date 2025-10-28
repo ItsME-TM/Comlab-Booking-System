@@ -12,8 +12,8 @@ export const handlers = [
         email: 'test@example.com',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student'
-      }
+        role: 'student',
+      },
     });
   }),
 
@@ -26,22 +26,22 @@ export const handlers = [
         email: 'newuser@example.com',
         firstName: 'New',
         lastName: 'User',
-        role: 'student'
-      }
+        role: 'student',
+      },
     });
   }),
 
   http.post('/api/auth/refresh', () => {
     return HttpResponse.json({
       success: true,
-      token: 'new-mock-jwt-token'
+      token: 'new-mock-jwt-token',
     });
   }),
 
   http.post('/api/auth/logout', () => {
     return HttpResponse.json({
       success: true,
-      message: 'Logged out successfully'
+      message: 'Logged out successfully',
     });
   }),
 
@@ -55,16 +55,16 @@ export const handlers = [
           email: 'user1@example.com',
           firstName: 'User',
           lastName: 'One',
-          role: 'student'
+          role: 'student',
         },
         {
           id: '2',
           email: 'user2@example.com',
           firstName: 'User',
           lastName: 'Two',
-          role: 'lecturer'
-        }
-      ]
+          role: 'lecturer',
+        },
+      ],
     });
   }),
 
@@ -76,8 +76,8 @@ export const handlers = [
         email: 'user@example.com',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student'
-      }
+        role: 'student',
+      },
     });
   }),
 
@@ -90,8 +90,8 @@ export const handlers = [
         email: 'created@example.com',
         firstName: 'Created',
         lastName: 'User',
-        role: 'student'
-      }
+        role: 'student',
+      },
     });
   }),
 
@@ -104,15 +104,15 @@ export const handlers = [
         email: 'updated@example.com',
         firstName: 'Updated',
         lastName: 'User',
-        role: 'student'
-      }
+        role: 'student',
+      },
     });
   }),
 
   http.delete('/api/users/:id', () => {
     return HttpResponse.json({
       success: true,
-      message: 'User deleted successfully'
+      message: 'User deleted successfully',
     });
   }),
 
@@ -128,9 +128,9 @@ export const handlers = [
           startTime: '2024-01-15T10:00:00Z',
           endTime: '2024-01-15T12:00:00Z',
           purpose: 'Research work',
-          status: 'approved'
-        }
-      ]
+          status: 'approved',
+        },
+      ],
     });
   }),
 
@@ -145,8 +145,8 @@ export const handlers = [
         startTime: '2024-01-16T10:00:00Z',
         endTime: '2024-01-16T12:00:00Z',
         purpose: 'Lab session',
-        status: 'pending'
-      }
+        status: 'pending',
+      },
     });
   }),
 
@@ -156,15 +156,15 @@ export const handlers = [
       message: 'Booking updated successfully',
       booking: {
         id: params.id,
-        status: 'approved'
-      }
+        status: 'approved',
+      },
     });
   }),
 
   http.delete('/api/bookings/:id', () => {
     return HttpResponse.json({
       success: true,
-      message: 'Booking cancelled successfully'
+      message: 'Booking cancelled successfully',
     });
   }),
 
@@ -180,23 +180,23 @@ export const handlers = [
           message: 'Your booking has been approved',
           type: 'booking',
           isRead: false,
-          createdAt: '2024-01-15T09:00:00Z'
-        }
-      ]
+          createdAt: '2024-01-15T09:00:00Z',
+        },
+      ],
     });
   }),
 
   http.post('/api/notifications', () => {
     return HttpResponse.json({
       success: true,
-      message: 'Notification created successfully'
+      message: 'Notification created successfully',
     });
   }),
 
   http.put('/api/notifications/:id/read', () => {
     return HttpResponse.json({
       success: true,
-      message: 'Notification marked as read'
+      message: 'Notification marked as read',
     });
   }),
 

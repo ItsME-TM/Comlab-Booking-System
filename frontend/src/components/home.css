@@ -22,7 +22,7 @@
 }
 
 .home::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -32,7 +32,7 @@
   backdrop-filter: blur(5px);
   z-index: 1;
   pointer-events: none;
-  height: 150vh
+  height: 150vh;
 }
 
 .text-home {
@@ -51,19 +51,19 @@
   margin: 0;
   font-size: 7em;
   font-weight: bold;
-  color: #1A4350
+  color: #1a4350;
 }
 
 .text-home h3 {
   font-size: 3.5em;
   font-weight: bold;
-  color: #1A4350
+  color: #1a4350;
 }
 
 .text-home p {
   font-size: 2.5em;
   line-height: 1.5em;
-  color: #1A4350
+  color: #1a4350;
 }
 
 .button-row {
@@ -85,15 +85,16 @@ button {
   padding: 15px; /* Increased button padding */
   font-size: 1.2em; /* Increased font size */
   color: white;
-  background-color: #1A4350;
+  background-color: #1a4350;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
   perspective: 1000px;
   position: relative;
   overflow: hidden;
 }
-
 
 button:hover {
   background-color: #16334a;
@@ -111,7 +112,9 @@ button::after {
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   opacity: 0;
-  transition: transform 0.5s, opacity 0.5s;
+  transition:
+    transform 0.5s,
+    opacity 0.5s;
 }
 
 button:active::after {
@@ -119,7 +122,6 @@ button:active::after {
   opacity: 1;
   transition: 0s;
 }
-
 
 .icon-button .icon {
   transition: transform 0.3s ease;
@@ -129,29 +131,25 @@ button:active::after {
   transform: rotate(360deg);
 }
 
-.footer{
+.footer {
   z-index: 3;
 }
 @media screen and (max-width: 1200px) {
   .home {
-
     padding: 30px;
   }
   .text-home h1 {
     margin: 0;
     font-size: 4em;
- 
   }
-  
+
   .text-home h3 {
     font-size: 1.5em;
-    
   }
-  
+
   .text-home p {
     font-size: 2.5em;
-    line-height: 1.0em;
-   
+    line-height: 1em;
   }
 }
 
@@ -162,26 +160,20 @@ button:active::after {
   .text-home h1 {
     margin: 0;
     font-size: 3em;
- 
   }
-  
+
   .text-home h3 {
-    font-size: 1.0em;
-    
+    font-size: 1em;
   }
-  
+
   .text-home p {
-    font-size: 2.0em;
-    line-height: 1.0em;
-   
+    font-size: 2em;
+    line-height: 1em;
   }
-  
-
-
 }
 
 @media screen and (max-width: 480px) {
-  .hhh{
+  .hhh {
     overflow: auto;
   }
   .home {
@@ -190,23 +182,14 @@ button:active::after {
   .text-home h1 {
     margin: 0;
     font-size: 2.5em;
- 
   }
-  
+
   .text-home h3 {
     font-size: 0.5em;
-    
   }
-  
+
   .text-home p {
     font-size: 1.5em;
     line-height: 0.8em;
-   
   }
-
-
-
 }
-
-
-

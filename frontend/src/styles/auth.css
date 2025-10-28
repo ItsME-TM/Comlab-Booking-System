@@ -39,7 +39,7 @@
 .input:focus,
 .input-1:focus {
   outline: none;
-  border-color: #1A4350;
+  border-color: #1a4350;
   box-shadow: 0 0 0 2px rgba(26, 67, 80, 0.1);
 }
 
@@ -51,7 +51,7 @@
 
 .forgot-password a,
 .forgot-password-1 a {
-  color: #1A4350;
+  color: #1a4350;
   text-decoration: none;
   font-size: 0.9rem;
 }

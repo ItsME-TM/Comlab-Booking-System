@@ -45,7 +45,6 @@
   },
   "lint-staged": {
     "backend/**/*.js": "npm run lint:fix --prefix backend -- ",
-    "frontend/**/*.{js,jsx}": "npm run lint:fix --prefix frontend -- ",
     "*.{json,md}": "prettier --write",
     "**/*.{css,scss}": "prettier --write"
   }

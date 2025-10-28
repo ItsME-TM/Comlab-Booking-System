@@ -36,8 +36,8 @@ class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role
-      }
+        role: user.role,
+      },
     };
   }
 
@@ -66,7 +66,7 @@ class AuthService {
       lastName,
       email,
       password,
-      role
+      role,
     });
 
     await user.save();
@@ -81,8 +81,8 @@ class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role
-      }
+        role: user.role,
+      },
     };
   }
 
@@ -95,7 +95,7 @@ class AuthService {
     try {
       // Verify current token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
+
       // Find user to ensure they still exist
       const user = await User.findById(decoded._id);
       if (!user) {
@@ -112,8 +112,8 @@ class AuthService {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          role: user.role
-        }
+          role: user.role,
+        },
       };
     } catch (error) {
       throw new Error('Invalid or expired token');
@@ -140,7 +140,7 @@ class AuthService {
     const payload = {
       _id: user._id,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
 
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3d' });

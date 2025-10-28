@@ -24,7 +24,7 @@ describe('Error Handler Middleware', () => {
   describe('Custom Error Classes', () => {
     test('AppError should create error with correct properties', () => {
       const error = new AppError('Test error', 400);
-      
+
       expect(error.message).toBe('Test error');
       expect(error.statusCode).toBe(400);
       expect(error.status).toBe('fail');
@@ -33,7 +33,7 @@ describe('Error Handler Middleware', () => {
 
     test('ValidationError should create 400 error', () => {
       const error = new ValidationError('Invalid input');
-      
+
       expect(error.statusCode).toBe(400);
       expect(error.name).toBe('ValidationError');
       expect(error.message).toBe('Invalid input');
@@ -41,7 +41,7 @@ describe('Error Handler Middleware', () => {
 
     test('AuthenticationError should create 401 error', () => {
       const error = new AuthenticationError();
-      
+
       expect(error.statusCode).toBe(401);
       expect(error.name).toBe('AuthenticationError');
       expect(error.message).toBe('Authentication failed');
@@ -49,7 +49,7 @@ describe('Error Handler Middleware', () => {
 
     test('AuthorizationError should create 403 error', () => {
       const error = new AuthorizationError();
-      
+
       expect(error.statusCode).toBe(403);
       expect(error.name).toBe('AuthorizationError');
       expect(error.message).toBe('Access denied');
@@ -57,7 +57,7 @@ describe('Error Handler Middleware', () => {
 
     test('NotFoundError should create 404 error', () => {
       const error = new NotFoundError();
-      
+
       expect(error.statusCode).toBe(404);
       expect(error.name).toBe('NotFoundError');
       expect(error.message).toBe('Resource not found');
@@ -65,7 +65,7 @@ describe('Error Handler Middleware', () => {
 
     test('ConflictError should create 409 error', () => {
       const error = new ConflictError();
-      
+
       expect(error.statusCode).toBe(409);
       expect(error.name).toBe('ConflictError');
       expect(error.message).toBe('Resource conflict');
@@ -79,9 +79,7 @@ describe('Error Handler Middleware', () => {
       });
       app.use(globalErrorHandler);
 
-      const response = await request(app)
-        .get('/test-error')
-        .expect(400);
+      const response = await request(app).get('/test-error').expect(400);
 
       expect(response.body).toMatchObject({
         success: false,
@@ -95,7 +93,7 @@ describe('Error Handler Middleware', () => {
     test('should handle generic errors with 500 status', async () => {
       const originalEnv = process.env.NODE_ENV;
       process.env.NODE_ENV = 'development'; // Set to development to see actual error message
-      
+
       app.get('/test-generic-error', (req, res, next) => {
         const error = new Error('Generic error');
         next(error);
@@ -112,7 +110,7 @@ describe('Error Handler Middleware', () => {
         path: '/test-generic-error',
         method: 'GET',
       });
-      
+
       process.env.NODE_ENV = originalEnv;
     });
 
@@ -125,9 +123,7 @@ describe('Error Handler Middleware', () => {
       });
       app.use(globalErrorHandler);
 
-      const response = await request(app)
-        .get('/test-dev-error')
-        .expect(400);
+      const response = await request(app).get('/test-dev-error').expect(400);
 
       expect(response.body.stack).toBeDefined();
 
@@ -143,9 +139,7 @@ describe('Error Handler Middleware', () => {
       });
       app.use(globalErrorHandler);
 
-      const response = await request(app)
-        .get('/test-prod-error')
-        .expect(400);
+      const response = await request(app).get('/test-prod-error').expect(400);
 
       expect(response.body.stack).toBeUndefined();
 
@@ -162,9 +156,7 @@ describe('Error Handler Middleware', () => {
       app.get('/test-async', asyncRoute);
       app.use(globalErrorHandler);
 
-      const response = await request(app)
-        .get('/test-async')
-        .expect(400);
+      const response = await request(app).get('/test-async').expect(400);
 
       expect(response.body.message).toBe('Async error');
     });
@@ -206,7 +198,7 @@ describe('Error Handler Middleware', () => {
   });
 
   describe('Request Logger', () => {
-    test('should log requests without errors', (done) => {
+    test('should log requests without errors', done => {
       const mockLogger = {
         info: jest.fn(),
         warn: jest.fn(),
@@ -221,7 +213,9 @@ describe('Error Handler Middleware', () => {
         res.on('finish', () => {
           const duration = Date.now() - start;
           const logLevel = res.statusCode >= 400 ? 'warn' : 'info';
-          mockLogger[logLevel](`${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`);
+          mockLogger[logLevel](
+            `${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`,
+          );
         });
         next();
       });

@@ -13,18 +13,17 @@ body {
   margin: 0; /* Remove any margin */
   padding: 0; /* Remove any padding */
   box-sizing: border-box;
-  
 }
 
 .admin_home_body {
-  background-color: #1A4350;
+  background-color: #1a4350;
   background-image: url('../images/adminhome_backgroundjpg.jpg');
   background-size: cover; /* Ensure the image covers the container */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Do not repeat the background image */
   position: relative;
   display: flex;
-  justify-content: center ;
+  justify-content: center;
   align-items: center;
   flex-grow: 1;
   width: 100%;
@@ -70,18 +69,15 @@ body {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.4) inset; /* Inset shadow effect */
 }
 
-
-.text-h1{
+.text-h1 {
   font-family: 'Roboto', serif;
   font-size: 64px;
   font-weight: 400;
   line-height: 88px;
   text-align: center;
   color: white;
-
-
 }
-.text-h3{
+.text-h3 {
   font-family: 'Roboto Slab', serif;
   font-size: 32px;
   font-weight: 400;
@@ -93,12 +89,12 @@ body {
 
 /* Media queries for responsiveness */
 @media screen and (max-width: 1024px) {
-  .text-h1{
+  .text-h1 {
     font-size: 50px;
     line-height: 56px;
     padding: 10px;
   }
-  .text-h3{
+  .text-h3 {
     font-size: 24px;
     line-height: 32px;
     padding: 10px;
@@ -110,12 +106,12 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .text-h1{
+  .text-h1 {
     font-size: 35px;
     line-height: 38px;
     padding: 8px;
   }
-  .text-h3{
+  .text-h3 {
     font-size: 22px;
     line-height: 24px;
     padding: 8px;
@@ -127,12 +123,12 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  .text-h1{
+  .text-h1 {
     font-size: 20px;
     line-height: 22px;
     padding: 5px;
   }
-  .text-h3{
+  .text-h3 {
     font-size: 10px;
     line-height: 12px;
     padding: 3px;

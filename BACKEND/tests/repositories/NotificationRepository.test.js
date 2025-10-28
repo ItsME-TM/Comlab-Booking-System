@@ -17,13 +17,13 @@ describe('NotificationRepository', () => {
       const notificationData = {
         receiverEmail: 'user@example.com',
         bookingId: 'booking123',
-        type: 'request'
+        type: 'request',
       };
 
       const mockNotification = {
         _id: 'notification123',
         ...notificationData,
-        save: jest.fn().mockResolvedValue(true)
+        save: jest.fn().mockResolvedValue(true),
       };
 
       Notification.mockImplementation(() => mockNotification);
@@ -55,11 +55,11 @@ describe('NotificationRepository', () => {
       const receiverEmail = 'user@example.com';
       const mockNotifications = [
         { _id: 'notification1', receiverEmail, type: 'request' },
-        { _id: 'notification2', receiverEmail, type: 'confirmed' }
+        { _id: 'notification2', receiverEmail, type: 'confirmed' },
       ];
 
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue(mockNotifications)
+        sort: jest.fn().mockResolvedValue(mockNotifications),
       };
       Notification.find.mockReturnValue(mockQuery);
 
@@ -76,7 +76,7 @@ describe('NotificationRepository', () => {
       const expectedQuery = { receiverEmail, ...filters };
 
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue([])
+        sort: jest.fn().mockResolvedValue([]),
       };
       Notification.find.mockReturnValue(mockQuery);
 
@@ -90,11 +90,11 @@ describe('NotificationRepository', () => {
     it('should find notifications by sender email', async () => {
       const senderEmail = 'sender@example.com';
       const mockNotifications = [
-        { _id: 'notification1', senderEmail, type: 'booking_confirmation' }
+        { _id: 'notification1', senderEmail, type: 'booking_confirmation' },
       ];
 
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue(mockNotifications)
+        sort: jest.fn().mockResolvedValue(mockNotifications),
       };
       Notification.find.mockReturnValue(mockQuery);
 
@@ -110,11 +110,11 @@ describe('NotificationRepository', () => {
       const bookingId = 'booking123';
       const mockNotifications = [
         { _id: 'notification1', bookingId, type: 'request' },
-        { _id: 'notification2', bookingId, type: 'confirmed' }
+        { _id: 'notification2', bookingId, type: 'confirmed' },
       ];
 
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue(mockNotifications)
+        sort: jest.fn().mockResolvedValue(mockNotifications),
       };
       Notification.find.mockReturnValue(mockQuery);
 
@@ -133,12 +133,15 @@ describe('NotificationRepository', () => {
 
       Notification.findByIdAndUpdate.mockResolvedValue(mockUpdatedNotification);
 
-      const result = await notificationRepository.updateById(notificationId, updateData);
+      const result = await notificationRepository.updateById(
+        notificationId,
+        updateData,
+      );
 
       expect(Notification.findByIdAndUpdate).toHaveBeenCalledWith(
         notificationId,
         updateData,
-        { new: true }
+        { new: true },
       );
       expect(result).toEqual(mockUpdatedNotification);
     });
@@ -152,9 +155,15 @@ describe('NotificationRepository', () => {
 
       Notification.updateMany.mockResolvedValue(mockResult);
 
-      const result = await notificationRepository.updateByBookingId(bookingId, updateData);
+      const result = await notificationRepository.updateByBookingId(
+        bookingId,
+        updateData,
+      );
 
-      expect(Notification.updateMany).toHaveBeenCalledWith({ bookingId }, updateData);
+      expect(Notification.updateMany).toHaveBeenCalledWith(
+        { bookingId },
+        updateData,
+      );
       expect(result).toEqual(mockResult);
     });
   });
@@ -167,18 +176,18 @@ describe('NotificationRepository', () => {
 
       Notification.findOneAndUpdate.mockResolvedValue(mockNotification);
 
-      const result = await notificationRepository.markAsRead(notificationId, userEmail);
+      const result = await notificationRepository.markAsRead(
+        notificationId,
+        userEmail,
+      );
 
       expect(Notification.findOneAndUpdate).toHaveBeenCalledWith(
         {
           _id: notificationId,
-          $or: [
-            { receiverEmail: userEmail },
-            { senderEmail: userEmail }
-          ]
+          $or: [{ receiverEmail: userEmail }, { senderEmail: userEmail }],
         },
         { isRead: true },
-        { new: true }
+        { new: true },
       );
       expect(result).toEqual(mockNotification);
     });
@@ -192,11 +201,14 @@ describe('NotificationRepository', () => {
 
       Notification.updateMany.mockResolvedValue(mockResult);
 
-      const result = await notificationRepository.updateNotificationsByDate(date, updateData);
+      const result = await notificationRepository.updateNotificationsByDate(
+        date,
+        updateData,
+      );
 
       expect(Notification.updateMany).toHaveBeenCalledWith(
         { labDate: date, type: { $ne: 'cancellation' } },
-        updateData
+        updateData,
       );
       expect(result).toEqual(mockResult);
     });
@@ -211,7 +223,9 @@ describe('NotificationRepository', () => {
 
       const result = await notificationRepository.deleteById(notificationId);
 
-      expect(Notification.findByIdAndDelete).toHaveBeenCalledWith(notificationId);
+      expect(Notification.findByIdAndDelete).toHaveBeenCalledWith(
+        notificationId,
+      );
       expect(result).toEqual(mockDeletedNotification);
     });
   });
@@ -220,11 +234,11 @@ describe('NotificationRepository', () => {
     it('should find all notifications', async () => {
       const mockNotifications = [
         { _id: 'notification1', type: 'request' },
-        { _id: 'notification2', type: 'confirmed' }
+        { _id: 'notification2', type: 'confirmed' },
       ];
 
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue(mockNotifications)
+        sort: jest.fn().mockResolvedValue(mockNotifications),
       };
       Notification.find.mockReturnValue(mockQuery);
 
@@ -237,7 +251,7 @@ describe('NotificationRepository', () => {
     it('should find all notifications with filters', async () => {
       const filters = { type: 'request' };
       const mockQuery = {
-        sort: jest.fn().mockResolvedValue([])
+        sort: jest.fn().mockResolvedValue([]),
       };
       Notification.find.mockReturnValue(mockQuery);
 

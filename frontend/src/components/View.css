@@ -1,6 +1,6 @@
 .view_body {
   padding: 50px;
-  background-color: #1A4350;
+  background-color: #1a4350;
 }
 
 .calendar-container {
@@ -29,11 +29,10 @@
 .green-event-content {
   position: relative;
   z-index: 1; /* Ensure text is above background */
-  
 }
 
 .custom-toolbar {
-  background-color: #A6BBC1;
+  background-color: #a6bbc1;
   padding: 10px;
 }
 
@@ -71,12 +70,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex; /* Use flexbox */
-  justify-content: center; 
+  justify-content: center;
   align-items: center; /* Center items vertically */
   flex-direction: column; /* Align items in a column */
 }
 
-.event-details h3, .event-details p {
+.event-details h3,
+.event-details p {
   margin-top: 0;
   color: white;
 }
@@ -131,7 +131,7 @@
   right: 10px;
   cursor: pointer;
 }
-.view-close-button:hover{
+.view-close-button:hover {
   color: #fff;
 }
 
@@ -148,7 +148,7 @@
 }
 
 .confirmation-box {
-  background-color: #EDF1F3;
+  background-color: #edf1f3;
   width: 40%;
   text-align: center;
   padding: 20px;
@@ -171,7 +171,7 @@
 }
 
 .confirmation-box .cancel-button {
-  background-color: #FF0000; /* Red background */
+  background-color: #ff0000; /* Red background */
 }
 
 .confirmation-box .not-now-button {
@@ -187,12 +187,12 @@
   color: #b30000;
 }
 .attendee-box {
-  background-color: #FFA000;
+  background-color: #ffa000;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   margin: 5px 0;
-  display: block; 
+  display: block;
 }
 
 .attendee-box.booking_confirmation {

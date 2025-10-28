@@ -1,32 +1,30 @@
 .page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    
-  }
-  
-  .msg-container-error {
-    width: 500px;
-    height: flex;
-    padding: 10px 10px;
-    border-radius: 0px;
-    text-align: center;
-    background-color: #93b6bf;
-  }
-  
-  .title {
-    color: #055366;
-  }
-  .msg-container-error h1{
-    color: #055366;
-  }
-  .error-message {
-    color: red;
-  }
-  
-  .link {
-    color: #055366; 
-    text-decoration: none;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.msg-container-error {
+  width: 500px;
+  height: flex;
+  padding: 10px 10px;
+  border-radius: 0px;
+  text-align: center;
+  background-color: #93b6bf;
+}
+
+.title {
+  color: #055366;
+}
+.msg-container-error h1 {
+  color: #055366;
+}
+.error-message {
+  color: red;
+}
+
+.link {
+  color: #055366;
+  text-decoration: none;
+}

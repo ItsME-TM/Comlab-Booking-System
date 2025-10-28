@@ -153,7 +153,7 @@ const globalErrorHandler = (err, req, res, next) => {
  * Async Error Handler Wrapper
  * Wraps async functions to catch errors automatically
  */
-const asyncHandler = (fn) => {
+const asyncHandler = fn => {
   return (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
@@ -174,22 +174,25 @@ const notFoundHandler = (req, res, next) => {
  */
 const requestLogger = (req, res, next) => {
   const start = Date.now();
-  
+
   res.on('finish', () => {
     const duration = Date.now() - start;
     const logLevel = res.statusCode >= 400 ? 'warn' : 'info';
-    
-    logger[logLevel](`${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`, {
-      method: req.method,
-      url: req.originalUrl,
-      statusCode: res.statusCode,
-      duration: `${duration}ms`,
-      ip: req.ip,
-      userAgent: req.get('User-Agent'),
-      userId: req.user?.id,
-    });
+
+    logger[logLevel](
+      `${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`,
+      {
+        method: req.method,
+        url: req.originalUrl,
+        statusCode: res.statusCode,
+        duration: `${duration}ms`,
+        ip: req.ip,
+        userAgent: req.get('User-Agent'),
+        userId: req.user?.id,
+      },
+    );
   });
-  
+
   next();
 };
 

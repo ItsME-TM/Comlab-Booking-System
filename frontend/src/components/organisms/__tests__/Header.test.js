@@ -6,19 +6,21 @@ import Header from '../Header';
 
 // Mock the router location
 const mockLocation = {
-  pathname: '/dashboard'
+  pathname: '/dashboard',
 };
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => mockLocation,
-  Link: ({ children, to, ...props }) => <a href={to} {...props}>{children}</a>
+  Link: ({ children, to, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 const HeaderWrapper = ({ children }) => (
-  <BrowserRouter>
-    {children}
-  </BrowserRouter>
+  <BrowserRouter>{children}</BrowserRouter>
 );
 
 describe('Header Component', () => {
@@ -32,11 +34,13 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     expect(screen.getByText('CO1 Lab Booking System')).toBeInTheDocument();
-    expect(screen.getByText('Faculty of Engineering - University of Jaffna')).toBeInTheDocument();
+    expect(
+      screen.getByText('Faculty of Engineering - University of Jaffna'),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('')).toBeInTheDocument(); // Logo image
   });
 
@@ -44,7 +48,7 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     expect(screen.getByText('Home')).toBeInTheDocument();
@@ -56,7 +60,7 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     expect(screen.getByAltText('notf-icon')).toBeInTheDocument();
@@ -67,7 +71,7 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const userIcon = screen.getByAltText('user-icon').closest('.userIcon');
@@ -78,11 +82,11 @@ describe('Header Component', () => {
 
   test('applies active class to current page button', () => {
     mockLocation.pathname = '/dashboard';
-    
+
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const homeButton = screen.getByText('Home').closest('button');
@@ -93,7 +97,7 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} isProfileVisible={true} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const userIcon = screen.getByAltText('user-icon').closest('.userIcon');
@@ -102,11 +106,11 @@ describe('Header Component', () => {
 
   test('applies active-page class when on user page', () => {
     mockLocation.pathname = '/user';
-    
+
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const userIcon = screen.getByAltText('user-icon').closest('.userIcon');
@@ -115,11 +119,11 @@ describe('Header Component', () => {
 
   test('applies active-page class to notification icon when on notification page', () => {
     mockLocation.pathname = '/Notification';
-    
+
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const notificationIcon = screen.getByAltText('notf-icon');
@@ -130,19 +134,28 @@ describe('Header Component', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
-    expect(screen.getByText('Home').closest('a')).toHaveAttribute('href', '/dashboard');
-    expect(screen.getByText('Booking').closest('a')).toHaveAttribute('href', '/booking');
-    expect(screen.getByText('View').closest('a')).toHaveAttribute('href', '/view');
+    expect(screen.getByText('Home').closest('a')).toHaveAttribute(
+      'href',
+      '/dashboard',
+    );
+    expect(screen.getByText('Booking').closest('a')).toHaveAttribute(
+      'href',
+      '/booking',
+    );
+    expect(screen.getByText('View').closest('a')).toHaveAttribute(
+      'href',
+      '/view',
+    );
   });
 
   test('navbar toggle button is present for mobile', () => {
     render(
       <HeaderWrapper>
         <Header onUserIconClick={mockOnUserIconClick} />
-      </HeaderWrapper>
+      </HeaderWrapper>,
     );
 
     const toggleButton = document.querySelector('.navbar-toggler');

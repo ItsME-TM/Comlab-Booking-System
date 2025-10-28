@@ -12,7 +12,9 @@ class NotificationService {
   async getNotifications(filters = {}) {
     try {
       const queryParams = new URLSearchParams(filters).toString();
-      const endpoint = queryParams ? `/notifications?${queryParams}` : '/notifications';
+      const endpoint = queryParams
+        ? `/notifications?${queryParams}`
+        : '/notifications';
       const response = await apiClient.get(endpoint);
       return response;
     } catch (error) {
@@ -59,7 +61,9 @@ class NotificationService {
    */
   async markAsRead(notificationId) {
     try {
-      const response = await apiClient.patch(`/notifications/${notificationId}/read`);
+      const response = await apiClient.patch(
+        `/notifications/${notificationId}/read`,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to mark notification as read');
@@ -75,7 +79,9 @@ class NotificationService {
       const response = await apiClient.patch('/notifications/mark-all-read');
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to mark all notifications as read');
+      throw new Error(
+        error.message || 'Failed to mark all notifications as read',
+      );
     }
   }
 
@@ -86,7 +92,9 @@ class NotificationService {
    */
   async deleteNotification(notificationId) {
     try {
-      const response = await apiClient.delete(`/notifications/${notificationId}`);
+      const response = await apiClient.delete(
+        `/notifications/${notificationId}`,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to delete notification');
@@ -130,7 +138,10 @@ class NotificationService {
    */
   async sendEmail(emailData) {
     try {
-      const response = await apiClient.post('/notifications/send-email', emailData);
+      const response = await apiClient.post(
+        '/notifications/send-email',
+        emailData,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to send email notification');
@@ -146,7 +157,9 @@ class NotificationService {
       const response = await apiClient.get('/notifications/preferences');
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to fetch notification preferences');
+      throw new Error(
+        error.message || 'Failed to fetch notification preferences',
+      );
     }
   }
 
@@ -157,10 +170,15 @@ class NotificationService {
    */
   async updatePreferences(preferences) {
     try {
-      const response = await apiClient.put('/notifications/preferences', preferences);
+      const response = await apiClient.put(
+        '/notifications/preferences',
+        preferences,
+      );
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to update notification preferences');
+      throw new Error(
+        error.message || 'Failed to update notification preferences',
+      );
     }
   }
 
@@ -171,10 +189,15 @@ class NotificationService {
    */
   async subscribeToPush(subscription) {
     try {
-      const response = await apiClient.post('/notifications/push-subscribe', subscription);
+      const response = await apiClient.post(
+        '/notifications/push-subscribe',
+        subscription,
+      );
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to subscribe to push notifications');
+      throw new Error(
+        error.message || 'Failed to subscribe to push notifications',
+      );
     }
   }
 
@@ -187,7 +210,9 @@ class NotificationService {
       const response = await apiClient.post('/notifications/push-unsubscribe');
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to unsubscribe from push notifications');
+      throw new Error(
+        error.message || 'Failed to unsubscribe from push notifications',
+      );
     }
   }
 }

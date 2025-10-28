@@ -13,13 +13,13 @@ describe('NotificationService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock email transporter
     mockEmailTransporter = {
-      sendMail: jest.fn().mockResolvedValue({ messageId: 'test-message-id' })
+      sendMail: jest.fn().mockResolvedValue({ messageId: 'test-message-id' }),
     };
     nodemailer.createTransporter.mockReturnValue(mockEmailTransporter);
-    
+
     // Mock repository
     mockNotificationRepository = {
       create: jest.fn(),
@@ -30,15 +30,15 @@ describe('NotificationService', () => {
       updateById: jest.fn(),
       updateByBookingId: jest.fn(),
       markAsRead: jest.fn(),
-      updateNotificationsByDate: jest.fn()
+      updateNotificationsByDate: jest.fn(),
     };
     NotificationRepository.mockImplementation(() => mockNotificationRepository);
-    
+
     // Set environment variables
     process.env.EMAIL_ENABLED = 'false';
     process.env.EMAIL_USER = 'test@example.com';
     process.env.EMAIL_PASS = 'testpass';
-    
+
     notificationService = new NotificationService();
   });
 
@@ -53,25 +53,28 @@ describe('NotificationService', () => {
         labStartTime: '10:00',
         labEndTime: '12:00',
         message: 'Test message',
-        type: 'request'
+        type: 'request',
       };
 
       const mockNotification = { _id: 'notification123', ...notificationData };
       mockNotificationRepository.create.mockResolvedValue(mockNotification);
 
-      const result = await notificationService.createNotification(notificationData);
+      const result =
+        await notificationService.createNotification(notificationData);
 
-      expect(mockNotificationRepository.create).toHaveBeenCalledWith(notificationData);
+      expect(mockNotificationRepository.create).toHaveBeenCalledWith(
+        notificationData,
+      );
       expect(result).toEqual(mockNotification);
     });
 
     it('should send email when email is enabled', async () => {
       process.env.EMAIL_ENABLED = 'true';
-      
+
       const notificationData = {
         receiverEmail: 'user@example.com',
         type: 'request',
-        labSessionTitle: 'Test Lab'
+        labSessionTitle: 'Test Lab',
       };
 
       const mockNotification = { _id: 'notification123', ...notificationData };
@@ -84,10 +87,13 @@ describe('NotificationService', () => {
 
     it('should throw error when notification creation fails', async () => {
       const notificationData = { receiverEmail: 'user@example.com' };
-      mockNotificationRepository.create.mockRejectedValue(new Error('Database error'));
+      mockNotificationRepository.create.mockRejectedValue(
+        new Error('Database error'),
+      );
 
-      await expect(notificationService.createNotification(notificationData))
-        .rejects.toThrow('Failed to create notification: Database error');
+      await expect(
+        notificationService.createNotification(notificationData),
+      ).rejects.toThrow('Failed to create notification: Database error');
     });
   });
 
@@ -98,19 +104,30 @@ describe('NotificationService', () => {
         bookingId: 'booking123',
         senderEmail: 'sender@example.com',
         labSessionTitle: 'Test Lab',
-        type: 'request'
+        type: 'request',
       };
 
       const mockNotifications = [
-        { _id: 'notification1', receiverEmail: 'user1@example.com', ...notificationTemplate },
-        { _id: 'notification2', receiverEmail: 'user2@example.com', ...notificationTemplate }
+        {
+          _id: 'notification1',
+          receiverEmail: 'user1@example.com',
+          ...notificationTemplate,
+        },
+        {
+          _id: 'notification2',
+          receiverEmail: 'user2@example.com',
+          ...notificationTemplate,
+        },
       ];
 
       mockNotificationRepository.create
         .mockResolvedValueOnce(mockNotifications[0])
         .mockResolvedValueOnce(mockNotifications[1]);
 
-      const result = await notificationService.createBulkNotifications(attendees, notificationTemplate);
+      const result = await notificationService.createBulkNotifications(
+        attendees,
+        notificationTemplate,
+      );
 
       expect(mockNotificationRepository.create).toHaveBeenCalledTimes(2);
       expect(result).toHaveLength(2);
@@ -124,14 +141,20 @@ describe('NotificationService', () => {
       const receiverEmail = 'user@example.com';
       const mockNotifications = [
         { _id: 'notification1', receiverEmail, type: 'request' },
-        { _id: 'notification2', receiverEmail, type: 'confirmed' }
+        { _id: 'notification2', receiverEmail, type: 'confirmed' },
       ];
 
-      mockNotificationRepository.findByReceiver.mockResolvedValue(mockNotifications);
+      mockNotificationRepository.findByReceiver.mockResolvedValue(
+        mockNotifications,
+      );
 
-      const result = await notificationService.getNotificationsByReceiver(receiverEmail);
+      const result =
+        await notificationService.getNotificationsByReceiver(receiverEmail);
 
-      expect(mockNotificationRepository.findByReceiver).toHaveBeenCalledWith(receiverEmail, {});
+      expect(mockNotificationRepository.findByReceiver).toHaveBeenCalledWith(
+        receiverEmail,
+        {},
+      );
       expect(result).toEqual(mockNotifications);
     });
 
@@ -139,11 +162,14 @@ describe('NotificationService', () => {
       const receiverEmail = 'user@example.com';
       const excludeTypes = ['booking_confirmation'];
 
-      await notificationService.getNotificationsByReceiver(receiverEmail, excludeTypes);
+      await notificationService.getNotificationsByReceiver(
+        receiverEmail,
+        excludeTypes,
+      );
 
       expect(mockNotificationRepository.findByReceiver).toHaveBeenCalledWith(
-        receiverEmail, 
-        { type: { $nin: excludeTypes } }
+        receiverEmail,
+        { type: { $nin: excludeTypes } },
       );
     });
   });
@@ -156,9 +182,15 @@ describe('NotificationService', () => {
 
       mockNotificationRepository.markAsRead.mockResolvedValue(mockNotification);
 
-      const result = await notificationService.markNotificationAsRead(notificationId, userEmail);
+      const result = await notificationService.markNotificationAsRead(
+        notificationId,
+        userEmail,
+      );
 
-      expect(mockNotificationRepository.markAsRead).toHaveBeenCalledWith(notificationId, userEmail);
+      expect(mockNotificationRepository.markAsRead).toHaveBeenCalledWith(
+        notificationId,
+        userEmail,
+      );
       expect(result).toEqual(mockNotification);
     });
 
@@ -168,8 +200,11 @@ describe('NotificationService', () => {
 
       mockNotificationRepository.markAsRead.mockResolvedValue(null);
 
-      await expect(notificationService.markNotificationAsRead(notificationId, userEmail))
-        .rejects.toThrow('Failed to mark notification as read: Notification not found or access denied');
+      await expect(
+        notificationService.markNotificationAsRead(notificationId, userEmail),
+      ).rejects.toThrow(
+        'Failed to mark notification as read: Notification not found or access denied',
+      );
     });
   });
 
@@ -181,18 +216,24 @@ describe('NotificationService', () => {
         _id: notificationId,
         receiverEmail: userEmail,
         isReceiverConfirm: true,
-        type: 'booking_confirmation'
+        type: 'booking_confirmation',
       };
 
       mockNotificationRepository.updateById.mockResolvedValue(mockNotification);
 
-      const result = await notificationService.acceptNotification(notificationId, userEmail);
+      const result = await notificationService.acceptNotification(
+        notificationId,
+        userEmail,
+      );
 
-      expect(mockNotificationRepository.updateById).toHaveBeenCalledWith(notificationId, {
-        isReceiverConfirm: true,
-        type: 'booking_confirmation',
-        isRead: false
-      });
+      expect(mockNotificationRepository.updateById).toHaveBeenCalledWith(
+        notificationId,
+        {
+          isReceiverConfirm: true,
+          type: 'booking_confirmation',
+          isRead: false,
+        },
+      );
       expect(result).toEqual(mockNotification);
     });
 
@@ -201,13 +242,16 @@ describe('NotificationService', () => {
       const userEmail = 'user@example.com';
       const mockNotification = {
         _id: notificationId,
-        receiverEmail: 'other@example.com' // Different user
+        receiverEmail: 'other@example.com', // Different user
       };
 
       mockNotificationRepository.updateById.mockResolvedValue(mockNotification);
 
-      await expect(notificationService.acceptNotification(notificationId, userEmail))
-        .rejects.toThrow('Failed to accept notification: Notification not found or access denied');
+      await expect(
+        notificationService.acceptNotification(notificationId, userEmail),
+      ).rejects.toThrow(
+        'Failed to accept notification: Notification not found or access denied',
+      );
     });
   });
 
@@ -216,20 +260,27 @@ describe('NotificationService', () => {
       const notificationId = 'notification123';
       const mockNotification = {
         _id: notificationId,
-        bookingId: 'booking123'
+        bookingId: 'booking123',
       };
 
       mockNotificationRepository.findById.mockResolvedValue(mockNotification);
-      mockNotificationRepository.updateByBookingId.mockResolvedValue({ modifiedCount: 3 });
+      mockNotificationRepository.updateByBookingId.mockResolvedValue({
+        modifiedCount: 3,
+      });
 
       const result = await notificationService.confirmLab(notificationId);
 
-      expect(mockNotificationRepository.findById).toHaveBeenCalledWith(notificationId);
-      expect(mockNotificationRepository.updateByBookingId).toHaveBeenCalledWith('booking123', {
-        IsLabWillGoingOn: true,
-        type: 'confirmed',
-        isRead: false
-      });
+      expect(mockNotificationRepository.findById).toHaveBeenCalledWith(
+        notificationId,
+      );
+      expect(mockNotificationRepository.updateByBookingId).toHaveBeenCalledWith(
+        'booking123',
+        {
+          IsLabWillGoingOn: true,
+          type: 'confirmed',
+          isRead: false,
+        },
+      );
       expect(result.updatedCount).toBe(3);
     });
 
@@ -238,8 +289,9 @@ describe('NotificationService', () => {
 
       mockNotificationRepository.findById.mockResolvedValue(null);
 
-      await expect(notificationService.confirmLab(notificationId))
-        .rejects.toThrow('Failed to confirm lab: Notification not found');
+      await expect(
+        notificationService.confirmLab(notificationId),
+      ).rejects.toThrow('Failed to confirm lab: Notification not found');
     });
   });
 
@@ -248,19 +300,24 @@ describe('NotificationService', () => {
       const notificationId = 'notification123';
       const mockNotification = {
         _id: notificationId,
-        bookingId: 'booking123'
+        bookingId: 'booking123',
       };
 
       mockNotificationRepository.findById.mockResolvedValue(mockNotification);
-      mockNotificationRepository.updateByBookingId.mockResolvedValue({ modifiedCount: 2 });
+      mockNotificationRepository.updateByBookingId.mockResolvedValue({
+        modifiedCount: 2,
+      });
 
       const result = await notificationService.cancelLab(notificationId);
 
-      expect(mockNotificationRepository.updateByBookingId).toHaveBeenCalledWith('booking123', {
-        IsLabWillGoingOn: false,
-        type: 'cancellation',
-        isRead: false
-      });
+      expect(mockNotificationRepository.updateByBookingId).toHaveBeenCalledWith(
+        'booking123',
+        {
+          IsLabWillGoingOn: false,
+          type: 'cancellation',
+          isRead: false,
+        },
+      );
       expect(result.updatedCount).toBe(2);
     });
   });
@@ -268,14 +325,16 @@ describe('NotificationService', () => {
   describe('updateNotificationsToReminder', () => {
     it('should update notifications to reminder type', async () => {
       const date = new Date('2024-01-15');
-      mockNotificationRepository.updateNotificationsByDate.mockResolvedValue({ modifiedCount: 5 });
+      mockNotificationRepository.updateNotificationsByDate.mockResolvedValue({
+        modifiedCount: 5,
+      });
 
-      const result = await notificationService.updateNotificationsToReminder(date);
+      const result =
+        await notificationService.updateNotificationsToReminder(date);
 
-      expect(mockNotificationRepository.updateNotificationsByDate).toHaveBeenCalledWith(
-        date.toISOString(),
-        { type: 'reminder' }
-      );
+      expect(
+        mockNotificationRepository.updateNotificationsByDate,
+      ).toHaveBeenCalledWith(date.toISOString(), { type: 'reminder' });
       expect(result.updatedCount).toBe(5);
     });
   });
@@ -289,7 +348,7 @@ describe('NotificationService', () => {
         labStartTime: '10:00',
         labEndTime: '12:00',
         senderEmail: 'sender@example.com',
-        message: 'Test message'
+        message: 'Test message',
       };
 
       const result = notificationService.generateEmailContent(notification);
@@ -307,7 +366,7 @@ describe('NotificationService', () => {
         labSessionTitle: 'Test Lab',
         labDate: '2024-01-15',
         labStartTime: '10:00',
-        labEndTime: '12:00'
+        labEndTime: '12:00',
       };
 
       const result = notificationService.generateEmailContent(notification);

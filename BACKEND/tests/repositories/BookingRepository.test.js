@@ -18,13 +18,15 @@ describe('BookingRepository', () => {
         title: 'Lab Session',
         startTime: '2024-01-01T10:00:00Z',
         endTime: '2024-01-01T12:00:00Z',
-        description: 'Test session'
+        description: 'Test session',
       };
 
-      const mockSave = jest.fn().mockResolvedValue({ _id: 'booking123', ...bookingData });
+      const mockSave = jest
+        .fn()
+        .mockResolvedValue({ _id: 'booking123', ...bookingData });
       Booking.mockImplementation(() => ({
         save: mockSave,
-        ...bookingData
+        ...bookingData,
       }));
 
       const result = await bookingRepository.create(bookingData);
@@ -51,7 +53,7 @@ describe('BookingRepository', () => {
     it('should find all bookings with filters', async () => {
       const mockBookings = [
         { _id: 'booking1', status: 'pending' },
-        { _id: 'booking2', status: 'confirmed' }
+        { _id: 'booking2', status: 'confirmed' },
       ];
       const filters = { status: 'pending' };
 
@@ -78,14 +80,16 @@ describe('BookingRepository', () => {
     it('should find all non-cancelled bookings', async () => {
       const mockBookings = [
         { _id: 'booking1', status: 'pending' },
-        { _id: 'booking2', status: 'confirmed' }
+        { _id: 'booking2', status: 'confirmed' },
       ];
 
       Booking.find.mockResolvedValue(mockBookings);
 
       const result = await bookingRepository.findActiveBookings();
 
-      expect(Booking.find).toHaveBeenCalledWith({ status: { $ne: 'cancelled' } });
+      expect(Booking.find).toHaveBeenCalledWith({
+        status: { $ne: 'cancelled' },
+      });
       expect(result).toEqual(mockBookings);
     });
   });
@@ -98,15 +102,18 @@ describe('BookingRepository', () => {
 
       Booking.find.mockResolvedValue(mockBookings);
 
-      const result = await bookingRepository.findOverlappingBookings(startTime, endTime);
+      const result = await bookingRepository.findOverlappingBookings(
+        startTime,
+        endTime,
+      );
 
       expect(Booking.find).toHaveBeenCalledWith({
         $or: [
           { startTime: { $lt: endTime, $gte: startTime } },
           { endTime: { $gt: startTime, $lte: endTime } },
-          { startTime: { $lte: startTime }, endTime: { $gte: endTime } }
+          { startTime: { $lte: startTime }, endTime: { $gte: endTime } },
         ],
-        status: { $nin: ['cancelled'] }
+        status: { $nin: ['cancelled'] },
       });
       expect(result).toEqual(mockBookings);
     });
@@ -120,18 +127,18 @@ describe('BookingRepository', () => {
       Booking.find.mockResolvedValue(mockBookings);
 
       const result = await bookingRepository.findOverlappingBookings(
-        startTime, 
-        endTime, 
-        excludeStatuses
+        startTime,
+        endTime,
+        excludeStatuses,
       );
 
       expect(Booking.find).toHaveBeenCalledWith({
         $or: [
           { startTime: { $lt: endTime, $gte: startTime } },
           { endTime: { $gt: startTime, $lte: endTime } },
-          { startTime: { $lte: startTime }, endTime: { $gte: endTime } }
+          { startTime: { $lte: startTime }, endTime: { $gte: endTime } },
         ],
-        status: { $nin: excludeStatuses }
+        status: { $nin: excludeStatuses },
       });
       expect(result).toEqual(mockBookings);
     });
@@ -145,11 +152,14 @@ describe('BookingRepository', () => {
 
       Booking.find.mockResolvedValue(mockBookings);
 
-      const result = await bookingRepository.findByDateRange(startDate, endDate);
+      const result = await bookingRepository.findByDateRange(
+        startDate,
+        endDate,
+      );
 
       expect(Booking.find).toHaveBeenCalledWith({
         startTime: { $gte: startDate },
-        endTime: { $lte: endDate }
+        endTime: { $lte: endDate },
       });
       expect(result).toEqual(mockBookings);
     });
@@ -179,7 +189,9 @@ describe('BookingRepository', () => {
 
       const result = await bookingRepository.update(id, updateData);
 
-      expect(Booking.findByIdAndUpdate).toHaveBeenCalledWith(id, updateData, { new: true });
+      expect(Booking.findByIdAndUpdate).toHaveBeenCalledWith(id, updateData, {
+        new: true,
+      });
       expect(result).toEqual(updatedBooking);
     });
   });
@@ -194,7 +206,11 @@ describe('BookingRepository', () => {
 
       const result = await bookingRepository.updateStatus(id, status);
 
-      expect(Booking.findByIdAndUpdate).toHaveBeenCalledWith(id, { status }, { new: true });
+      expect(Booking.findByIdAndUpdate).toHaveBeenCalledWith(
+        id,
+        { status },
+        { new: true },
+      );
       expect(result).toEqual(updatedBooking);
     });
   });

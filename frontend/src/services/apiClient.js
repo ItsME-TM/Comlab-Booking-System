@@ -40,11 +40,11 @@ class ApiClient {
    */
   async applyRequestInterceptors(config) {
     let modifiedConfig = { ...config };
-    
+
     for (const interceptor of this.requestInterceptors) {
       modifiedConfig = await interceptor(modifiedConfig);
     }
-    
+
     return modifiedConfig;
   }
 
@@ -56,11 +56,11 @@ class ApiClient {
    */
   async applyResponseInterceptors(response, data) {
     let modifiedData = data;
-    
+
     for (const interceptor of this.responseInterceptors) {
       modifiedData = await interceptor(response, modifiedData);
     }
-    
+
     return modifiedData;
   }
 
@@ -71,11 +71,11 @@ class ApiClient {
    */
   async applyErrorInterceptors(error) {
     let modifiedError = error;
-    
+
     for (const interceptor of this.errorInterceptors) {
       modifiedError = await interceptor(modifiedError);
     }
-    
+
     return modifiedError;
   }
 
@@ -94,7 +94,7 @@ class ApiClient {
         headers: {
           'Content-Type': 'application/json',
         },
-        ...options
+        ...options,
       };
 
       // Apply request interceptors
@@ -105,13 +105,13 @@ class ApiClient {
         method: modifiedConfig.method,
         headers: modifiedConfig.headers,
         body: modifiedConfig.body,
-        ...modifiedConfig
+        ...modifiedConfig,
       });
 
       // Parse response
       let data;
       const contentType = response.headers.get('content-type');
-      
+
       if (contentType && contentType.includes('application/json')) {
         data = await response.json();
       } else {
@@ -120,7 +120,9 @@ class ApiClient {
 
       // Handle HTTP errors
       if (!response.ok) {
-        const error = new Error(data.message || `HTTP ${response.status}: ${response.statusText}`);
+        const error = new Error(
+          data.message || `HTTP ${response.status}: ${response.statusText}`,
+        );
         error.status = response.status;
         error.response = response;
         error.data = data;
@@ -159,7 +161,7 @@ class ApiClient {
     return this.request(endpoint, {
       ...options,
       method: 'POST',
-      body: data ? JSON.stringify(data) : null
+      body: data ? JSON.stringify(data) : null,
     });
   }
 
@@ -174,7 +176,7 @@ class ApiClient {
     return this.request(endpoint, {
       ...options,
       method: 'PUT',
-      body: data ? JSON.stringify(data) : null
+      body: data ? JSON.stringify(data) : null,
     });
   }
 
@@ -199,7 +201,7 @@ class ApiClient {
     return this.request(endpoint, {
       ...options,
       method: 'PATCH',
-      body: data ? JSON.stringify(data) : null
+      body: data ? JSON.stringify(data) : null,
     });
   }
 }
@@ -208,12 +210,12 @@ class ApiClient {
 const apiClient = new ApiClient();
 
 // Add authentication interceptor
-apiClient.addRequestInterceptor((config) => {
+apiClient.addRequestInterceptor(config => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers = {
       ...config.headers,
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
   }
   return config;
@@ -228,24 +230,27 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Add error handling interceptor
-apiClient.addErrorInterceptor((error) => {
+apiClient.addErrorInterceptor(error => {
   // Handle authentication errors
   if (error.status === 401) {
     // Clear invalid token
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    
+
     // Redirect to login if not already there
-    if (window.location.pathname !== '/signin' && window.location.pathname !== '/') {
+    if (
+      window.location.pathname !== '/signin' &&
+      window.location.pathname !== '/'
+    ) {
       window.location.href = '/signin';
     }
   }
-  
+
   // Log errors in development
   if (process.env.NODE_ENV === 'development') {
     console.error('API Error:', error);
   }
-  
+
   return error;
 });
 

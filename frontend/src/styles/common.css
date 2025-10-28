@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #A6BBC1 0%, #638793 100%);
+  background: linear-gradient(135deg, #a6bbc1 0%, #638793 100%);
   padding: 2rem;
 }
 
@@ -95,15 +95,15 @@
   .text-home h1 {
     font-size: 2rem;
   }
-  
+
   .text-home h3 {
     font-size: 1.2rem;
   }
-  
+
   .text-h1 {
     font-size: 2rem;
   }
-  
+
   .text-h3 {
     font-size: 1.2rem;
   }

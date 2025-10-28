@@ -24,7 +24,7 @@ describe('useForm Hook', () => {
 
     act(() => {
       result.current.handleChange({
-        target: { name: 'name', value: 'John Doe' }
+        target: { name: 'name', value: 'John Doe' },
       });
     });
 
@@ -37,7 +37,7 @@ describe('useForm Hook', () => {
 
     act(() => {
       result.current.handleBlur({
-        target: { name: 'name' }
+        target: { name: 'name' },
       });
     });
 
@@ -70,7 +70,7 @@ describe('useForm Hook', () => {
 
     act(() => {
       result.current.handleChange({
-        target: { name: 'name', value: 'Jane' }
+        target: { name: 'name', value: 'Jane' },
       });
       result.current.setFieldError('name', 'Error');
     });
@@ -101,7 +101,7 @@ describe('useForm Hook', () => {
 
     act(() => {
       result.current.handleChange({
-        target: { name: 'name', value: 'John' }
+        target: { name: 'name', value: 'John' },
       });
     });
 
@@ -109,18 +109,20 @@ describe('useForm Hook', () => {
   });
 
   test('validation errors are set correctly', () => {
-    const validate = (values) => {
+    const validate = values => {
       const errors = {};
       if (!values.name) errors.name = 'Name is required';
       if (!values.email) errors.email = 'Email is required';
       return errors;
     };
 
-    const { result } = renderHook(() => useForm({ name: '', email: '' }, validate));
+    const { result } = renderHook(() =>
+      useForm({ name: '', email: '' }, validate),
+    );
 
     act(() => {
       result.current.handleChange({
-        target: { name: 'name', value: '' }
+        target: { name: 'name', value: '' },
       });
     });
 
@@ -129,7 +131,7 @@ describe('useForm Hook', () => {
   });
 
   test('isValid returns correct validation status', () => {
-    const validate = (values) => {
+    const validate = values => {
       const errors = {};
       if (!values.name) errors.name = 'Name is required';
       return errors;
@@ -155,7 +157,7 @@ describe('useForm Hook', () => {
       name: 'name',
       value: 'John',
       onChange: result.current.handleChange,
-      onBlur: result.current.handleBlur
+      onBlur: result.current.handleBlur,
     });
   });
 });

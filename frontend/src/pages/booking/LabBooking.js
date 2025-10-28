@@ -8,21 +8,21 @@ import { jwtDecode } from 'jwt-decode';
 import Select from 'react-select';
 
 export default function LabBooking() {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const [attendees, setAttendees] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [formattedDate, setFormattedDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [description, setDescription] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
+  const [formattedDate, setFormattedDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [description, setDescription] = useState('');
   const [isBoxVisible, setIsBoxVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [availabilityMessage, setAvailabilityMessage] = useState('');
   const [users, setUsers] = useState([]);
   const [isPollVisible, setIsPollVisible] = useState(false);
-  const [pollDate, setPollDate] = useState("");
-  const [uEmail, setEmail] = useState("");
-  const [id, setId] = useState("");
+  const [pollDate, setPollDate] = useState('');
+  const [uEmail, setEmail] = useState('');
+  const [id, setId] = useState('');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +31,7 @@ export default function LabBooking() {
   useEffect(() => {
     if (token) {
       const decodedToken = jwtDecode(token);
-      setEmail(decodedToken.email || "");
+      setEmail(decodedToken.email || '');
     }
   }, [token]);
 
@@ -45,7 +45,7 @@ export default function LabBooking() {
       setEndTime(moment(event.end).format('HH:mm'));
       setDescription(event.description);
       setAttendees(event.attendees || []);
-      setEmail(event.uEmail || "");
+      setEmail(event.uEmail || '');
     }
   }, [location.state]);
 
@@ -57,8 +57,11 @@ export default function LabBooking() {
 
   return (
     <div>
-      <Header onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
-      <div className="booking-container">
+      <Header
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
+      <div className='booking-container'>
         <h1>Lab Booking</h1>
         {/* Booking form content would go here */}
       </div>

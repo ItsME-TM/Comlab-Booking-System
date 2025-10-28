@@ -1,4 +1,3 @@
-
 /* header.css */
 .userIcon img {
   width: 50px;
@@ -9,9 +8,7 @@
 .navbar-green .navbar-brand div h3 {
   font-weight: 700;
   color: #205464;
-  text-shadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
-
- 
+  text-shadow: '0px 4px 4px rgba(0, 0, 0, 0.25)';
 }
 
 .navbar-green .navbar-brand div p {
@@ -19,8 +16,6 @@
   color: #205464;
   line-height: 24px;
   font-size: 18px;
-
-
 }
 
 .userIcon:hover img,
@@ -44,12 +39,10 @@
 }
 
 .navbar-green {
-  background-color: #A6BBC1;
+  background-color: #a6bbc1;
   color: white;
   width: 100%;
 }
-
-
 
 .buttons-container {
   display: flex;
@@ -61,7 +54,7 @@
 }
 
 @media screen and (max-width: 1080px) {
-  .d-flex{
+  .d-flex {
     justify-content: center;
   }
   .navbar-green .navbar-brand div h3 {
@@ -82,17 +75,14 @@
     width: 100%;
   }
 
-
-
   .buttons-container > * {
     width: 100%;
     text-align: center;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
   .buttons-container {
     display: flex;
     align-items: start;
-   
   }
 
   .userIcon,
@@ -108,9 +98,8 @@
   }
 }
 @media screen and (max-width: 530px) {
-  .d-flex{
+  .d-flex {
     margin-top: 45px;
-
   }
   .navbar-green .navbar-brand div h3 {
     font-size: 20px;
@@ -121,13 +110,8 @@
     font-size: 8px;
     white-space: wrap;
   }
-  .buttons-container{
+  .buttons-container {
     display: flex;
     flex-direction: column;
-
   }
-
-
-
-
 }

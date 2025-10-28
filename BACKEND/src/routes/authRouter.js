@@ -1,35 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/AuthController');
-const { 
-  auth, 
-  validateRequest, 
-  validateEmail, 
-  validatePassword 
+const {
+  auth,
+  validateRequest,
+  validateEmail,
+  validatePassword,
 } = require('../middleware/auth');
 
 // Authentication routes with validation
-router.post('/login', 
+router.post(
+  '/login',
   validateRequest(['email', 'password']),
   validateEmail,
-  AuthController.login
+  AuthController.login,
 );
 
-router.post('/register', 
+router.post(
+  '/register',
   validateRequest(['firstName', 'lastName', 'email', 'password', 'role']),
   validateEmail,
   validatePassword,
-  AuthController.register
+  AuthController.register,
 );
 
-router.post('/refresh', 
+router.post(
+  '/refresh',
   validateRequest(['token']),
-  AuthController.refreshToken
+  AuthController.refreshToken,
 );
 
-router.post('/logout', 
-  auth, 
-  AuthController.logout
-);
+router.post('/logout', auth, AuthController.logout);
 
 module.exports = router;

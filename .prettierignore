@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Build outputs
+build/
+dist/
+coverage/
+*/build/
+*/dist/
+*/coverage/
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Package lock files
+package-lock.json
+yarn.lock
+**/package-lock.json
+**/yarn.lock
+
+# Generated files
+*.min.js
+*.min.css
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Legacy directories (should be cleaned up)
+BACKEND/
+Frontend/

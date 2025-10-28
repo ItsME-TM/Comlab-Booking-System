@@ -25,7 +25,7 @@ describe('BookingService', () => {
         endTime: endDate.toISOString(),
         description: 'Test lab session',
         attendees: ['student1@example.com', 'student2@example.com'],
-        status: 'pending'
+        status: 'pending',
       };
 
       const errors = bookingService.validateBookingData(bookingData);
@@ -39,26 +39,30 @@ describe('BookingService', () => {
         startTime: pastDate.toISOString(),
         endTime: pastDate.toISOString(),
         attendees: ['invalid-email'],
-        status: 'invalid-status'
+        status: 'invalid-status',
       };
 
       const errors = bookingService.validateBookingData(bookingData);
       expect(errors).toContain('Title is required');
       expect(errors).toContain('End time must be after start time');
       expect(errors).toContain('Start time cannot be in the past');
-      expect(errors).toContain('Invalid email format for attendee 1: invalid-email');
-      expect(errors).toContain('Invalid status. Must be one of: pending, confirmed, cancelled');
+      expect(errors).toContain(
+        'Invalid email format for attendee 1: invalid-email',
+      );
+      expect(errors).toContain(
+        'Invalid status. Must be one of: pending, confirmed, cancelled',
+      );
     });
 
     it('should validate booking duration limits', () => {
       const futureDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
-      
+
       // Test too long duration (over 8 hours)
       const longEndDate = new Date(futureDate.getTime() + 9 * 60 * 60 * 1000);
       const longBooking = {
         title: 'Long Session',
         startTime: futureDate.toISOString(),
-        endTime: longEndDate.toISOString()
+        endTime: longEndDate.toISOString(),
       };
 
       let errors = bookingService.validateBookingData(longBooking);
@@ -69,7 +73,7 @@ describe('BookingService', () => {
       const shortBooking = {
         title: 'Short Session',
         startTime: futureDate.toISOString(),
-        endTime: shortEndDate.toISOString()
+        endTime: shortEndDate.toISOString(),
       };
 
       errors = bookingService.validateBookingData(shortBooking);
@@ -84,7 +88,7 @@ describe('BookingService', () => {
         title: 'Lab Session',
         startTime: futureDate.toISOString(),
         endTime: endDate.toISOString(),
-        attendees: []
+        attendees: [],
       };
 
       const errors = bookingService.validateBookingData(bookingData);
@@ -102,10 +106,14 @@ describe('BookingService', () => {
         startTime: futureDate.toISOString(),
         endTime: endDate.toISOString(),
         description: 'Test session',
-        attendees: ['student@example.com']
+        attendees: ['student@example.com'],
       };
 
-      const mockCreatedBooking = { _id: 'booking123', ...bookingData, status: 'pending' };
+      const mockCreatedBooking = {
+        _id: 'booking123',
+        ...bookingData,
+        status: 'pending',
+      };
 
       mockBookingRepository.findOverlappingBookings.mockResolvedValue([]);
       mockBookingRepository.create.mockResolvedValue(mockCreatedBooking);
@@ -115,7 +123,7 @@ describe('BookingService', () => {
       expect(mockBookingRepository.findOverlappingBookings).toHaveBeenCalled();
       expect(mockBookingRepository.create).toHaveBeenCalledWith({
         ...bookingData,
-        status: 'pending'
+        status: 'pending',
       });
       expect(result).toEqual(mockCreatedBooking);
     });
@@ -123,11 +131,12 @@ describe('BookingService', () => {
     it('should throw error for invalid booking data', async () => {
       const bookingData = {
         title: '',
-        startTime: 'invalid-date'
+        startTime: 'invalid-date',
       };
 
-      await expect(bookingService.createBooking(bookingData))
-        .rejects.toThrow('Validation failed');
+      await expect(bookingService.createBooking(bookingData)).rejects.toThrow(
+        'Validation failed',
+      );
     });
 
     it('should throw error when time slot is not available', async () => {
@@ -138,7 +147,7 @@ describe('BookingService', () => {
         title: 'Lab Session',
         startTime: futureDate.toISOString(),
         endTime: endDate.toISOString(),
-        attendees: ['student@example.com']
+        attendees: ['student@example.com'],
       };
 
       const conflictingBooking = {
@@ -146,13 +155,16 @@ describe('BookingService', () => {
         title: 'Existing Session',
         status: 'confirmed',
         startTime: futureDate.toISOString(),
-        endTime: endDate.toISOString()
+        endTime: endDate.toISOString(),
       };
 
-      mockBookingRepository.findOverlappingBookings.mockResolvedValue([conflictingBooking]);
+      mockBookingRepository.findOverlappingBookings.mockResolvedValue([
+        conflictingBooking,
+      ]);
 
-      await expect(bookingService.createBooking(bookingData))
-        .rejects.toThrow('Time slot is not available');
+      await expect(bookingService.createBooking(bookingData)).rejects.toThrow(
+        'Time slot is not available',
+      );
     });
 
     it('should filter out empty attendees', async () => {
@@ -163,7 +175,7 @@ describe('BookingService', () => {
         title: 'Lab Session',
         startTime: futureDate.toISOString(),
         endTime: endDate.toISOString(),
-        attendees: ['student@example.com', '', '  ', 'student2@example.com']
+        attendees: ['student@example.com', '', '  ', 'student2@example.com'],
       };
 
       mockBookingRepository.findOverlappingBookings.mockResolvedValue([]);
@@ -174,7 +186,7 @@ describe('BookingService', () => {
       expect(mockBookingRepository.create).toHaveBeenCalledWith({
         ...bookingData,
         attendees: ['student@example.com', 'student2@example.com'],
-        status: 'pending'
+        status: 'pending',
       });
     });
   });
@@ -188,7 +200,7 @@ describe('BookingService', () => {
 
       const result = await bookingService.checkAvailability(
         futureDate.toISOString(),
-        endDate.toISOString()
+        endDate.toISOString(),
       );
 
       expect(result.available).toBe(true);
@@ -204,14 +216,16 @@ describe('BookingService', () => {
         title: 'Existing Session',
         status: 'confirmed',
         startTime: futureDate.toISOString(),
-        endTime: endDate.toISOString()
+        endTime: endDate.toISOString(),
       };
 
-      mockBookingRepository.findOverlappingBookings.mockResolvedValue([conflictingBooking]);
+      mockBookingRepository.findOverlappingBookings.mockResolvedValue([
+        conflictingBooking,
+      ]);
 
       const result = await bookingService.checkAvailability(
         futureDate.toISOString(),
-        endDate.toISOString()
+        endDate.toISOString(),
       );
 
       expect(result.available).toBe(false);
@@ -228,14 +242,16 @@ describe('BookingService', () => {
         title: 'Cancelled Session',
         status: 'cancelled',
         startTime: futureDate.toISOString(),
-        endTime: endDate.toISOString()
+        endTime: endDate.toISOString(),
       };
 
-      mockBookingRepository.findOverlappingBookings.mockResolvedValue([cancelledBooking]);
+      mockBookingRepository.findOverlappingBookings.mockResolvedValue([
+        cancelledBooking,
+      ]);
 
       const result = await bookingService.checkAvailability(
         futureDate.toISOString(),
-        endDate.toISOString()
+        endDate.toISOString(),
       );
 
       expect(result.available).toBe(true);
@@ -250,15 +266,17 @@ describe('BookingService', () => {
         title: 'Current Session',
         status: 'confirmed',
         startTime: futureDate.toISOString(),
-        endTime: endDate.toISOString()
+        endTime: endDate.toISOString(),
       };
 
-      mockBookingRepository.findOverlappingBookings.mockResolvedValue([currentBooking]);
+      mockBookingRepository.findOverlappingBookings.mockResolvedValue([
+        currentBooking,
+      ]);
 
       const result = await bookingService.checkAvailability(
         futureDate.toISOString(),
         endDate.toISOString(),
-        'current123'
+        'current123',
       );
 
       expect(result.available).toBe(true);
@@ -269,14 +287,17 @@ describe('BookingService', () => {
       expect(result.available).toBe(false);
       expect(result.reason).toBe('Start time and end time are required');
 
-      result = await bookingService.checkAvailability('invalid-date', 'invalid-date');
+      result = await bookingService.checkAvailability(
+        'invalid-date',
+        'invalid-date',
+      );
       expect(result.available).toBe(false);
       expect(result.reason).toBe('Invalid date format');
 
       const futureDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
       result = await bookingService.checkAvailability(
         futureDate.toISOString(),
-        futureDate.toISOString()
+        futureDate.toISOString(),
       );
       expect(result.available).toBe(false);
       expect(result.reason).toBe('End time must be after start time');
@@ -284,7 +305,7 @@ describe('BookingService', () => {
       const pastDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
       result = await bookingService.checkAvailability(
         pastDate.toISOString(),
-        futureDate.toISOString()
+        futureDate.toISOString(),
       );
       expect(result.available).toBe(false);
       expect(result.reason).toBe('Start time cannot be in the past');
@@ -298,19 +319,28 @@ describe('BookingService', () => {
         title: 'Old Title',
         status: 'pending',
         startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        endTime: new Date(Date.now() + 26 * 60 * 60 * 1000).toISOString()
+        endTime: new Date(Date.now() + 26 * 60 * 60 * 1000).toISOString(),
       };
 
-      const updateData = { title: 'New Title', description: 'Updated description' };
+      const updateData = {
+        title: 'New Title',
+        description: 'Updated description',
+      };
       const updatedBooking = { ...existingBooking, ...updateData };
 
       mockBookingRepository.findById.mockResolvedValue(existingBooking);
       mockBookingRepository.update.mockResolvedValue(updatedBooking);
 
-      const result = await bookingService.updateBooking('booking123', updateData);
+      const result = await bookingService.updateBooking(
+        'booking123',
+        updateData,
+      );
 
       expect(mockBookingRepository.findById).toHaveBeenCalledWith('booking123');
-      expect(mockBookingRepository.update).toHaveBeenCalledWith('booking123', updateData);
+      expect(mockBookingRepository.update).toHaveBeenCalledWith(
+        'booking123',
+        updateData,
+      );
       expect(result).toEqual(updatedBooking);
     });
 
@@ -322,14 +352,19 @@ describe('BookingService', () => {
         _id: 'booking123',
         status: 'pending',
         startTime: futureDate.toISOString(),
-        endTime: new Date(futureDate.getTime() + 2 * 60 * 60 * 1000).toISOString()
+        endTime: new Date(
+          futureDate.getTime() + 2 * 60 * 60 * 1000,
+        ).toISOString(),
       };
 
       const updateData = { endTime: newEndDate.toISOString() };
 
       mockBookingRepository.findById.mockResolvedValue(existingBooking);
       mockBookingRepository.findOverlappingBookings.mockResolvedValue([]);
-      mockBookingRepository.update.mockResolvedValue({ ...existingBooking, ...updateData });
+      mockBookingRepository.update.mockResolvedValue({
+        ...existingBooking,
+        ...updateData,
+      });
 
       await bookingService.updateBooking('booking123', updateData);
 
@@ -339,20 +374,22 @@ describe('BookingService', () => {
     it('should throw error when booking not found', async () => {
       mockBookingRepository.findById.mockResolvedValue(null);
 
-      await expect(bookingService.updateBooking('booking123', { title: 'New Title' }))
-        .rejects.toThrow('Booking not found');
+      await expect(
+        bookingService.updateBooking('booking123', { title: 'New Title' }),
+      ).rejects.toThrow('Booking not found');
     });
 
     it('should throw error when trying to update cancelled booking', async () => {
       const cancelledBooking = {
         _id: 'booking123',
-        status: 'cancelled'
+        status: 'cancelled',
       };
 
       mockBookingRepository.findById.mockResolvedValue(cancelledBooking);
 
-      await expect(bookingService.updateBooking('booking123', { title: 'New Title' }))
-        .rejects.toThrow('Cannot update a cancelled booking');
+      await expect(
+        bookingService.updateBooking('booking123', { title: 'New Title' }),
+      ).rejects.toThrow('Cannot update a cancelled booking');
     });
 
     it('should filter out empty attendees', async () => {
@@ -360,11 +397,11 @@ describe('BookingService', () => {
         _id: 'booking123',
         status: 'pending',
         startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        endTime: new Date(Date.now() + 26 * 60 * 60 * 1000).toISOString()
+        endTime: new Date(Date.now() + 26 * 60 * 60 * 1000).toISOString(),
       };
 
       const updateData = {
-        attendees: ['student@example.com', '', '  ', 'student2@example.com']
+        attendees: ['student@example.com', '', '  ', 'student2@example.com'],
       };
 
       mockBookingRepository.findById.mockResolvedValue(existingBooking);
@@ -373,7 +410,7 @@ describe('BookingService', () => {
       await bookingService.updateBooking('booking123', updateData);
 
       expect(mockBookingRepository.update).toHaveBeenCalledWith('booking123', {
-        attendees: ['student@example.com', 'student2@example.com']
+        attendees: ['student@example.com', 'student2@example.com'],
       });
     });
   });
@@ -382,7 +419,7 @@ describe('BookingService', () => {
     it('should successfully cancel booking', async () => {
       const booking = {
         _id: 'booking123',
-        status: 'pending'
+        status: 'pending',
       };
 
       const cancelledBooking = { ...booking, status: 'cancelled' };
@@ -393,27 +430,32 @@ describe('BookingService', () => {
       const result = await bookingService.cancelBooking('booking123');
 
       expect(mockBookingRepository.findById).toHaveBeenCalledWith('booking123');
-      expect(mockBookingRepository.updateStatus).toHaveBeenCalledWith('booking123', 'cancelled');
+      expect(mockBookingRepository.updateStatus).toHaveBeenCalledWith(
+        'booking123',
+        'cancelled',
+      );
       expect(result).toEqual(cancelledBooking);
     });
 
     it('should throw error when booking not found', async () => {
       mockBookingRepository.findById.mockResolvedValue(null);
 
-      await expect(bookingService.cancelBooking('booking123'))
-        .rejects.toThrow('Booking not found');
+      await expect(bookingService.cancelBooking('booking123')).rejects.toThrow(
+        'Booking not found',
+      );
     });
 
     it('should throw error when booking is already cancelled', async () => {
       const booking = {
         _id: 'booking123',
-        status: 'cancelled'
+        status: 'cancelled',
       };
 
       mockBookingRepository.findById.mockResolvedValue(booking);
 
-      await expect(bookingService.cancelBooking('booking123'))
-        .rejects.toThrow('Booking is already cancelled');
+      await expect(bookingService.cancelBooking('booking123')).rejects.toThrow(
+        'Booking is already cancelled',
+      );
     });
   });
 
@@ -426,50 +468,58 @@ describe('BookingService', () => {
         _id: 'booking123',
         status: 'pending',
         startTime: futureDate.toISOString(),
-        endTime: endDate.toISOString()
+        endTime: endDate.toISOString(),
       };
 
       const confirmedBooking = { ...booking, status: 'confirmed' };
 
       mockBookingRepository.findById.mockResolvedValue(booking);
-      mockBookingRepository.findOverlappingBookings.mockResolvedValue([booking]);
+      mockBookingRepository.findOverlappingBookings.mockResolvedValue([
+        booking,
+      ]);
       mockBookingRepository.updateStatus.mockResolvedValue(confirmedBooking);
 
       const result = await bookingService.confirmBooking('booking123');
 
-      expect(mockBookingRepository.updateStatus).toHaveBeenCalledWith('booking123', 'confirmed');
+      expect(mockBookingRepository.updateStatus).toHaveBeenCalledWith(
+        'booking123',
+        'confirmed',
+      );
       expect(result).toEqual(confirmedBooking);
     });
 
     it('should throw error when booking not found', async () => {
       mockBookingRepository.findById.mockResolvedValue(null);
 
-      await expect(bookingService.confirmBooking('booking123'))
-        .rejects.toThrow('Booking not found');
+      await expect(bookingService.confirmBooking('booking123')).rejects.toThrow(
+        'Booking not found',
+      );
     });
 
     it('should throw error when booking is cancelled', async () => {
       const booking = {
         _id: 'booking123',
-        status: 'cancelled'
+        status: 'cancelled',
       };
 
       mockBookingRepository.findById.mockResolvedValue(booking);
 
-      await expect(bookingService.confirmBooking('booking123'))
-        .rejects.toThrow('Cannot confirm a cancelled booking');
+      await expect(bookingService.confirmBooking('booking123')).rejects.toThrow(
+        'Cannot confirm a cancelled booking',
+      );
     });
 
     it('should throw error when booking is already confirmed', async () => {
       const booking = {
         _id: 'booking123',
-        status: 'confirmed'
+        status: 'confirmed',
       };
 
       mockBookingRepository.findById.mockResolvedValue(booking);
 
-      await expect(bookingService.confirmBooking('booking123'))
-        .rejects.toThrow('Booking is already confirmed');
+      await expect(bookingService.confirmBooking('booking123')).rejects.toThrow(
+        'Booking is already confirmed',
+      );
     });
   });
 
@@ -477,20 +527,23 @@ describe('BookingService', () => {
     it('should return bookings with specified status', async () => {
       const mockBookings = [
         { _id: 'booking1', status: 'pending' },
-        { _id: 'booking2', status: 'pending' }
+        { _id: 'booking2', status: 'pending' },
       ];
 
       mockBookingRepository.findByStatus.mockResolvedValue(mockBookings);
 
       const result = await bookingService.getBookingsByStatus('pending');
 
-      expect(mockBookingRepository.findByStatus).toHaveBeenCalledWith('pending');
+      expect(mockBookingRepository.findByStatus).toHaveBeenCalledWith(
+        'pending',
+      );
       expect(result).toEqual(mockBookings);
     });
 
     it('should throw error for invalid status', async () => {
-      await expect(bookingService.getBookingsByStatus('invalid-status'))
-        .rejects.toThrow('Invalid status specified');
+      await expect(
+        bookingService.getBookingsByStatus('invalid-status'),
+      ).rejects.toThrow('Invalid status specified');
     });
   });
 
@@ -502,9 +555,15 @@ describe('BookingService', () => {
 
       mockBookingRepository.findByDateRange.mockResolvedValue(mockBookings);
 
-      const result = await bookingService.getBookingsByDateRange(startDate, endDate);
+      const result = await bookingService.getBookingsByDateRange(
+        startDate,
+        endDate,
+      );
 
-      expect(mockBookingRepository.findByDateRange).toHaveBeenCalledWith(startDate, endDate);
+      expect(mockBookingRepository.findByDateRange).toHaveBeenCalledWith(
+        startDate,
+        endDate,
+      );
       expect(result).toEqual(mockBookings);
     });
 
@@ -512,13 +571,15 @@ describe('BookingService', () => {
       const startDate = new Date('2024-01-31');
       const endDate = new Date('2024-01-01');
 
-      await expect(bookingService.getBookingsByDateRange(startDate, endDate))
-        .rejects.toThrow('End date must be after start date');
+      await expect(
+        bookingService.getBookingsByDateRange(startDate, endDate),
+      ).rejects.toThrow('End date must be after start date');
     });
 
     it('should throw error for missing dates', async () => {
-      await expect(bookingService.getBookingsByDateRange(null, new Date()))
-        .rejects.toThrow('Start date and end date are required');
+      await expect(
+        bookingService.getBookingsByDateRange(null, new Date()),
+      ).rejects.toThrow('Start date and end date are required');
     });
   });
 
@@ -526,8 +587,8 @@ describe('BookingService', () => {
     it('should return booking statistics', async () => {
       mockBookingRepository.count
         .mockResolvedValueOnce(10) // total
-        .mockResolvedValueOnce(3)  // pending
-        .mockResolvedValueOnce(5)  // confirmed
+        .mockResolvedValueOnce(3) // pending
+        .mockResolvedValueOnce(5) // confirmed
         .mockResolvedValueOnce(2); // cancelled
 
       const result = await bookingService.getBookingStats();
@@ -536,7 +597,7 @@ describe('BookingService', () => {
         total: 10,
         pending: 3,
         confirmed: 5,
-        cancelled: 2
+        cancelled: 2,
       });
     });
   });

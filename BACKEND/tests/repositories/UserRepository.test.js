@@ -19,13 +19,13 @@ describe('UserRepository', () => {
         lastName: 'Doe',
         email: 'john@example.com',
         role: 'lecturer',
-        password: 'password123'
+        password: 'password123',
       };
 
       const mockUser = {
         ...userData,
         _id: 'user123',
-        save: jest.fn().mockResolvedValue(userData)
+        save: jest.fn().mockResolvedValue(userData),
       };
 
       User.mockImplementation(() => mockUser);
@@ -54,7 +54,11 @@ describe('UserRepository', () => {
 
   describe('findByIdWithPassword', () => {
     it('should find user by ID with password', async () => {
-      const mockUser = { _id: 'user123', firstName: 'John', password: 'hashedPassword' };
+      const mockUser = {
+        _id: 'user123',
+        firstName: 'John',
+        password: 'hashedPassword',
+      };
       User.findById.mockResolvedValue(mockUser);
 
       const result = await userRepository.findByIdWithPassword('user123');
@@ -139,7 +143,11 @@ describe('UserRepository', () => {
 
       const result = await userRepository.update('user123', updateData);
 
-      expect(User.findByIdAndUpdate).toHaveBeenCalledWith('user123', updateData, { new: true });
+      expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
+        'user123',
+        updateData,
+        { new: true },
+      );
       expect(mockSelect).toHaveBeenCalledWith('-password');
       expect(result).toEqual(mockUser);
     });
@@ -152,12 +160,15 @@ describe('UserRepository', () => {
       const mockSelect = jest.fn().mockResolvedValue(mockUser);
       User.findOneAndUpdate.mockReturnValue({ select: mockSelect });
 
-      const result = await userRepository.updateByEmail('john@example.com', updateData);
+      const result = await userRepository.updateByEmail(
+        'john@example.com',
+        updateData,
+      );
 
       expect(User.findOneAndUpdate).toHaveBeenCalledWith(
-        { email: 'john@example.com' }, 
-        updateData, 
-        { new: true }
+        { email: 'john@example.com' },
+        updateData,
+        { new: true },
       );
       expect(mockSelect).toHaveBeenCalledWith('-password');
       expect(result).toEqual(mockUser);
@@ -181,12 +192,15 @@ describe('UserRepository', () => {
       const mockUser = { _id: 'user123', otp: '123456' };
       User.findOneAndUpdate.mockResolvedValue(mockUser);
 
-      const result = await userRepository.updateOtp('john@example.com', '123456');
+      const result = await userRepository.updateOtp(
+        'john@example.com',
+        '123456',
+      );
 
       expect(User.findOneAndUpdate).toHaveBeenCalledWith(
-        { email: 'john@example.com' }, 
-        { otp: '123456' }, 
-        { new: true }
+        { email: 'john@example.com' },
+        { otp: '123456' },
+        { new: true },
       );
       expect(result).toEqual(mockUser);
     });
@@ -200,9 +214,9 @@ describe('UserRepository', () => {
       const result = await userRepository.clearOtp('john@example.com');
 
       expect(User.findOneAndUpdate).toHaveBeenCalledWith(
-        { email: 'john@example.com' }, 
-        { otp: '' }, 
-        { new: true }
+        { email: 'john@example.com' },
+        { otp: '' },
+        { new: true },
       );
       expect(result).toEqual(mockUser);
     });

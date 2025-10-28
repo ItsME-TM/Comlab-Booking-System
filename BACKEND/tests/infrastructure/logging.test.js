@@ -13,7 +13,7 @@ describe('Logging Infrastructure', () => {
 
   afterEach(() => {
     process.env = originalEnv;
-    
+
     // Clean up log files created during tests
     const logDir = path.join(__dirname, '../../logs');
     if (fs.existsSync(logDir)) {
@@ -113,23 +113,23 @@ describe('Logging Infrastructure', () => {
 
     test('should have logError helper method', () => {
       expect(typeof logger.logError).toBe('function');
-      
+
       const error = new Error('Test error');
       const spy = jest.spyOn(logger, 'error');
-      
+
       logger.logError(error, { userId: '123' });
-      
+
       expect(spy).toHaveBeenCalledWith('Test error', {
         stack: error.stack,
         userId: '123',
       });
-      
+
       spy.mockRestore();
     });
 
     test('should have logRequest helper method', () => {
       expect(typeof logger.logRequest).toBe('function');
-      
+
       const mockReq = {
         method: 'GET',
         originalUrl: '/api/test',
@@ -137,15 +137,15 @@ describe('Logging Infrastructure', () => {
         get: jest.fn().mockReturnValue('test-agent'),
         user: { id: '123' },
       };
-      
+
       const mockRes = {
         statusCode: 200,
       };
-      
+
       const spy = jest.spyOn(logger, 'info');
-      
+
       logger.logRequest(mockReq, mockRes, 150);
-      
+
       expect(spy).toHaveBeenCalledWith('GET /api/test 200', {
         method: 'GET',
         url: '/api/test',
@@ -155,7 +155,7 @@ describe('Logging Infrastructure', () => {
         userAgent: 'test-agent',
         userId: '123',
       });
-      
+
       spy.mockRestore();
     });
 
@@ -166,15 +166,15 @@ describe('Logging Infrastructure', () => {
         ip: '127.0.0.1',
         get: jest.fn().mockReturnValue('test-agent'),
       };
-      
+
       const mockRes = {
         statusCode: 404,
       };
-      
+
       const spy = jest.spyOn(logger, 'warn');
-      
+
       logger.logRequest(mockReq, mockRes, 50);
-      
+
       expect(spy).toHaveBeenCalled();
       spy.mockRestore();
     });
@@ -193,9 +193,9 @@ describe('Logging Infrastructure', () => {
 
     test('should write to http log level through stream', () => {
       const spy = jest.spyOn(logger, 'http');
-      
+
       logger.stream.write('GET /api/test 200 - 150ms\n');
-      
+
       expect(spy).toHaveBeenCalledWith('GET /api/test 200 - 150ms');
       spy.mockRestore();
     });
@@ -205,14 +205,14 @@ describe('Logging Infrastructure', () => {
     test('should not create log files in test environment', () => {
       process.env.NODE_ENV = 'test';
       logger = require('../../src/config/logger');
-      
+
       // Log some messages
       logger.error('Test error');
       logger.info('Test info');
-      
+
       // Check that log files are not created in test environment
       const logDir = path.join(__dirname, '../../logs');
-      
+
       // Wait a bit for potential file operations
       setTimeout(() => {
         if (fs.existsSync(logDir)) {
@@ -243,7 +243,7 @@ describe('Logging Infrastructure', () => {
     test('should handle circular references in log objects', () => {
       const circularObj = { name: 'test' };
       circularObj.self = circularObj;
-      
+
       expect(() => {
         logger.info('Circular object test', circularObj);
       }).not.toThrow();

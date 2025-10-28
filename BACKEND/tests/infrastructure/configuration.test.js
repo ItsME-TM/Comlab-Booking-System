@@ -94,21 +94,21 @@ describe('Configuration Management', () => {
 
     test('should have valid port number', () => {
       const config = require('../../src/config');
-      
+
       expect(config.app.port).toBeGreaterThan(0);
       expect(config.app.port).toBeLessThan(65536);
     });
 
     test('should have valid JWT secret', () => {
       const config = require('../../src/config');
-      
+
       expect(config.jwt.secret).toBeDefined();
       expect(config.jwt.secret.length).toBeGreaterThan(10);
     });
 
     test('should have valid email configuration', () => {
       const config = require('../../src/config');
-      
+
       expect(config.email.user).toContain('@');
       expect(config.email.password).toBeDefined();
       expect(config.email.host).toBeDefined();
@@ -117,7 +117,7 @@ describe('Configuration Management', () => {
 
     test('should have valid bcrypt rounds', () => {
       const config = require('../../src/config');
-      
+
       expect(config.security.bcryptRounds).toBeGreaterThanOrEqual(4);
       expect(config.security.bcryptRounds).toBeLessThanOrEqual(15);
     });

@@ -3,12 +3,14 @@ import axios from 'axios';
 import ToHeader from '../components/ToHeder';
 import '../components/notification.css';
 import Profile from '../components/Profile';
-import BeatLoader from "react-spinners/BeatLoader";
+import BeatLoader from 'react-spinners/BeatLoader';
 
 export default function ToNotification() {
   const [notifications, setNotifications] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([]);
-  const [selectedType, setSelectedType] = useState(localStorage.getItem('selectedType') || '');
+  const [selectedType, setSelectedType] = useState(
+    localStorage.getItem('selectedType') || '',
+  );
   const [labDetails, setLabDetails] = useState(null);
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -23,8 +25,8 @@ export default function ToNotification() {
       try {
         const response1 = await axios.get('/api/notification/', {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         setNotifications(response1.data);
         setFilteredNotifications(response1.data);
@@ -39,11 +41,15 @@ export default function ToNotification() {
   useEffect(() => {
     const updateNotificationsToReminder = async () => {
       try {
-        const response = await axios.put('/api/notification/reminder', {}, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const response = await axios.put(
+          '/api/notification/reminder',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
         console.log('Notifications updated:', response.data);
       } catch (error) {
         console.error('Error updating notifications:', error);
@@ -56,26 +62,39 @@ export default function ToNotification() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 500)
+    }, 500);
   }, []);
 
-  const filterNotifications = useCallback((type) => {
-    if (type === 'unread') {
-      setFilteredNotifications(notifications.filter(notification => !notification.isRead));
-    } else if (type === '') {
-      setFilteredNotifications(notifications);
-    } else if (type === 'Confirmed/Rejected') {
-      setFilteredNotifications(notifications.filter(notification => notification.type === 'rejected' || notification.type === 'confirmed'));
-    } else {
-      setFilteredNotifications(notifications.filter(notification => notification.type === type));
-    }
-  }, [notifications]);
+  const filterNotifications = useCallback(
+    type => {
+      if (type === 'unread') {
+        setFilteredNotifications(
+          notifications.filter(notification => !notification.isRead),
+        );
+      } else if (type === '') {
+        setFilteredNotifications(notifications);
+      } else if (type === 'Confirmed/Rejected') {
+        setFilteredNotifications(
+          notifications.filter(
+            notification =>
+              notification.type === 'rejected' ||
+              notification.type === 'confirmed',
+          ),
+        );
+      } else {
+        setFilteredNotifications(
+          notifications.filter(notification => notification.type === type),
+        );
+      }
+    },
+    [notifications],
+  );
 
   useEffect(() => {
     filterNotifications(selectedType);
   }, [selectedType, notifications, filterNotifications]);
 
-  const handleButtonClick = (type) => {
+  const handleButtonClick = type => {
     setSelectedType(type);
     localStorage.setItem('selectedType', type);
     setLabDetails(null);
@@ -83,7 +102,7 @@ export default function ToNotification() {
     setIsDialogVisible(false);
   };
 
-  const handleNotificationClick = (notification) => {
+  const handleNotificationClick = notification => {
     setLabDetails(notification);
     setSelectedNotification(notification);
     setIsDialogVisible(true);
@@ -97,15 +116,21 @@ export default function ToNotification() {
     }
 
     try {
-      const response = await axios.put(`/api/notification/markRead/${selectedNotification._id}`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.put(
+        `/api/notification/markRead/${selectedNotification._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       console.log('Marked notification as read:', response.data);
 
       const updatedNotifications = notifications.map(notif =>
-        notif._id === selectedNotification._id ? { ...notif, isRead: true } : notif
+        notif._id === selectedNotification._id
+          ? { ...notif, isRead: true }
+          : notif,
       );
       setNotifications(updatedNotifications);
       setFilteredNotifications(updatedNotifications);
@@ -124,13 +149,19 @@ export default function ToNotification() {
         {},
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
-      console.log('Updated isReceiverConfirm and booking status:', response.data);
+      console.log(
+        'Updated isReceiverConfirm and booking status:',
+        response.data,
+      );
     } catch (error) {
-      console.error('Error updating isReceiverConfirm and booking status:', error);
+      console.error(
+        'Error updating isReceiverConfirm and booking status:',
+        error,
+      );
     }
     setIsDialogVisible(false);
     window.location.reload(); // Refresh the page
@@ -138,15 +169,21 @@ export default function ToNotification() {
 
   const handleCancelClick = async () => {
     try {
-      const response = await axios.put(`/api/notification/markRead/${selectedNotification._id}`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.put(
+        `/api/notification/markRead/${selectedNotification._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       console.log('Marked notification as read:', response.data);
 
       const updatedNotifications = notifications.map(notif =>
-        notif._id === selectedNotification._id ? { ...notif, isRead: true } : notif
+        notif._id === selectedNotification._id
+          ? { ...notif, isRead: true }
+          : notif,
       );
       setNotifications(updatedNotifications);
       setFilteredNotifications(updatedNotifications);
@@ -160,15 +197,21 @@ export default function ToNotification() {
 
   const handleConClick = async () => {
     try {
-      const response = await axios.put(`/api/notification/markRead/${selectedNotification._id}`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axios.put(
+        `/api/notification/markRead/${selectedNotification._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       console.log('Marked notification as read:', response.data);
 
       const updatedNotifications = notifications.map(notif =>
-        notif._id === selectedNotification._id ? { ...notif, isRead: true } : notif
+        notif._id === selectedNotification._id
+          ? { ...notif, isRead: true }
+          : notif,
       );
       setNotifications(updatedNotifications);
       setFilteredNotifications(updatedNotifications);
@@ -181,13 +224,14 @@ export default function ToNotification() {
 
   const handleRejectClick = async () => {
     try {
-      const response = await axios.post(`/api/notification/reject/${selectedNotification._id}`,
+      const response = await axios.post(
+        `/api/notification/reject/${selectedNotification._id}`,
         {},
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       console.log('Updated notification type:', response.data);
     } catch (error) {
@@ -201,9 +245,8 @@ export default function ToNotification() {
     setIsBoxVisible(!isBoxVisible);
   };
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (profileRef.current && !profileRef.current.contains(event.target)) {
-      
       setIsBoxVisible(false);
     }
   };
@@ -221,157 +264,300 @@ export default function ToNotification() {
 
   return (
     <div>
-      <ToHeader onUserIconClick={handleUserIconClick} isProfileVisible={isBoxVisible} />
-      <div className="notification-container">
-        <div className="left-side">
+      <ToHeader
+        onUserIconClick={handleUserIconClick}
+        isProfileVisible={isBoxVisible}
+      />
+      <div className='notification-container'>
+        <div className='left-side'>
           <h2 className='title'>Notifications</h2>
           <ul className='toolbars'>
-            <button 
-              className={`toolbar-button ${selectedType === '' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === '' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('')}
             >
               All
             </button>
-            <button 
-              className={`toolbar-button ${selectedType === 'unread' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === 'unread' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('unread')}
             >
               Unread
             </button>
-            <button 
-              className={`toolbar-button ${selectedType === 'request' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === 'request' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('request')}
             >
               Requests
             </button>
-            <button 
-              className={`toolbar-button ${selectedType === 'cancellation' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === 'cancellation' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('cancellation')}
             >
               Cancellations
             </button>
-            <button 
-              className={`toolbar-button ${selectedType === 'reminder' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === 'reminder' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('reminder')}
             >
               Reminders
             </button>
-            <button 
-              className={`toolbar-button ${selectedType === 'Confirmed/Rejected' ? 'selected' : ''}`} 
+            <button
+              className={`toolbar-button ${selectedType === 'Confirmed/Rejected' ? 'selected' : ''}`}
               onClick={() => handleButtonClick('Confirmed/Rejected')}
             >
               Confirmed/Rejected
             </button>
           </ul>
-
         </div>
-        <div className="right-side">
-        {loading ? (
-            <div className="loading-spinner">
-              <BeatLoader color={"#000000"} loading={true} size={20} />
+        <div className='right-side'>
+          {loading ? (
+            <div className='loading-spinner'>
+              <BeatLoader color={'#000000'} loading={true} size={20} />
             </div>
           ) : (
-          <div className="scroll-container">
-            <ul className="preview-list">
-              {filteredNotifications.map((notification, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleNotificationClick(notification)}
-                  className={`${notification === selectedNotification ? 'selected' : ''} ${isDialogVisible ? 'disabled' : ''}`}
-                >
-                  {notification.type}_{notification.labSessionTitle}
-                </li>
-              ))}
-            </ul>
-          </div>
-              )}
+            <div className='scroll-container'>
+              <ul className='preview-list'>
+                {filteredNotifications.map((notification, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleNotificationClick(notification)}
+                    className={`${notification === selectedNotification ? 'selected' : ''} ${isDialogVisible ? 'disabled' : ''}`}
+                  >
+                    {notification.type}_{notification.labSessionTitle}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {isDialogVisible && labDetails && (
-            <div className="lab-details-box">
-              <div className="lab-details">
+            <div className='lab-details-box'>
+              <div className='lab-details'>
                 {selectedNotification.type === 'unread' && (
-                  <div className="dialog-box-noti">
-                    <button className="close-button" onClick={() => { handleCancelClick(); window.location.reload(); }}>x</button>
+                  <div className='dialog-box-noti'>
+                    <button
+                      className='close-button'
+                      onClick={() => {
+                        handleCancelClick();
+                        window.location.reload();
+                      }}
+                    >
+                      x
+                    </button>
                     <h2>{labDetails.type}</h2>
-                    <p>{labDetails.labSessionTitle}<br />
-                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })}
-                      {' '}
-                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    <p>
+                      {labDetails.labSessionTitle}
+                      <br />
+                      {new Date(labDetails.labDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          weekday: 'short',
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        },
+                      )}{' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                       {' - '}
-                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                      {new Date(labDetails.labEndTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                     </p>
                     <p>Message: {labDetails.message}</p>
-                    <button onClick={handleOkClick} className="ok-button">
+                    <button onClick={handleOkClick} className='ok-button'>
                       OK
                     </button>
                   </div>
                 )}
                 {selectedNotification.type === 'request' && (
-                  <div className="dialog-box-noti">
-                    <button className="close-button" onClick={() => { handleCancelClick(); window.location.reload(); }}>x</button>
+                  <div className='dialog-box-noti'>
+                    <button
+                      className='close-button'
+                      onClick={() => {
+                        handleCancelClick();
+                        window.location.reload();
+                      }}
+                    >
+                      x
+                    </button>
                     <h2>Lab Session Request</h2>
                     <p>From: {labDetails.senderEmail}</p>
-                    <p>{labDetails.labSessionTitle}<br />
-                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })}
-                      {' '}
-                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    <p>
+                      {labDetails.labSessionTitle}
+                      <br />
+                      {new Date(labDetails.labDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          weekday: 'short',
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        },
+                      )}{' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                       {' - '}
-                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                      {new Date(labDetails.labEndTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                     </p>
-                    <p><b>You have a pending lab session booking request for the above details.</b></p>
-                    <div className="button-group">
-                      <button onClick={handleAcceptClick} className="ok-button"> Accept </button>
-                      <button onClick={handleRejectClick} className="ok-button"> Reject </button>
+                    <p>
+                      <b>
+                        You have a pending lab session booking request for the
+                        above details.
+                      </b>
+                    </p>
+                    <div className='button-group'>
+                      <button onClick={handleAcceptClick} className='ok-button'>
+                        {' '}
+                        Accept{' '}
+                      </button>
+                      <button onClick={handleRejectClick} className='ok-button'>
+                        {' '}
+                        Reject{' '}
+                      </button>
                     </div>
                   </div>
                 )}
                 {selectedNotification.type === 'cancellation' && (
-                  <div className="dialog-box-noti">
-                    <button className="close-button" onClick={() => { handleCancelClick(); window.location.reload(); }}>x</button>
+                  <div className='dialog-box-noti'>
+                    <button
+                      className='close-button'
+                      onClick={() => {
+                        handleCancelClick();
+                        window.location.reload();
+                      }}
+                    >
+                      x
+                    </button>
                     <h2>Lab Cancellation</h2>
                     <p>From: {labDetails.senderEmail}</p>
-                    <p>{labDetails.labSessionTitle}<br />
-                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })}
-                      {' '}
-                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    <p>
+                      {labDetails.labSessionTitle}
+                      <br />
+                      {new Date(labDetails.labDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          weekday: 'short',
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        },
+                      )}{' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                       {' - '}
-                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                      {new Date(labDetails.labEndTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                     </p>
-                    <p><b>Above mentioned lab session was cancelled.</b></p>
-                    <button onClick={handleCancelClick} className="ok-button">
+                    <p>
+                      <b>Above mentioned lab session was cancelled.</b>
+                    </p>
+                    <button onClick={handleCancelClick} className='ok-button'>
                       OK
                     </button>
                   </div>
                 )}
                 {selectedNotification.type === 'reminder' && (
-                  <div className="dialog-box-noti">
-                    <button className="close-button" onClick={() => { handleCancelClick(); window.location.reload(); }}>x</button>
+                  <div className='dialog-box-noti'>
+                    <button
+                      className='close-button'
+                      onClick={() => {
+                        handleCancelClick();
+                        window.location.reload();
+                      }}
+                    >
+                      x
+                    </button>
                     <h2>Reminder</h2>
-                    <p>{labDetails.labSessionTitle}<br />
-                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })}
-                      {' '}
-                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    <p>
+                      {labDetails.labSessionTitle}
+                      <br />
+                      {new Date(labDetails.labDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          weekday: 'short',
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        },
+                      )}{' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                       {' - '}
-                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                      {new Date(labDetails.labEndTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                     </p>
-                    <p><b>{calculateRemainingTime(labDetails.labDate, labDetails.labStartTime)} minutes left for the lab session to start.</b></p>
-                    <button onClick={handleConClick} className="ok-button">
+                    <p>
+                      <b>
+                        {calculateRemainingTime(
+                          labDetails.labDate,
+                          labDetails.labStartTime,
+                        )}{' '}
+                        minutes left for the lab session to start.
+                      </b>
+                    </p>
+                    <button onClick={handleConClick} className='ok-button'>
                       OK
                     </button>
                   </div>
                 )}
-                {(selectedNotification.type === 'confirmed' || selectedNotification.type === 'rejected') && (
-                  <div className="dialog-box-noti">
-                    <button className="close-button" onClick={() => { handleCancelClick(); window.location.reload(); }}>x</button>
+                {(selectedNotification.type === 'confirmed' ||
+                  selectedNotification.type === 'rejected') && (
+                  <div className='dialog-box-noti'>
+                    <button
+                      className='close-button'
+                      onClick={() => {
+                        handleCancelClick();
+                        window.location.reload();
+                      }}
+                    >
+                      x
+                    </button>
                     <h2>{labDetails.type}</h2>
-                    <p>{labDetails.labSessionTitle}<br />
-                      {new Date(labDetails.labDate).toLocaleDateString('en-US', { weekday: 'short', month: '2-digit', day: '2-digit', year: 'numeric' })}
-                      {' '}
-                      {new Date(labDetails.labStartTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                    <p>
+                      {labDetails.labSessionTitle}
+                      <br />
+                      {new Date(labDetails.labDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          weekday: 'short',
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        },
+                      )}{' '}
+                      {new Date(labDetails.labStartTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                       {' - '}
-                      {new Date(labDetails.labEndTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                      {new Date(labDetails.labEndTime).toLocaleTimeString(
+                        'en-US',
+                        { hour: '2-digit', minute: '2-digit', hour12: true },
+                      )}
                     </p>
-                    <p><b>The lab session has been {labDetails.type}.</b></p>
-                    <button onClick={handleCancelClick} className="ok-button">OK</button>
+                    <p>
+                      <b>The lab session has been {labDetails.type}.</b>
+                    </p>
+                    <button onClick={handleCancelClick} className='ok-button'>
+                      OK
+                    </button>
                   </div>
                 )}
               </div>

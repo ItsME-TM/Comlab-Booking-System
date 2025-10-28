@@ -17,7 +17,7 @@ const requiredEnvVars = [
   'MONGODB_URL',
   'JWT_SECRET',
   'EMAIL_USER',
-  'EMAIL_PASS'
+  'EMAIL_PASS',
 ];
 
 /**
@@ -25,7 +25,7 @@ const requiredEnvVars = [
  */
 const validateEnvironment = () => {
   const missingVars = [];
-  
+
   requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
       missingVars.push(varName);
@@ -35,7 +35,7 @@ const validateEnvironment = () => {
   if (missingVars.length > 0) {
     throw new Error(
       `Missing required environment variables: ${missingVars.join(', ')}\n` +
-      'Please check your .env file and ensure all required variables are set.'
+        'Please check your .env file and ensure all required variables are set.',
     );
   }
 };
@@ -61,7 +61,7 @@ const config = {
       maxPoolSize: parseInt(process.env.DB_MAX_POOL_SIZE) || 10,
       serverSelectionTimeoutMS: parseInt(process.env.DB_TIMEOUT) || 5000,
       socketTimeoutMS: parseInt(process.env.DB_SOCKET_TIMEOUT) || 45000,
-    }
+    },
   },
 
   // JWT Configuration
@@ -93,13 +93,20 @@ const config = {
   // File Upload Configuration
   upload: {
     maxFileSize: parseInt(process.env.MAX_FILE_SIZE) || 5 * 1024 * 1024, // 5MB
-    allowedTypes: process.env.ALLOWED_FILE_TYPES?.split(',') || ['image/jpeg', 'image/png', 'image/gif'],
-    uploadPath: process.env.UPLOAD_PATH || path.join(__dirname, '../../uploads'),
+    allowedTypes: process.env.ALLOWED_FILE_TYPES?.split(',') || [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+    ],
+    uploadPath:
+      process.env.UPLOAD_PATH || path.join(__dirname, '../../uploads'),
   },
 
   // Logging Configuration
   logging: {
-    level: process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'warn' : 'debug'),
+    level:
+      process.env.LOG_LEVEL ||
+      (process.env.NODE_ENV === 'production' ? 'warn' : 'debug'),
     maxFiles: parseInt(process.env.LOG_MAX_FILES) || 5,
     maxSize: process.env.LOG_MAX_SIZE || '20m',
   },
@@ -107,7 +114,9 @@ const config = {
   // Frontend Configuration
   frontend: {
     url: process.env.FRONTEND_URL || 'http://localhost:3000',
-    buildPath: process.env.FRONTEND_BUILD_PATH || path.join(__dirname, '../../../frontend/build'),
+    buildPath:
+      process.env.FRONTEND_BUILD_PATH ||
+      path.join(__dirname, '../../../frontend/build'),
   },
 
   // Development Configuration
@@ -184,7 +193,7 @@ const getEnvironmentConfig = () => {
 /**
  * Configuration Validation
  */
-const validateConfig = (config) => {
+const validateConfig = config => {
   // Validate port
   if (config.app.port < 1 || config.app.port > 65535) {
     throw new Error('PORT must be between 1 and 65535');
@@ -215,13 +224,13 @@ const initializeConfig = () => {
   try {
     // Validate required environment variables
     validateEnvironment();
-    
+
     // Get environment-specific configuration
     const envConfig = getEnvironmentConfig();
-    
+
     // Validate configuration
     validateConfig(envConfig);
-    
+
     return envConfig;
   } catch (error) {
     if (process.env.NODE_ENV === 'test') {

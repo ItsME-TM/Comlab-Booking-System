@@ -117,7 +117,9 @@ class BookingService {
    */
   async rejectBooking(bookingId, reason = '') {
     try {
-      const response = await apiClient.patch(`/bookings/${bookingId}/reject`, { reason });
+      const response = await apiClient.patch(`/bookings/${bookingId}/reject`, {
+        reason,
+      });
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to reject booking');
@@ -134,7 +136,10 @@ class BookingService {
    */
   async checkAvailability(availabilityData) {
     try {
-      const response = await apiClient.post('/bookings/check-availability', availabilityData);
+      const response = await apiClient.post(
+        '/bookings/check-availability',
+        availabilityData,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to check availability');
@@ -148,7 +153,9 @@ class BookingService {
    */
   async getUserBookings(userId = null) {
     try {
-      const endpoint = userId ? `/bookings/user/${userId}` : '/bookings/my-bookings';
+      const endpoint = userId
+        ? `/bookings/user/${userId}`
+        : '/bookings/my-bookings';
       const response = await apiClient.get(endpoint);
       return response;
     } catch (error) {
@@ -166,10 +173,14 @@ class BookingService {
   async getBookingsByDateRange(dateRange) {
     try {
       const queryParams = new URLSearchParams(dateRange).toString();
-      const response = await apiClient.get(`/bookings/date-range?${queryParams}`);
+      const response = await apiClient.get(
+        `/bookings/date-range?${queryParams}`,
+      );
       return response;
     } catch (error) {
-      throw new Error(error.message || 'Failed to fetch bookings by date range');
+      throw new Error(
+        error.message || 'Failed to fetch bookings by date range',
+      );
     }
   }
 
@@ -181,7 +192,9 @@ class BookingService {
    */
   async getLabSchedule(labId, date) {
     try {
-      const response = await apiClient.get(`/bookings/lab/${labId}/schedule?date=${date}`);
+      const response = await apiClient.get(
+        `/bookings/lab/${labId}/schedule?date=${date}`,
+      );
       return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to fetch lab schedule');

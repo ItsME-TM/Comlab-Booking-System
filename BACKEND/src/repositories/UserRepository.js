@@ -31,11 +31,15 @@ class UserRepository {
   }
 
   async update(id, updateData) {
-    return await User.findByIdAndUpdate(id, updateData, { new: true }).select('-password');
+    return await User.findByIdAndUpdate(id, updateData, { new: true }).select(
+      '-password',
+    );
   }
 
   async updateByEmail(email, updateData) {
-    return await User.findOneAndUpdate({ email }, updateData, { new: true }).select('-password');
+    return await User.findOneAndUpdate({ email }, updateData, {
+      new: true,
+    }).select('-password');
   }
 
   async delete(id) {

@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
     lastName: 'Rathnayake',
     email: 'shashika@eng.jfn.ac.lk',
     password: 'password123',
-    role: 'admin'
+    role: 'admin',
   });
 
   return (
