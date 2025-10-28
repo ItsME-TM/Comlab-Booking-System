@@ -1,8 +1,7 @@
 // App.js
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { NotificationProvider } from './NotificationContext';
-import { UserProvider } from './components/UserContext';
+import { NotificationProvider, UserProvider } from './contexts';
 
 // Import organized components
 import { Home, Dashboard } from './pages/common';
