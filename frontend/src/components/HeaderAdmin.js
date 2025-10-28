@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +8,6 @@ import './styles.css';
 import '../components/header.css';
 import Buttons from '../components/Buttons';
 import userIcon from '../images/user.png';
-import { Link } from 'react-router-dom';
 
 export default function HeaderAdmin({ onUserIconClick, isProfileVisible }) {
   const location = useLocation(); // Get the current location object

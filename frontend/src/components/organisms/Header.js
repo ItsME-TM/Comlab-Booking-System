@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from '../atoms/Button';
 import logo from '../../assets/images/user.png';
-import userIcon from '../../assets/images/user.png';
 import notificationIcon from '../../assets/images/notification.jpg';
 import './Header.css';
 
