@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import Button from '../atoms/Button';
-import logo from '../../assets/images/logo.ico';
+import logo from '../../assets/images/user.png';
 import './NavBarBL.css';
 
 function NavBarBL() {

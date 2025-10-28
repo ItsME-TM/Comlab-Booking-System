@@ -69,8 +69,7 @@ export default function UserSignIn() {
     }
     window.location.reload(); // Refresh the page
   };
-  retur;
-  n(
+  return (
     <div>
       <div className='page-container-login'>
         <div className='form-container-login'>
@@ -132,6 +131,6 @@ export default function UserSignIn() {
           className='EntranceUniImage'
         />
       </div>
-    </div>,
+    </div>
   );
 }

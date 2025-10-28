@@ -8,7 +8,7 @@ import moment from 'moment';
 import { jwtDecode } from 'jwt-decode';
 import Select from 'react-select';
 
-export default function MyApp() {
+function MyApp() {
   const [title, setTitle] = useState('');
   const [attendees, setAttendees] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
@@ -394,3 +394,6 @@ export default function MyApp() {
     </div>
   );
 }
+
+export { MyApp as LabBooking };
+export default MyApp;

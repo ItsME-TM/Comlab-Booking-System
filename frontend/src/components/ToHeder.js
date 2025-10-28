@@ -1,15 +1,13 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from './logo.ico';
+import logo from '../assets/images/user.png';
 import './styles.css';
-import '../components/header.css';
-import Buttons from '../components/Buttons';
-import userIcon from '../images/user.png';
+import Buttons from './Buttons';
 import notificationIcon from '../images/notification.jpg';
-import { Link } from 'react-router-dom';
+import userIcon from '../images/user.png';
 
 export default function ToHeader({ onUserIconClick, isProfileVisible }) {
   const location = useLocation();

@@ -54,8 +54,7 @@ export default function AdminLogin() {
       }
     }
   };
-  ret;
-  urn(
+  return (
     <div>
       <div className='page-container-login'>
         <div className='form-container-login'>
@@ -118,6 +117,6 @@ export default function AdminLogin() {
           className='EntranceUniImage'
         />
       </div>
-    </div>,
+    </div>
   );
 }

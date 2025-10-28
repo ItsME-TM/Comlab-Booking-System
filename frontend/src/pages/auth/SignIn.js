@@ -47,8 +47,7 @@ export default function LoginForm() {
       window.location.href = '/errmsg';
     }
   };
-  retu;
-  rn(
+  return (
     <div>
       <NavBarBL />
       <div className='page-container-login'>
@@ -102,6 +101,6 @@ export default function LoginForm() {
           )}
         </div>
       </div>
-    </div>,
+    </div>
   );
 }
