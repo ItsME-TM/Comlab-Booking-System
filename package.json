@@ -14,11 +14,38 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
+    "start": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "lint": "concurrently \"npm run lint:backend\" \"npm run lint:frontend\"",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:fix": "concurrently \"npm run lint:fix:backend\" \"npm run lint:fix:frontend\"",
+    "lint:fix:backend": "cd backend && npm run lint:fix",
+    "lint:fix:frontend": "cd frontend && npm run lint:fix",
+    "format": "npm run format:js && npm run format:styles && npm run format:docs",
+    "format:js": "prettier --write \"backend/**/*.js\" \"frontend/src/**/*.{js,jsx}\"",
+    "format:styles": "prettier --write \"frontend/src/**/*.{css,scss}\"",
+    "format:docs": "prettier --write \"*.{json,md}\" \"**/README.md\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,json,md,css,scss}\"",
+    "format:fix": "node scripts/fix-formatting.js",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "@eslint/js": "^9.38.0",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "gh-pages": "^6.3.0",
+    "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2"
+  },
+  "lint-staged": {
+    "{backend,frontend}/**/*.{js,jsx}": "eslint --fix",
+    "*.{json,md}": "prettier --write",
+    "**/*.{css,scss}": "prettier --write"
   }
 }
