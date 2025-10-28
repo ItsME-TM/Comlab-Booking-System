@@ -17,3 +17,7 @@ frontend/logs/*.log
 *.log
 
 .kiro
+
+# Root eslint config (each project has its own)
+/eslint.config.js
+/.eslintrc.js
