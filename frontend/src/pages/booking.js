@@ -20,7 +20,7 @@ function MyApp() {
   const [errorMessage, setErrorMessage] = useState('');
   const [availabilityMessage, setAvailabilityMessage] = useState('');
   const [users, setUsers] = useState([]);
-  const [isPollVisible, setIsPollVisible] = useState(false);
+  const [isPollVisible] = useState(false);
   const [uEmail, setEmail] = useState('');
   const [id, setId] = useState(''); // Added state for id
   const token = localStorage.getItem('token');
@@ -106,7 +106,7 @@ function MyApp() {
     };
 
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         '/api/bookings/check-availability',
         checkData,
         {
@@ -117,7 +117,7 @@ function MyApp() {
         },
       );
 
-      setAvailabilityMessage(response.data.message);
+      setAvailabilityMessage(data.message);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setAvailabilityMessage(error.response.data.error);
@@ -140,7 +140,7 @@ function MyApp() {
       // If there's an existing event in the location state, edit the lab session
       if (location.state && location.state.event) {
         const bookingId = location.state.event.id;
-        const response = await axios.put(
+        await axios.put(
           `/api/bookings/editLabSession/${bookingId}`,
           bookingData,
           {
@@ -156,7 +156,7 @@ function MyApp() {
         window.location.reload();
       } else {
         // Otherwise, create a new booking
-        const response = await axios.post('/api/bookings', bookingData, {
+        const { data } = await axios.post('/api/bookings', bookingData, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -166,7 +166,7 @@ function MyApp() {
         alert('Booking Successful');
         //window.location.reload();
 
-        const bookingId = response.data._id;
+        const bookingId = data._id;
         const notificationData = {
           title: bookingData.title,
           startTime: bookingData.startTime,
@@ -179,7 +179,7 @@ function MyApp() {
         };
 
         try {
-          const notificationResponse = await axios.post(
+          await axios.post(
             '/api/notification/createNotification',
             notificationData,
             {

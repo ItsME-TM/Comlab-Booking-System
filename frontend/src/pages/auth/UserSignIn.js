@@ -9,7 +9,6 @@ export default function UserSignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [failedAttempts, setFailedAttempts] = useState(0);
   const navigate = useNavigate();
 
   const sendData = async e => {
@@ -44,15 +43,7 @@ export default function UserSignIn() {
       } else {
         setErrorMessage('Unauthorized role');
       }
-      setFailedAttempts(0);
     } catch (error) {
-      setFailedAttempts(prev => {
-        const newAttempts = prev + 1;
-        if (newAttempts >= 3) {
-          navigate('/errmsg');
-        }
-        return newAttempts;
-      });
       if (
         error.response &&
         error.response.data &&
