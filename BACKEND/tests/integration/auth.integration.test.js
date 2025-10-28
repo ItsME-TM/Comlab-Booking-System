@@ -1,6 +1,6 @@
 // Mock nodemailer before importing app
 jest.mock('nodemailer', () => ({
-  createTransport: jest.fn().mockReturnValue({
+  createTransporter: jest.fn().mockReturnValue({
     sendMail: jest.fn().mockResolvedValue({
       messageId: 'test-message-id',
       accepted: ['test@example.com'],
@@ -14,7 +14,7 @@ jest.mock('nodemailer', () => ({
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../src/app');
-const User = require('../../src/models/User');
+const User = require('../../src/models/user');
 const DbHelper = require('../helpers/dbHelper');
 
 describe('Authentication Integration Tests', () => {
