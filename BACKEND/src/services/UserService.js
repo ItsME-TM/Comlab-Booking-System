@@ -3,12 +3,25 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { setTimeout: delay } = require('timers/promises');
 
+/**
+ * Service class for managing user operations
+ * Handles business logic for user creation, updates, and authentication
+ */
 class UserService {
   constructor() {
     this.userRepository = new UserRepository();
   }
 
-  // User validation methods
+  /**
+   * Validate user data for creation
+   * @param {Object} userData - User data to validate
+   * @param {string} userData.firstName - User's first name
+   * @param {string} userData.lastName - User's last name
+   * @param {string} userData.email - User's email address
+   * @param {string} userData.role - User's role
+   * @param {string} userData.password - User's password
+   * @returns {Array<string>} Array of validation error messages
+   */
   validateUserData(userData) {
     const errors = [];
 
@@ -35,6 +48,16 @@ class UserService {
     return errors;
   }
 
+  /**
+   * Validate user data for updates
+   * @param {Object} updateData - Update data to validate
+   * @param {string} [updateData.firstName] - Updated first name
+   * @param {string} [updateData.lastName] - Updated last name
+   * @param {string} [updateData.email] - Updated email
+   * @param {string} [updateData.role] - Updated role
+   * @param {string} [updateData.password] - Updated password
+   * @returns {Array<string>} Array of validation error messages
+   */
   validateUpdateData(updateData) {
     const errors = [];
 
@@ -70,17 +93,37 @@ class UserService {
     return errors;
   }
 
+  /**
+   * Validate email format
+   * @param {string} email - Email address to validate
+   * @returns {boolean} True if email format is valid
+   */
   isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
+  /**
+   * Check if a role is valid
+   * @param {string} role - Role to validate
+   * @returns {boolean} True if role is valid
+   */
   isValidRole(role) {
     const validRoles = ['admin', 'lecturer', 'instructor', 'to'];
     return validRoles.includes(role);
   }
 
-  // Business logic methods
+  /**
+   * Create a new user
+   * @param {Object} userData - User data
+   * @param {string} userData.firstName - User's first name
+   * @param {string} userData.lastName - User's last name
+   * @param {string} userData.email - User's email address
+   * @param {string} userData.role - User's role
+   * @param {string} userData.password - User's password
+   * @returns {Promise<Object>} Created user object
+   * @throws {Error} If validation fails or user already exists
+   */
   async createUser(userData) {
     // Validate input data
     const validationErrors = this.validateUserData(userData);
@@ -98,6 +141,12 @@ class UserService {
     return await this.userRepository.create(userData);
   }
 
+  /**
+   * Get a user by ID
+   * @param {string} id - User ID
+   * @returns {Promise<Object>} User object
+   * @throws {Error} If user not found
+   */
   async getUserById(id) {
     if (!id) {
       throw new Error('User ID is required');
@@ -111,6 +160,12 @@ class UserService {
     return user;
   }
 
+  /**
+   * Get a user by email address
+   * @param {string} email - User's email address
+   * @returns {Promise<Object>} User object
+   * @throws {Error} If email is invalid or user not found
+   */
   async getUserByEmail(email) {
     if (!email || !this.isValidEmail(email)) {
       throw new Error('Valid email is required');
@@ -124,6 +179,11 @@ class UserService {
     return user;
   }
 
+  /**
+   * Get all users
+   * @param {boolean} [includeAdmins=false] - Whether to include admin users
+   * @returns {Promise<Array<Object>>} Array of user objects
+   */
   async getAllUsers(includeAdmins = false) {
     if (includeAdmins) {
       return await this.userRepository.findAll();
@@ -131,6 +191,12 @@ class UserService {
     return await this.userRepository.findNonAdminUsers();
   }
 
+  /**
+   * Get users by role
+   * @param {string} role - User role to filter by
+   * @returns {Promise<Array<Object>>} Array of user objects
+   * @throws {Error} If role is invalid
+   */
   async getUsersByRole(role) {
     if (!this.isValidRole(role)) {
       throw new Error('Invalid role specified');
@@ -139,6 +205,18 @@ class UserService {
     return await this.userRepository.findByRole(role);
   }
 
+  /**
+   * Update a user
+   * @param {string} id - User ID
+   * @param {Object} updateData - Data to update
+   * @param {string} [updateData.firstName] - Updated first name
+   * @param {string} [updateData.lastName] - Updated last name
+   * @param {string} [updateData.email] - Updated email
+   * @param {string} [updateData.role] - Updated role
+   * @param {string} [updateData.password] - Updated password
+   * @returns {Promise<Object>} Updated user object
+   * @throws {Error} If validation fails, user not found, or email already exists
+   */
   async updateUser(id, updateData) {
     if (!id) {
       throw new Error('User ID is required');
@@ -174,6 +252,14 @@ class UserService {
     return await this.userRepository.update(id, updateData);
   }
 
+  /**
+   * Update user's name
+   * @param {string} id - User ID
+   * @param {string} firstName - New first name
+   * @param {string} lastName - New last name
+   * @returns {Promise<Object>} Updated user object
+   * @throws {Error} If user not found or names are invalid
+   */
   async updateUserName(id, firstName, lastName) {
     if (!id) {
       throw new Error('User ID is required');
@@ -195,6 +281,13 @@ class UserService {
     return await this.userRepository.update(id, { firstName, lastName });
   }
 
+  /**
+   * Update user's password
+   * @param {string} email - User's email address
+   * @param {string} newPassword - New password
+   * @returns {Promise<Object>} Updated user object
+   * @throws {Error} If email is invalid, user not found, or password is too short
+   */
   async updatePassword(email, newPassword) {
     if (!email || !this.isValidEmail(email)) {
       throw new Error('Valid email is required');
@@ -215,6 +308,12 @@ class UserService {
     });
   }
 
+  /**
+   * Delete a user
+   * @param {string} id - User ID
+   * @returns {Promise<Object>} Deleted user object
+   * @throws {Error} If user not found
+   */
   async deleteUser(id) {
     if (!id) {
       throw new Error('User ID is required');
@@ -228,7 +327,12 @@ class UserService {
     return await this.userRepository.delete(id);
   }
 
-  // OTP related methods
+  /**
+   * Generate and save OTP for password reset
+   * @param {string} email - User's email address
+   * @returns {Promise<Object>} Object containing OTP and user data
+   * @throws {Error} If email is invalid or user not found
+   */
   async generateAndSaveOtp(email) {
     if (!email || !this.isValidEmail(email)) {
       throw new Error('Valid email is required');
@@ -255,6 +359,13 @@ class UserService {
     return { otp, user };
   }
 
+  /**
+   * Verify OTP for password reset
+   * @param {string} email - User's email address
+   * @param {string} otp - OTP to verify
+   * @returns {Promise<Object>} User object if OTP is valid
+   * @throws {Error} If email is invalid, user not found, or OTP is invalid
+   */
   async verifyOtp(email, otp) {
     if (!email || !this.isValidEmail(email)) {
       throw new Error('Valid email is required');
@@ -276,29 +387,53 @@ class UserService {
     return user;
   }
 
-  // Authorization helpers
+  /**
+   * Check if a user exists
+   * @param {string} id - User ID
+   * @returns {Promise<boolean>} True if user exists
+   */
   async checkUserExists(id) {
     return (await this.userRepository.findById(id)) !== null;
   }
 
+  /**
+   * Get count of users
+   * @param {string} [role=null] - Optional role filter
+   * @returns {Promise<number>} Count of users
+   */
   async getUserCount(role = null) {
     const filters = role ? { role } : {};
     return await this.userRepository.count(filters);
   }
 
-  // Role-based queries
+  /**
+   * Get all lecturers
+   * @returns {Promise<Array<Object>>} Array of lecturer user objects
+   */
   async getLecturers() {
     return await this.getUsersByRole('lecturer');
   }
 
+  /**
+   * Get all instructors
+   * @returns {Promise<Array<Object>>} Array of instructor user objects
+   */
   async getInstructors() {
     return await this.getUsersByRole('instructor');
   }
 
+  /**
+   * Get all technical officers
+   * @returns {Promise<Array<Object>>} Array of technical officer user objects
+   */
   async getTechnicalOfficers() {
     return await this.getUsersByRole('to');
   }
 
+  /**
+   * Get all administrators
+   * @returns {Promise<Array<Object>>} Array of admin user objects
+   */
   async getAdmins() {
     return await this.getUsersByRole('admin');
   }

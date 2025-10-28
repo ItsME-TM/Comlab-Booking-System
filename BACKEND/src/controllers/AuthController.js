@@ -1,8 +1,18 @@
 const AuthService = require('../services/AuthService');
 
+/**
+ * Controller class for handling authentication operations
+ * Manages HTTP requests for login, registration, token refresh, and logout
+ */
 class AuthController {
   /**
    * Handle user login
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body
+   * @param {string} req.body.email - User email
+   * @param {string} req.body.password - User password
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
    */
   async login(req, res) {
     try {
@@ -25,6 +35,10 @@ class AuthController {
 
   /**
    * Handle user registration
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body with user data
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
    */
   async register(req, res) {
     try {
@@ -47,6 +61,11 @@ class AuthController {
 
   /**
    * Handle token refresh
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body
+   * @param {string} req.body.token - Current JWT token
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
    */
   async refreshToken(req, res) {
     try {
@@ -76,6 +95,10 @@ class AuthController {
 
   /**
    * Handle user logout
+   * @param {Object} req - Express request object
+   * @param {Object} req.user - Authenticated user from middleware
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
    */
   async logout(req, res) {
     try {

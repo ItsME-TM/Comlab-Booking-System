@@ -1,6 +1,10 @@
 const BookingService = require('../services/BookingService');
 const NotificationService = require('../services/NotificationService');
 
+/**
+ * Controller class for handling booking operations
+ * Manages HTTP requests for creating, updating, and managing lab bookings
+ */
 class BookingController {
   constructor() {
     this.bookingService = new BookingService();
@@ -8,7 +12,13 @@ class BookingController {
     // this.notificationService = new NotificationService();
   }
 
-  // Role checking middleware helper
+  /**
+   * Check if user has permission to manage bookings
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   * @returns {void}
+   */
   checkBookingPermission(req, res, next) {
     if (
       req.user.role !== 'lecturer' &&
@@ -22,7 +32,15 @@ class BookingController {
     next();
   }
 
-  // Availability checking
+  /**
+   * Check availability of a time slot
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body
+   * @param {Date} req.body.startTime - Start time to check
+   * @param {Date} req.body.endTime - End time to check
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async checkAvailability(req, res) {
     try {
       const { startTime, endTime } = req.body;
@@ -59,7 +77,13 @@ class BookingController {
     }
   }
 
-  // Create a new booking
+  /**
+   * Create a new booking
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body with booking data
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async createBooking(req, res) {
     try {
       const { title, startTime, endTime, description, attendees } = req.body;
@@ -95,7 +119,14 @@ class BookingController {
     }
   }
 
-  // Get all bookings
+  /**
+   * Get all bookings
+   * @param {Object} req - Express request object
+   * @param {Object} req.query - Query parameters
+   * @param {string} [req.query.includeInactive] - Whether to include cancelled bookings
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async getAllBookings(req, res) {
     try {
       const { includeInactive } = req.query;
@@ -114,7 +145,14 @@ class BookingController {
     }
   }
 
-  // Get booking by ID
+  /**
+   * Get a booking by ID
+   * @param {Object} req - Express request object
+   * @param {Object} req.params - Route parameters
+   * @param {string} req.params.id - Booking ID
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async getBookingById(req, res) {
     try {
       const { id } = req.params;
@@ -190,7 +228,15 @@ class BookingController {
     }
   }
 
-  // Update booking
+  /**
+   * Update a booking
+   * @param {Object} req - Express request object
+   * @param {Object} req.params - Route parameters
+   * @param {string} req.params.id - Booking ID
+   * @param {Object} req.body - Request body with update data
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async updateBooking(req, res) {
     try {
       const { id } = req.params;
@@ -228,7 +274,15 @@ class BookingController {
     }
   }
 
-  // Cancel booking
+  /**
+   * Cancel a booking
+   * @param {Object} req - Express request object
+   * @param {Object} req.params - Route parameters
+   * @param {string} req.params.id - Booking ID
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async cancelBooking(req, res) {
     try {
       const { id } = req.params;

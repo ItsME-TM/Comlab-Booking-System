@@ -1,11 +1,23 @@
 const NotificationService = require('../services/NotificationService');
 const User = require('../models/user');
 
+/**
+ * Controller class for handling notification operations
+ * Manages HTTP requests for creating, retrieving, and managing notifications
+ */
 class NotificationController {
   constructor() {
     this.notificationService = new NotificationService();
   }
 
+  /**
+   * Create a new notification
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body with notification data
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async createNotification(req, res) {
     try {
       // Check user permissions
@@ -65,6 +77,13 @@ class NotificationController {
     }
   }
 
+  /**
+   * Get notifications for the authenticated user
+   * @param {Object} req - Express request object
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async getNotifications(req, res) {
     try {
       // Check user permissions
@@ -118,6 +137,15 @@ class NotificationController {
     }
   }
 
+  /**
+   * Mark a notification as read
+   * @param {Object} req - Express request object
+   * @param {Object} req.params - Route parameters
+   * @param {string} req.params.id - Notification ID
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async markAsRead(req, res) {
     try {
       // Check user permissions

@@ -2,6 +2,10 @@ const UserService = require('../services/UserService');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+/**
+ * Controller class for handling user operations
+ * Manages HTTP requests for user creation, updates, and management
+ */
 class UserController {
   constructor() {
     this.userService = new UserService();
@@ -17,7 +21,15 @@ class UserController {
     });
   }
 
-  // Email notification methods
+  /**
+   * Send welcome email to new user
+   * @param {string} firstName - User's first name
+   * @param {string} lastName - User's last name
+   * @param {string} email - User's email address
+   * @param {string} role - User's role
+   * @param {string} password - User's password
+   * @returns {Promise<Object>} Email send result
+   */
   async sendNewUserEmail(firstName, lastName, email, role, password) {
     const subject = 'Welcome to Our Platform!';
     const text = `
@@ -138,6 +150,12 @@ LBS Administrator
     return this.transporter.sendMail(mailOptions);
   }
 
+  /**
+   * Send OTP email for password reset
+   * @param {string} email - User's email address
+   * @param {string} otp - One-time password
+   * @returns {Promise<Object>} Email send result
+   */
   async sendOtpEmail(email, otp) {
     const mailOptions = {
       from: {
@@ -151,7 +169,14 @@ LBS Administrator
     return this.transporter.sendMail(mailOptions);
   }
 
-  // Controller methods
+  /**
+   * Verify email and send OTP
+   * @param {Object} req - Express request object
+   * @param {Object} req.query - Query parameters
+   * @param {string} req.query.email - User's email address
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async verifyEmail(req, res) {
     try {
       const { email } = req.query;
@@ -174,6 +199,14 @@ LBS Administrator
     }
   }
 
+  /**
+   * Add a new user (admin only)
+   * @param {Object} req - Express request object
+   * @param {Object} req.body - Request body with user data
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async addUser(req, res) {
     try {
       if (req.user.role !== 'admin') {
@@ -205,6 +238,13 @@ LBS Administrator
     }
   }
 
+  /**
+   * Get all users (admin only)
+   * @param {Object} req - Express request object
+   * @param {Object} req.user - Authenticated user
+   * @param {Object} res - Express response object
+   * @returns {Promise<void>}
+   */
   async getAllUsers(req, res) {
     try {
       if (req.user.role !== 'admin') {

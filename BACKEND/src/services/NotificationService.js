@@ -2,12 +2,20 @@ const NotificationRepository = require('../repositories/NotificationRepository')
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+/**
+ * Service class for managing notification operations
+ * Handles business logic for creating, sending, and managing notifications
+ */
 class NotificationService {
   constructor() {
     this.notificationRepository = new NotificationRepository();
     this.emailTransporter = this.createEmailTransporter();
   }
 
+  /**
+   * Create email transporter for sending notifications
+   * @returns {Object} Nodemailer transporter instance
+   */
   createEmailTransporter() {
     return nodemailer.createTransporter({
       service: 'gmail',
@@ -18,6 +26,21 @@ class NotificationService {
     });
   }
 
+  /**
+   * Create a new notification
+   * @param {Object} notificationData - Notification data
+   * @param {string} notificationData.receiverEmail - Recipient email address
+   * @param {string} notificationData.senderEmail - Sender email address
+   * @param {string} notificationData.labSessionTitle - Lab session title
+   * @param {string} notificationData.labDate - Lab date
+   * @param {string} notificationData.labStartTime - Lab start time
+   * @param {string} notificationData.labEndTime - Lab end time
+   * @param {string} notificationData.message - Notification message
+   * @param {string} notificationData.type - Notification type
+   * @param {string} [notificationData.bookingId] - Associated booking ID
+   * @returns {Promise<Object>} Created notification object
+   * @throws {Error} If notification creation fails
+   */
   async createNotification(notificationData) {
     try {
       const notification =
@@ -34,6 +57,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Create notifications for multiple attendees
+   * @param {Array<string>} attendees - Array of attendee email addresses
+   * @param {Object} notificationTemplate - Template for notification data
+   * @returns {Promise<Array<Object>>} Array of created notification objects
+   * @throws {Error} If bulk notification creation fails
+   */
   async createBulkNotifications(attendees, notificationTemplate) {
     try {
       const notifications = [];
@@ -60,6 +90,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Get notifications for a receiver
+   * @param {string} receiverEmail - Receiver's email address
+   * @param {Array<string>} [excludeTypes=[]] - Notification types to exclude
+   * @returns {Promise<Array<Object>>} Array of notification objects
+   * @throws {Error} If retrieval fails
+   */
   async getNotificationsByReceiver(receiverEmail, excludeTypes = []) {
     try {
       const filters =
@@ -75,6 +112,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Get notifications sent by a sender
+   * @param {string} senderEmail - Sender's email address
+   * @param {Array<string>} [includeTypes=[]] - Notification types to include
+   * @returns {Promise<Array<Object>>} Array of notification objects
+   * @throws {Error} If retrieval fails
+   */
   async getNotificationsBySender(senderEmail, includeTypes = []) {
     try {
       const filters =
@@ -90,6 +134,12 @@ class NotificationService {
     }
   }
 
+  /**
+   * Get notifications for a specific booking
+   * @param {string} bookingId - Booking ID
+   * @returns {Promise<Array<Object>>} Array of notification objects
+   * @throws {Error} If retrieval fails
+   */
   async getNotificationsByBookingId(bookingId) {
     try {
       return await this.notificationRepository.findByBookingId(bookingId);
@@ -100,6 +150,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Mark a notification as read
+   * @param {string} notificationId - Notification ID
+   * @param {string} userEmail - User's email address
+   * @returns {Promise<Object>} Updated notification object
+   * @throws {Error} If notification not found or access denied
+   */
   async markNotificationAsRead(notificationId, userEmail) {
     try {
       const notification = await this.notificationRepository.markAsRead(
@@ -115,6 +172,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Accept a notification (confirm attendance)
+   * @param {string} notificationId - Notification ID
+   * @param {string} userEmail - User's email address
+   * @returns {Promise<Object>} Updated notification object
+   * @throws {Error} If notification not found or access denied
+   */
   async acceptNotification(notificationId, userEmail) {
     try {
       const notification = await this.notificationRepository.updateById(
@@ -136,6 +200,13 @@ class NotificationService {
     }
   }
 
+  /**
+   * Reject a notification (decline attendance)
+   * @param {string} notificationId - Notification ID
+   * @param {string} userEmail - User's email address
+   * @returns {Promise<Object>} Updated notification object
+   * @throws {Error} If notification not found or access denied
+   */
   async rejectNotification(notificationId, userEmail) {
     try {
       const notification = await this.notificationRepository.updateById(
@@ -158,6 +229,12 @@ class NotificationService {
     }
   }
 
+  /**
+   * Confirm a lab session
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Result with notification and updated count
+   * @throws {Error} If notification not found or booking ID missing
+   */
   async confirmLab(notificationId) {
     try {
       const notification =
@@ -187,6 +264,12 @@ class NotificationService {
     }
   }
 
+  /**
+   * Cancel a lab session
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Result with notification and updated count
+   * @throws {Error} If notification not found or booking ID missing
+   */
   async cancelLab(notificationId) {
     try {
       const notification =
@@ -216,6 +299,12 @@ class NotificationService {
     }
   }
 
+  /**
+   * Update notifications to reminder type for a specific date
+   * @param {Date|string} date - Date to update notifications for
+   * @returns {Promise<Object>} Result with updated count
+   * @throws {Error} If update fails
+   */
   async updateNotificationsToReminder(date) {
     try {
       const todayISO = new Date(date).toISOString();
@@ -232,6 +321,11 @@ class NotificationService {
     }
   }
 
+  /**
+   * Send email notification
+   * @param {Object} notification - Notification object
+   * @returns {Promise<Object>} Email send result
+   */
   async sendEmailNotification(notification) {
     try {
       if (!this.emailTransporter) {
@@ -257,6 +351,11 @@ class NotificationService {
     }
   }
 
+  /**
+   * Generate email content based on notification type
+   * @param {Object} notification - Notification object
+   * @returns {Object} Email content with subject and HTML body
+   */
   generateEmailContent(notification) {
     const baseSubject = `Lab Booking ${notification.type.replace('_', ' ').toUpperCase()}`;
 

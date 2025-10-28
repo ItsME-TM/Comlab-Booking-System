@@ -8,8 +8,22 @@ process.env.NODE_ENV = 'test';
 process.env.JWT_SECRET = 'test-jwt-secret-for-testing-purposes-only';
 process.env.EMAIL_USER = 'test@example.com';
 process.env.EMAIL_PASS = 'test-password';
+process.env.EMAIL_ENABLED = 'false';
 process.env.PORT = '8071';
 process.env.LOG_LEVEL = 'error';
+
+// Mock nodemailer
+jest.mock('nodemailer', () => ({
+  createTransport: jest.fn().mockReturnValue({
+    sendMail: jest.fn().mockResolvedValue({
+      messageId: 'test-message-id',
+      accepted: ['test@example.com'],
+      rejected: [],
+      response: '250 Message accepted',
+    }),
+    verify: jest.fn().mockResolvedValue(true),
+  }),
+}));
 
 // Global test timeout
 jest.setTimeout(30000);

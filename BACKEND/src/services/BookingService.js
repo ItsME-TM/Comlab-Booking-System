@@ -1,11 +1,24 @@
 const BookingRepository = require('../repositories/BookingRepository');
 
+/**
+ * Service class for managing lab booking operations
+ * Handles business logic for creating, updating, and managing bookings
+ */
 class BookingService {
   constructor() {
     this.bookingRepository = new BookingRepository();
   }
 
-  // Validation methods
+  /**
+   * Validate booking data for creation
+   * @param {Object} bookingData - Booking data to validate
+   * @param {string} bookingData.title - Booking title
+   * @param {Date} bookingData.startTime - Booking start time
+   * @param {Date} bookingData.endTime - Booking end time
+   * @param {Array<string>} [bookingData.attendees] - List of attendee emails
+   * @param {string} [bookingData.status] - Booking status
+   * @returns {Array<string>} Array of validation error messages
+   */
   validateBookingData(bookingData) {
     const errors = [];
 
@@ -73,6 +86,15 @@ class BookingService {
     return errors;
   }
 
+  /**
+   * Validate booking data for updates
+   * @param {Object} updateData - Update data to validate
+   * @param {string} [updateData.title] - Updated booking title
+   * @param {Date} [updateData.startTime] - Updated start time
+   * @param {Date} [updateData.endTime] - Updated end time
+   * @param {string} [updateData.status] - Updated status
+   * @returns {Array<string>} Array of validation error messages
+   */
   validateUpdateData(updateData) {
     const errors = [];
 
@@ -109,12 +131,27 @@ class BookingService {
     return errors;
   }
 
+  /**
+   * Check if a status value is valid
+   * @param {string} status - Status to validate
+   * @returns {boolean} True if status is valid
+   */
   isValidStatus(status) {
     const validStatuses = ['pending', 'confirmed', 'cancelled'];
     return validStatuses.includes(status);
   }
 
-  // Business logic methods
+  /**
+   * Create a new booking
+   * @param {Object} bookingData - Booking data
+   * @param {string} bookingData.title - Booking title
+   * @param {Date} bookingData.startTime - Start time
+   * @param {Date} bookingData.endTime - End time
+   * @param {string} [bookingData.description] - Booking description
+   * @param {Array<string>} [bookingData.attendees] - Attendee emails
+   * @returns {Promise<Object>} Created booking object
+   * @throws {Error} If validation fails or time slot is not available
+   */
   async createBooking(bookingData) {
     // Validate input data
     const validationErrors = this.validateBookingData(bookingData);
@@ -146,6 +183,12 @@ class BookingService {
     return await this.bookingRepository.create(bookingData);
   }
 
+  /**
+   * Get a booking by ID
+   * @param {string} id - Booking ID
+   * @returns {Promise<Object>} Booking object
+   * @throws {Error} If booking not found
+   */
   async getBookingById(id) {
     if (!id) {
       throw new Error('Booking ID is required');
@@ -159,6 +202,11 @@ class BookingService {
     return booking;
   }
 
+  /**
+   * Get all bookings
+   * @param {boolean} [includeInactive=false] - Whether to include cancelled bookings
+   * @returns {Promise<Array<Object>>} Array of booking objects
+   */
   async getAllBookings(includeInactive = false) {
     if (includeInactive) {
       return await this.bookingRepository.findAll();
@@ -166,6 +214,12 @@ class BookingService {
     return await this.bookingRepository.findActiveBookings();
   }
 
+  /**
+   * Get bookings by status
+   * @param {string} status - Booking status (pending, confirmed, cancelled)
+   * @returns {Promise<Array<Object>>} Array of booking objects
+   * @throws {Error} If status is invalid
+   */
   async getBookingsByStatus(status) {
     if (!this.isValidStatus(status)) {
       throw new Error('Invalid status specified');
@@ -174,6 +228,13 @@ class BookingService {
     return await this.bookingRepository.findByStatus(status);
   }
 
+  /**
+   * Get bookings within a date range
+   * @param {Date|string} startDate - Start date
+   * @param {Date|string} endDate - End date
+   * @returns {Promise<Array<Object>>} Array of booking objects
+   * @throws {Error} If dates are invalid or end date is before start date
+   */
   async getBookingsByDateRange(startDate, endDate) {
     if (!startDate || !endDate) {
       throw new Error('Start date and end date are required');
@@ -193,6 +254,18 @@ class BookingService {
     return await this.bookingRepository.findByDateRange(start, end);
   }
 
+  /**
+   * Update a booking
+   * @param {string} id - Booking ID
+   * @param {Object} updateData - Data to update
+   * @param {string} [updateData.title] - Updated title
+   * @param {Date} [updateData.startTime] - Updated start time
+   * @param {Date} [updateData.endTime] - Updated end time
+   * @param {string} [updateData.description] - Updated description
+   * @param {Array<string>} [updateData.attendees] - Updated attendees
+   * @returns {Promise<Object>} Updated booking object
+   * @throws {Error} If validation fails, booking not found, or time slot unavailable
+   */
   async updateBooking(id, updateData) {
     if (!id) {
       throw new Error('Booking ID is required');
@@ -236,6 +309,13 @@ class BookingService {
     return await this.bookingRepository.update(id, updateData);
   }
 
+  /**
+   * Cancel a booking
+   * @param {string} id - Booking ID
+   * @param {string} [userId=null] - User ID performing the cancellation
+   * @returns {Promise<Object>} Cancelled booking object
+   * @throws {Error} If booking not found or already cancelled
+   */
   async cancelBooking(id, userId = null) {
     if (!id) {
       throw new Error('Booking ID is required');
@@ -253,6 +333,13 @@ class BookingService {
     return await this.bookingRepository.updateStatus(id, 'cancelled');
   }
 
+  /**
+   * Confirm a booking
+   * @param {string} id - Booking ID
+   * @param {string} [userId=null] - User ID performing the confirmation
+   * @returns {Promise<Object>} Confirmed booking object
+   * @throws {Error} If booking not found, cancelled, already confirmed, or time slot unavailable
+   */
   async confirmBooking(id, userId = null) {
     if (!id) {
       throw new Error('Booking ID is required');
@@ -284,6 +371,12 @@ class BookingService {
     return await this.bookingRepository.updateStatus(id, 'confirmed');
   }
 
+  /**
+   * Permanently delete a booking
+   * @param {string} id - Booking ID
+   * @returns {Promise<Object>} Deleted booking object
+   * @throws {Error} If booking not found
+   */
   async deleteBooking(id) {
     if (!id) {
       throw new Error('Booking ID is required');
@@ -297,7 +390,13 @@ class BookingService {
     return await this.bookingRepository.delete(id);
   }
 
-  // Availability checking
+  /**
+   * Check if a time slot is available for booking
+   * @param {Date|string} startTime - Start time to check
+   * @param {Date|string} endTime - End time to check
+   * @param {string} [excludeBookingId=null] - Booking ID to exclude from conflict check (for updates)
+   * @returns {Promise<Object>} Availability result with available flag, reason, and conflicts
+   */
   async checkAvailability(startTime, endTime, excludeBookingId = null) {
     if (!startTime || !endTime) {
       return {
@@ -367,7 +466,10 @@ class BookingService {
     };
   }
 
-  // Statistics and reporting
+  /**
+   * Get booking statistics
+   * @returns {Promise<Object>} Statistics object with counts by status
+   */
   async getBookingStats() {
     const totalBookings = await this.bookingRepository.count();
     const pendingBookings = await this.bookingRepository.count({
@@ -388,6 +490,11 @@ class BookingService {
     };
   }
 
+  /**
+   * Get upcoming bookings
+   * @param {number} [limit=10] - Maximum number of bookings to return
+   * @returns {Promise<Array<Object>>} Array of upcoming booking objects
+   */
   async getUpcomingBookings(limit = 10) {
     const now = new Date();
     const upcomingBookings = await this.bookingRepository.findAll({
@@ -400,11 +507,20 @@ class BookingService {
       .slice(0, limit);
   }
 
-  // Helper methods
+  /**
+   * Check if a booking exists
+   * @param {string} id - Booking ID
+   * @returns {Promise<boolean>} True if booking exists
+   */
   async bookingExists(id) {
     return await this.bookingRepository.exists(id);
   }
 
+  /**
+   * Get count of bookings matching filters
+   * @param {Object} [filters={}] - MongoDB query filters
+   * @returns {Promise<number>} Count of matching bookings
+   */
   async getBookingCount(filters = {}) {
     return await this.bookingRepository.count(filters);
   }
