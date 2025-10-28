@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const User = require('../../src/models/User');
-const Booking = require('../../src/models/Booking');
-const Notification = require('../../src/models/Notification');
+const User = require('../../src/models/user');
+const Booking = require('../../src/models/labBooking');
+const Notification = require('../../src/models/notification');
 const DbHelper = require('../helpers/dbHelper');
 
 describe('Database Operations Integration Tests', () => {
@@ -16,7 +16,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
         department: 'Computer Science',
       };
 
@@ -39,7 +39,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
       };
 
       // Create first user
@@ -66,7 +66,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
       };
 
       await expect(
@@ -98,7 +98,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Booking',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
       });
     });
 
@@ -200,7 +200,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Notification',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
       });
     });
 
@@ -271,7 +271,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Complex',
         lastName: 'User',
-        role: 'student',
+        role: 'lecturer',
       });
 
       testBooking = await DbHelper.createTestData(Booking, {
@@ -394,7 +394,7 @@ describe('Database Operations Integration Tests', () => {
           password: 'hashedpassword123',
           firstName: `User${i}`,
           lastName: 'Test',
-          role: 'student',
+          role: 'lecturer',
         });
       }
 
@@ -416,7 +416,7 @@ describe('Database Operations Integration Tests', () => {
         password: 'hashedpassword123',
         firstName: 'Large',
         lastName: 'Dataset',
-        role: 'student',
+        role: 'lecturer',
       });
 
       // Create many bookings

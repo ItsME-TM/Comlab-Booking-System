@@ -116,6 +116,10 @@ class AuthService {
         },
       };
     } catch (error) {
+      // Re-throw specific errors
+      if (error.message === 'User not found') {
+        throw error;
+      }
       throw new Error('Invalid or expired token');
     }
   }

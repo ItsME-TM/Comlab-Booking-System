@@ -1,24 +1,28 @@
+// Mock nodemailer before importing NotificationService
+jest.mock('nodemailer', () => ({
+  createTransport: jest.fn().mockReturnValue({
+    sendMail: jest.fn().mockResolvedValue({
+      messageId: 'test-message-id',
+      accepted: ['test@example.com'],
+      rejected: [],
+      response: '250 Message accepted',
+    }),
+    verify: jest.fn().mockResolvedValue(true),
+  }),
+}));
+
 const NotificationService = require('../../src/services/NotificationService');
 const NotificationRepository = require('../../src/repositories/NotificationRepository');
-const nodemailer = require('nodemailer');
 
 // Mock dependencies
 jest.mock('../../src/repositories/NotificationRepository');
-jest.mock('nodemailer');
 
 describe('NotificationService', () => {
   let notificationService;
   let mockNotificationRepository;
-  let mockEmailTransporter;
 
   beforeEach(() => {
     jest.clearAllMocks();
-
-    // Mock email transporter
-    mockEmailTransporter = {
-      sendMail: jest.fn().mockResolvedValue({ messageId: 'test-message-id' }),
-    };
-    nodemailer.createTransporter.mockReturnValue(mockEmailTransporter);
 
     // Mock repository
     mockNotificationRepository = {

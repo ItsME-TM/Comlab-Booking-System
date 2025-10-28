@@ -66,10 +66,10 @@ class BookingService {
         errors.push('At least one attendee is required');
       }
 
-      // Validate attendee emails
+      // Validate attendee emails (skip empty/whitespace-only strings)
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       bookingData.attendees.forEach((attendee, index) => {
-        if (attendee && !emailRegex.test(attendee)) {
+        if (attendee && attendee.trim().length > 0 && !emailRegex.test(attendee)) {
           errors.push(
             `Invalid email format for attendee ${index + 1}: ${attendee}`,
           );

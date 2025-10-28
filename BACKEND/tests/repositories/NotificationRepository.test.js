@@ -23,8 +23,11 @@ describe('NotificationRepository', () => {
       const mockNotification = {
         _id: 'notification123',
         ...notificationData,
-        save: jest.fn().mockResolvedValue(true),
+        save: jest.fn(),
       };
+
+      // Make save return the notification itself
+      mockNotification.save.mockResolvedValue(mockNotification);
 
       Notification.mockImplementation(() => mockNotification);
 
