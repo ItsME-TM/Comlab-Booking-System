@@ -21,7 +21,6 @@ function MyApp() {
   const [availabilityMessage, setAvailabilityMessage] = useState('');
   const [users, setUsers] = useState([]);
   const [isPollVisible, setIsPollVisible] = useState(false);
-  const [pollDate, setPollDate] = useState('');
   const [uEmail, setEmail] = useState('');
   const [id, setId] = useState(''); // Added state for id
   const token = localStorage.getItem('token');
@@ -62,7 +61,7 @@ function MyApp() {
           const user = response.data;
           setEmail(user.email);
         } catch (error) {
-          console.error('Error fetching user:', error);
+          // Error fetching user
         }
       };
       fetchUser();
@@ -78,9 +77,8 @@ function MyApp() {
           },
         });
         setUsers(response.data);
-        console.log('users from booking page:', response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        // Error fetching users
       }
     };
     fetchUsers();
@@ -102,13 +100,10 @@ function MyApp() {
       setAvailabilityMessage('Start time and end time cannot be empty');
       return;
     }
-    console.log('aaaaaaaaaa');
     const checkData = {
       startTime: new Date(`${selectedDate}T${startTime}`).toISOString(),
       endTime: new Date(`${selectedDate}T${endTime}`).toISOString(),
     };
-
-    console.log('Checking availability with data:', checkData);
 
     try {
       const response = await axios.post(
@@ -122,10 +117,8 @@ function MyApp() {
         },
       );
 
-      console.log('Availability check response:', response.data);
       setAvailabilityMessage(response.data.message);
     } catch (error) {
-      console.error('Availability check error:', error);
       if (error.response && error.response.data && error.response.data.error) {
         setAvailabilityMessage(error.response.data.error);
       } else {
@@ -143,7 +136,6 @@ function MyApp() {
       attendees: attendees.map(user => user.email),
     };
 
-    console.log('Saving booking with data:', bookingData);
     try {
       // If there's an existing event in the location state, edit the lab session
       if (location.state && location.state.event) {
@@ -159,7 +151,6 @@ function MyApp() {
           },
         );
 
-        console.log('Edit lab session response:', response.data);
         alert('Lab session updated successfully');
         window.history.replaceState(null, '');
         window.location.reload();
@@ -172,12 +163,10 @@ function MyApp() {
           },
         });
 
-        console.log('Booking save response:', response.data);
         alert('Booking Successful');
         //window.location.reload();
 
         const bookingId = response.data._id;
-        console.log('aaaaaaaaaabbbbbbbbb', bookingId);
         const notificationData = {
           title: bookingData.title,
           startTime: bookingData.startTime,
@@ -188,8 +177,6 @@ function MyApp() {
           uDate: new Date(`${selectedDate}`).toISOString(),
           bookingId,
         };
-
-        console.log('Saving notification with data:', notificationData);
 
         try {
           const notificationResponse = await axios.post(
@@ -202,13 +189,7 @@ function MyApp() {
               },
             },
           );
-
-          console.log(
-            'Notification creation response:',
-            notificationResponse.data,
-          );
         } catch (notificationError) {
-          console.error('Notification creation error:', notificationError);
           if (
             notificationError.response &&
             notificationError.response.data &&
@@ -221,7 +202,6 @@ function MyApp() {
         }
       }
     } catch (error) {
-      console.error('Booking save error:', error);
       if (
         error.response &&
         error.response.data &&
@@ -260,14 +240,6 @@ function MyApp() {
       selectedOptions = selectedOptions.slice(0, 2);
     }
     setAttendees(selectedOptions);
-  };
-
-  const handlePollButtonClick = () => {
-    setIsPollVisible(true);
-  };
-
-  const handleClosePollClick = () => {
-    setIsPollVisible(false);
   };
 
   const rectangleClass =

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -115,3 +116,8 @@ export default function Header({ onUserIconClick, isProfileVisible }) {
     </div>
   );
 }
+
+Header.propTypes = {
+  onUserIconClick: PropTypes.func.isRequired,
+  isProfileVisible: PropTypes.bool.isRequired,
+};

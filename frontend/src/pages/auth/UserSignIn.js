@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/auth.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../../components/atoms';
 import EntranceImage from '../../assets/images/entrance.jpg';
@@ -22,7 +21,6 @@ export default function UserSignIn() {
     };
 
     try {
-      console.log('Attempting to log in with:', loginData);
       const response = await axios.post('/api/auth/login', loginData, {
         withCredentials: true,
         headers: {
@@ -30,7 +28,6 @@ export default function UserSignIn() {
         },
       });
 
-      console.log('Login response:', response);
       const { role } = response.data.user;
 
       if (role === 'admin') {
@@ -49,7 +46,6 @@ export default function UserSignIn() {
       }
       setFailedAttempts(0);
     } catch (error) {
-      console.error('Login error:', error);
       setFailedAttempts(prev => {
         const newAttempts = prev + 1;
         if (newAttempts >= 3) {

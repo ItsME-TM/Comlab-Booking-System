@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/auth.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../../components/atoms';
 import EntranceImage from '../../assets/images/entrance.jpg';
@@ -21,7 +20,6 @@ export default function AdminLogin() {
     };
 
     try {
-      console.log('Attempting to log in with:', loginData);
       const response = await axios.post('/api/auth/login', loginData, {
         withCredentials: true,
         headers: {
@@ -29,7 +27,6 @@ export default function AdminLogin() {
         },
       });
 
-      console.log('Login response:', response);
       const { role } = response.data.user;
       if (role === 'lecturer' || role === 'Instructor') {
         alert('Redirect to the User login page.');
@@ -42,7 +39,6 @@ export default function AdminLogin() {
         setErrorMessage('Unauthorized role');
       }
     } catch (error) {
-      console.error('Login error:', error);
       if (
         error.response &&
         error.response.data &&

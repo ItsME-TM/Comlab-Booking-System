@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -103,7 +104,7 @@ export default function Header({ onUserIconClick, isProfileVisible }) {
                   className={`userIcon ${isProfileVisible ? 'active' : ''} ${location.pathname === '/user' ? 'active-page' : ''}`}
                   onClick={onUserIconClick}
                 >
-                  <img src={userIcon} alt='user-icon' />
+                  <img src={logo} alt='user-icon' />
                 </div>
               </div>
             </Nav>
@@ -113,3 +114,8 @@ export default function Header({ onUserIconClick, isProfileVisible }) {
     </div>
   );
 }
+
+Header.propTypes = {
+  onUserIconClick: PropTypes.func.isRequired,
+  isProfileVisible: PropTypes.bool.isRequired,
+};
