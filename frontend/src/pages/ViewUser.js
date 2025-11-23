@@ -6,24 +6,23 @@ import Buttons from '../components/editButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BeatLoader } from 'react-spinners/BeatLoader';
+
 
 const token = localStorage.getItem('token');
 console.log('token from viewuser.js:', token);
 
 export default function ViewUser() {
-  const [user_id, setUserId] = useState('');
+
   const [deleteUser, setDeleteUser] = useState(null);
-  const [edituser_id, setEditUserId] = useState('');
+
   const [users, setUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState('lecturer');
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-  const [textContainerText, setTextContainerText] =
-    useState('Add User Details');
+
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const navigate = useNavigate();
   const profileRef = useRef(null);
-  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -69,7 +68,7 @@ export default function ViewUser() {
 
   const handleEditButtonClick = edituser_id => {
     console.log('edit user button clicked for user:', edituser_id);
-    setTextContainerText('Edit User Details');
+
     navigate('/editUser', { state: { id: edituser_id } });
   };
 

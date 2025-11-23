@@ -38,7 +38,7 @@ const initialState = {
 // Notification reducer
 const notificationReducer = (state, action) => {
   switch (action.type) {
-    case NOTIFICATION_ACTIONS.ADD_NOTIFICATION:
+    case NOTIFICATION_ACTIONS.ADD_NOTIFICATION: {
       const newNotification = {
         id: Date.now().toString(),
         timestamp: new Date().toISOString(),
@@ -50,8 +50,9 @@ const notificationReducer = (state, action) => {
         notifications: [newNotification, ...state.notifications],
         unreadCount: state.unreadCount + 1,
       };
+    }
 
-    case NOTIFICATION_ACTIONS.REMOVE_NOTIFICATION:
+    case NOTIFICATION_ACTIONS.REMOVE_NOTIFICATION: {
       const filteredNotifications = state.notifications.filter(
         notification => notification.id !== action.payload,
       );
@@ -66,8 +67,9 @@ const notificationReducer = (state, action) => {
             ? state.unreadCount - 1
             : state.unreadCount,
       };
+    }
 
-    case NOTIFICATION_ACTIONS.MARK_AS_READ:
+    case NOTIFICATION_ACTIONS.MARK_AS_READ: {
       const updatedNotifications = state.notifications.map(notification =>
         notification.id === action.payload
           ? { ...notification, isRead: true }
@@ -82,6 +84,7 @@ const notificationReducer = (state, action) => {
         notifications: updatedNotifications,
         unreadCount: wasUnread ? state.unreadCount - 1 : state.unreadCount,
       };
+    }
 
     case NOTIFICATION_ACTIONS.MARK_ALL_AS_READ:
       return {
@@ -100,7 +103,7 @@ const notificationReducer = (state, action) => {
         unreadCount: 0,
       };
 
-    case NOTIFICATION_ACTIONS.SET_NOTIFICATIONS:
+    case NOTIFICATION_ACTIONS.SET_NOTIFICATIONS: {
       const unreadCount = action.payload.filter(
         notification => !notification.isRead,
       ).length;
@@ -109,6 +112,7 @@ const notificationReducer = (state, action) => {
         notifications: action.payload,
         unreadCount,
       };
+    }
 
     case NOTIFICATION_ACTIONS.SET_LOADING:
       return {

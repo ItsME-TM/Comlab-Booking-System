@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../components/toProfile.css';
 import userImage from '../images/user-image.png';
 import '../App.css';
@@ -14,7 +13,7 @@ export default function ToProfile() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password] = useState('');
   const [role, setRole] = useState('');
   const [textContainerText, setTextContainerText] = useState('Your Account');
   const navigate = useNavigate();
