@@ -239,10 +239,10 @@ apiClient.addErrorInterceptor(error => {
 
     // Redirect to login if not already there
     if (
-      window.location.pathname !== '/signin' &&
+      window.location.pathname !== '/userLogin' &&
       window.location.pathname !== '/'
     ) {
-      window.location.href = '/signin';
+      window.location.href = '/userLogin';
     }
   }
 
