@@ -111,6 +111,162 @@ export const UserProvider = ({ children }) => {
     dispatch({ type: USER_ACTIONS.SET_ERROR, payload: error });
   };
 
+  /**
+   * Update user profile
+   * @param {Object} profileData - Profile data to update
+   */
+  const updateProfile = async profileData => {
+    try {
+      setLoading(true);
+      // Import userService dynamically to avoid circular dependencies
+      const { userService } = await import('../services');
+      const updatedUser = await userService.updateProfile(profileData);
+      updateUser(updatedUser);
+      setLoading(false);
+      return { success: true, user: updatedUser };
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+      return { success: false, error: error.message };
+    }
+  };
+
+  /**
+   * Refresh authentication token
+   * @returns {Promise<Object>} Result with success status
+   */
+  const refreshToken = async () => {
+    try {
+      setLoading(true);
+      const { authService } = await import('../services');
+      const response = await authService.refreshToken();
+      
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+      }
+      
+      setLoading(false);
+      return { success: true };
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+      // If token refresh fails, clear user data
+      clearUser();
+      return { success: false, error: error.message };
+    }
+  };
+
+  /**
+   * Check if user has a specific role
+   * @param {string} role - Role to check
+   * @returns {boolean} True if user has the role
+   */
+  const hasRole = role => {
+    return state.user?.role === role;
+  };
+
+  /**
+   * Check if user has any of the specified roles
+   * @param {Array<string>} roles - Array of roles to check
+   * @returns {boolean} True if user has any of the roles
+   */
+  const hasAnyRole = roles => {
+    return roles.includes(state.user?.role);
+  };
+
+  /**
+   * Check if user has all of the specified roles
+   * @param {Array<string>} roles - Array of roles to check
+   * @returns {boolean} True if user has all of the roles
+   */
+  const hasAllRoles = roles => {
+    return roles.every(role => state.user?.role === role);
+  };
+
+  /**
+   * Check if user is admin
+   * @returns {boolean} True if user is admin
+   */
+  const isAdmin = () => {
+    return hasRole('admin');
+  };
+
+  /**
+   * Check if user is lecturer
+   * @returns {boolean} True if user is lecturer
+   */
+  const isLecturer = () => {
+    return hasRole('lecturer');
+  };
+
+  /**
+   * Check if user is instructor
+   * @returns {boolean} True if user is instructor
+   */
+  const isInstructor = () => {
+    return hasRole('instructor');
+  };
+
+  /**
+   * Check if user is technical officer
+   * @returns {boolean} True if user is technical officer
+   */
+  const isTechnicalOfficer = () => {
+    return hasRole('to');
+  };
+
+  /**
+   * Check if user can manage users (admin only)
+   * @returns {boolean} True if user can manage users
+   */
+  const canManageUsers = () => {
+    return isAdmin();
+  };
+
+  /**
+   * Check if user can create bookings
+   * @returns {boolean} True if user can create bookings
+   */
+  const canCreateBookings = () => {
+    return hasAnyRole(['lecturer', 'instructor', 'to']);
+  };
+
+  /**
+   * Check if user can approve bookings (TO only)
+   * @returns {boolean} True if user can approve bookings
+   */
+  const canApproveBookings = () => {
+    return isTechnicalOfficer();
+  };
+
+  /**
+   * Check if user can view all bookings
+   * @returns {boolean} True if user can view all bookings
+   */
+  const canViewAllBookings = () => {
+    return hasAnyRole(['admin', 'to']);
+  };
+
+  /**
+   * Get user's full name
+   * @returns {string} User's full name
+   */
+  const getFullName = () => {
+    if (!state.user) return '';
+    return `${state.user.firstName || ''} ${state.user.lastName || ''}`.trim();
+  };
+
+  /**
+   * Get user's initials
+   * @returns {string} User's initials
+   */
+  const getInitials = () => {
+    if (!state.user) return '';
+    const firstName = state.user.firstName || '';
+    const lastName = state.user.lastName || '';
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
+
   const value = {
     ...state,
     setUser,
@@ -118,6 +274,21 @@ export const UserProvider = ({ children }) => {
     clearUser,
     setLoading,
     setError,
+    updateProfile,
+    refreshToken,
+    hasRole,
+    hasAnyRole,
+    hasAllRoles,
+    isAdmin,
+    isLecturer,
+    isInstructor,
+    isTechnicalOfficer,
+    canManageUsers,
+    canCreateBookings,
+    canApproveBookings,
+    canViewAllBookings,
+    getFullName,
+    getInitials,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

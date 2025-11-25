@@ -1,43 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import HeaderAdmin from '../components/HeaderAdmin';
 import '../components/viewuser.css';
 import Profile from '../components/Profile';
 import Buttons from '../components/editButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-const token = localStorage.getItem('token');
-console.log('token from viewuser.js:', token);
+import { useUsers } from '../hooks';
 
 export default function ViewUser() {
   const [deleteUser, setDeleteUser] = useState(null);
-
-  const [users, setUsers] = useState([]);
   const [selectedRole, setSelectedRole] = useState('lecturer');
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  
   const navigate = useNavigate();
   const profileRef = useRef(null);
+  const { users, loading, fetchAllUsers, deleteUser: removeUser } = useUsers();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('/api/users/getall', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUsers(response.data);
-        console.log('users from viewuser.js:', response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchUsers();
-  }, [token]);
+    fetchAllUsers();
+  }, [fetchAllUsers]);
 
   const handleRoleClick = role => {
     setSelectedRole(role);
@@ -78,19 +60,11 @@ export default function ViewUser() {
   const handleRemoveConfirmation = async () => {
     if (deleteUser) {
       console.log('handleRemoveConfirmation function:', deleteUser);
-      try {
-        await axios.delete(`/api/users/${deleteUser._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUsers(users.filter(user => user._id !== deleteUser._id));
-      } catch (error) {
-        console.error('Error deleting user:', error);
-        alert('Error deleting user');
+      const result = await removeUser(deleteUser._id);
+      if (result.success) {
+        setDeleteUser(null);
+        setShowConfirmationDialog(false);
       }
-      setDeleteUser(null);
-      setShowConfirmationDialog(false);
     }
   };
 
@@ -141,47 +115,51 @@ export default function ViewUser() {
         </div>
         <div className='right-side-admin'>
           <h3 className='role-title'>{selectedRole}</h3>
-          <table className='user-table'>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map(user => (
-                <tr key={user._id}>
-                  <td>{user.firstName}</td>
-                  <td>{user.email}</td>
-                  <div className='button-row'>
-                    <Buttons
-                      text='Edit'
-                      borderRadius='20px'
-                      width='65px'
-                      height='42px'
-                      marginTop='20px'
-                      onClick={() => {
-                        handleEditButtonClick(user._id);
-                        console.log('Hit the edit button');
-                      }}
-                    />
-                    <Buttons
-                      text='Remove'
-                      borderRadius='20px'
-                      width='100px'
-                      height='42px'
-                      marginTop='20px'
-                      marginLeft='50px'
-                      onClick={() => {
-                        handleRemoveButtonClick(user);
-                        console.log('Hit the remove button', user);
-                      }}
-                    />
-                  </div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '20px' }}>Loading users...</div>
+          ) : (
+            <table className='user-table'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredUsers.map(user => (
+                  <tr key={user._id}>
+                    <td>{user.firstName}</td>
+                    <td>{user.email}</td>
+                    <div className='button-row'>
+                      <Buttons
+                        text='Edit'
+                        borderRadius='20px'
+                        width='65px'
+                        height='42px'
+                        marginTop='20px'
+                        onClick={() => {
+                          handleEditButtonClick(user._id);
+                          console.log('Hit the edit button');
+                        }}
+                      />
+                      <Buttons
+                        text='Remove'
+                        borderRadius='20px'
+                        width='100px'
+                        height='42px'
+                        marginTop='20px'
+                        marginLeft='50px'
+                        onClick={() => {
+                          handleRemoveButtonClick(user);
+                          console.log('Hit the remove button', user);
+                        }}
+                      />
+                    </div>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         {isBoxVisible && <Profile profileRef={profileRef} />}
         {showConfirmationDialog && (
