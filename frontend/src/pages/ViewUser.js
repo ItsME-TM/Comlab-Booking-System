@@ -7,12 +7,10 @@ import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 const token = localStorage.getItem('token');
 console.log('token from viewuser.js:', token);
 
 export default function ViewUser() {
-
   const [deleteUser, setDeleteUser] = useState(null);
 
   const [users, setUsers] = useState([]);
@@ -22,7 +20,6 @@ export default function ViewUser() {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const navigate = useNavigate();
   const profileRef = useRef(null);
-
 
   useEffect(() => {
     const fetchUsers = async () => {

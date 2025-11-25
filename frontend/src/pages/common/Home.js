@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NavBarBL } from '../../components/organisms';
-import { Footer } from '../../components/organisms';
+import { NavBarBL, Footer } from '../../components/organisms';
 import { Button } from '../../components/atoms';
 import '../../styles/common.css';
 

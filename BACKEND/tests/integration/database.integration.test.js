@@ -283,7 +283,7 @@ describe('Database Operations Integration Tests', () => {
         labEndTime: testBooking.endTime,
         message: `Your booking has been created`,
       };
-      
+
       await DbHelper.createTestData(Notification, notificationData);
 
       // Verify relationships
@@ -346,10 +346,7 @@ describe('Database Operations Integration Tests', () => {
       expect(createdBookings).toHaveLength(2);
 
       // Bulk update all bookings to confirmed
-      await Booking.updateMany(
-        { status: 'pending' },
-        { status: 'confirmed' },
-      );
+      await Booking.updateMany({ status: 'pending' }, { status: 'confirmed' });
 
       const confirmedBookings = await Booking.find({ status: 'confirmed' });
       expect(confirmedBookings.length).toBeGreaterThanOrEqual(3);
@@ -399,15 +396,9 @@ describe('Database Operations Integration Tests', () => {
       await DbHelper.createMultipleTestData(Booking, bookings);
 
       // Query with pagination
-      const page1 = await Booking.find({})
-        .sort({ _id: -1 })
-        .limit(10)
-        .skip(0);
+      const page1 = await Booking.find({}).sort({ _id: -1 }).limit(10).skip(0);
 
-      const page2 = await Booking.find({})
-        .sort({ _id: -1 })
-        .limit(10)
-        .skip(10);
+      const page2 = await Booking.find({}).sort({ _id: -1 }).limit(10).skip(10);
 
       expect(page1).toHaveLength(10);
       expect(page2).toHaveLength(10);
@@ -419,7 +410,10 @@ describe('Database Operations Integration Tests', () => {
       ]);
 
       expect(statusCounts.length).toBeGreaterThan(0);
-      const totalCount = statusCounts.reduce((sum, item) => sum + item.count, 0);
+      const totalCount = statusCounts.reduce(
+        (sum, item) => sum + item.count,
+        0,
+      );
       expect(totalCount).toBeGreaterThanOrEqual(50);
     });
   });
