@@ -4,3 +4,4 @@ export { default as authService } from './authService';
 export { default as userService } from './userService';
 export { default as bookingService } from './bookingService';
 export { default as notificationService } from './notificationService';
+export { default as imageService } from './imageService';

@@ -23,6 +23,112 @@ class NotificationService {
   }
 
   /**
+   * Get user receiver notifications (booking confirmations)
+   * @returns {Promise<Array>} List of receiver notifications
+   */
+  async getUserReceiverNotifications() {
+    try {
+      const response = await apiClient.get('/notification/userReciver/');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch receiver notifications');
+    }
+  }
+
+  /**
+   * Accept notification (confirm receiver)
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Accept response
+   */
+  async acceptNotification(notificationId) {
+    try {
+      const response = await apiClient.post(
+        `/notification/updateIsReceiverConfirm/${notificationId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to accept notification');
+    }
+  }
+
+  /**
+   * Reject notification
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Reject response
+   */
+  async rejectNotification(notificationId) {
+    try {
+      const response = await apiClient.post(
+        `/notification/reject/${notificationId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to reject notification');
+    }
+  }
+
+  /**
+   * Confirm lab booking
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Confirm response
+   */
+  async confirmLab(notificationId) {
+    try {
+      const response = await apiClient.post(
+        `/notification/confirmedLab/${notificationId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to confirm lab');
+    }
+  }
+
+  /**
+   * Cancel lab booking
+   * @param {string} notificationId - Notification ID
+   * @returns {Promise<Object>} Cancel response
+   */
+  async cancelLab(notificationId) {
+    try {
+      const response = await apiClient.post(
+        `/notification/updateIsLabStatus/${notificationId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to cancel lab');
+    }
+  }
+
+  /**
+   * Get attendees and types by booking ID
+   * @param {string} bookingId - Booking ID
+   * @returns {Promise<Object>} Attendees data
+   */
+  async getAttendeesByBookingId(bookingId) {
+    try {
+      const response = await apiClient.get(
+        `/notification/attendeesAndTypeByBookingId/${bookingId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch attendees');
+    }
+  }
+
+  /**
+   * Update notifications to reminder status
+   * @returns {Promise<Object>} Update response
+   */
+  async updateNotificationsToReminder() {
+    try {
+      const response = await apiClient.put('/notification/reminder');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to update notifications to reminder');
+    }
+  }
+
+  /**
    * Get notification by ID
    * @param {string} notificationId - Notification ID
    * @returns {Promise<Object>} Notification data

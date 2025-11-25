@@ -21,6 +21,157 @@ class UserService {
   }
 
   /**
+   * Get all users (legacy endpoint)
+   * @returns {Promise<Array>} List of all users
+   */
+  async getAllUsers() {
+    try {
+      const response = await apiClient.get('/users/getall');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch users');
+    }
+  }
+
+  /**
+   * Get user names and emails
+   * @returns {Promise<Array>} List of user names and emails
+   */
+  async getUserNames() {
+    try {
+      const response = await apiClient.get('/users/getNames');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch user names');
+    }
+  }
+
+  /**
+   * Get all lecturers
+   * @returns {Promise<Array>} List of lecturers
+   */
+  async getLecturers() {
+    try {
+      const response = await apiClient.get('/users/lecturers');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch lecturers');
+    }
+  }
+
+  /**
+   * Get all technical officers
+   * @returns {Promise<Array>} List of technical officers
+   */
+  async getTechnicalOfficers() {
+    try {
+      const response = await apiClient.get('/users/tos');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch technical officers');
+    }
+  }
+
+  /**
+   * Get all instructors
+   * @returns {Promise<Array>} List of instructors
+   */
+  async getInstructors() {
+    try {
+      const response = await apiClient.get('/users/instructors');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch instructors');
+    }
+  }
+
+  /**
+   * Get current authenticated user from token
+   * @returns {Promise<Object>} Current user data
+   */
+  async getTokenUser() {
+    try {
+      const response = await apiClient.get('/users/tokenUser');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch token user');
+    }
+  }
+
+  /**
+   * Get user details by ID
+   * @param {string} userId - User ID
+   * @returns {Promise<Object>} User details
+   */
+  async getUserDetails(userId) {
+    try {
+      const response = await apiClient.get(`/users/getDetails/${userId}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch user details');
+    }
+  }
+
+  /**
+   * Update user name
+   * @param {string} userId - User ID
+   * @param {Object} nameData - Name data (firstName, lastName)
+   * @returns {Promise<Object>} Update response
+   */
+  async updateUserName(userId, nameData) {
+    try {
+      const response = await apiClient.post(`/users/updateName/${userId}`, nameData);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to update user name');
+    }
+  }
+
+  /**
+   * Verify email and send OTP
+   * @param {string} email - User email
+   * @returns {Promise<Object>} Verification response with OTP
+   */
+  async verifyEmail(email) {
+    try {
+      const response = await apiClient.get(`/users/verify-email?email=${email}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to verify email');
+    }
+  }
+
+  /**
+   * Update user password
+   * @param {Object} passwordData - Password update data
+   * @param {string} passwordData.email - User email
+   * @param {string} passwordData.password - New password
+   * @returns {Promise<Object>} Update response
+   */
+  async updatePassword(passwordData) {
+    try {
+      const response = await apiClient.post('/users/update-password', passwordData);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to update password');
+    }
+  }
+
+  /**
+   * Add new user (legacy endpoint)
+   * @param {Object} userData - User data
+   * @returns {Promise<Object>} Created user data
+   */
+  async addUser(userData) {
+    try {
+      const response = await apiClient.post('/users/add', { userData });
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to add user');
+    }
+  }
+
+  /**
    * Get user by ID
    * @param {string} userId - User ID
    * @returns {Promise<Object>} User data

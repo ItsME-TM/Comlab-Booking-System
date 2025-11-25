@@ -200,6 +200,94 @@ class BookingService {
       throw new Error(error.message || 'Failed to fetch lab schedule');
     }
   }
+
+  /**
+   * Cancel lab session (legacy endpoint)
+   * @param {string} bookingId - Booking ID
+   * @returns {Promise<Object>} Cancellation response
+   */
+  async cancelLabSession(bookingId) {
+    try {
+      const response = await apiClient.post(
+        `/bookings/cancelLabSession/${bookingId}`
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to cancel lab session');
+    }
+  }
+
+  /**
+   * Edit lab session (legacy endpoint)
+   * @param {string} bookingId - Booking ID
+   * @param {Object} bookingData - Updated booking data
+   * @returns {Promise<Object>} Update response
+   */
+  async editLabSession(bookingId, bookingData) {
+    try {
+      const response = await apiClient.put(
+        `/bookings/editLabSession/${bookingId}`,
+        bookingData
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to edit lab session');
+    }
+  }
+
+  /**
+   * Get bookings by status
+   * @param {string} status - Booking status
+   * @returns {Promise<Array>} List of bookings with specified status
+   */
+  async getBookingsByStatus(status) {
+    try {
+      const response = await apiClient.get(`/bookings/status/${status}`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch bookings by status');
+    }
+  }
+
+  /**
+   * Get booking statistics
+   * @returns {Promise<Object>} Booking statistics
+   */
+  async getBookingStats() {
+    try {
+      const response = await apiClient.get('/bookings/stats/overview');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch booking statistics');
+    }
+  }
+
+  /**
+   * Get upcoming bookings
+   * @returns {Promise<Array>} List of upcoming bookings
+   */
+  async getUpcomingBookings() {
+    try {
+      const response = await apiClient.get('/bookings/upcoming/list');
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to fetch upcoming bookings');
+    }
+  }
+
+  /**
+   * Confirm booking
+   * @param {string} bookingId - Booking ID
+   * @returns {Promise<Object>} Confirmation response
+   */
+  async confirmBooking(bookingId) {
+    try {
+      const response = await apiClient.patch(`/bookings/${bookingId}/confirm`);
+      return response;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to confirm booking');
+    }
+  }
 }
 
 // Export singleton instance
