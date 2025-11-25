@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../components/signIn.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Buttons from '../components/submitButton';
 import EntranceImage from '../images/entrance.jpg';

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import HeaderAdmin from '../components/HeaderAdmin';
 import Buttons from '../components/submitButton';
 import UserImageAdmin from '../images/user-image.png';
-import { Link, useLocation } from 'react-router-dom';
 import '../components/adduser.css';
 import Profile from '../components/Profile';
 import axios from 'axios';

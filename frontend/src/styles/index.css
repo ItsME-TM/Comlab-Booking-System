@@ -1,5 +1,8 @@
 /* Main styles entry point */
+/* Import theme variables first so they're available everywhere */
+@import './theme.css';
 @import './global.css';
+@import './responsive.css';
 @import './auth.css';
 @import './common.css';
 @import './booking.css';

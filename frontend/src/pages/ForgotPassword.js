@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../components/forgotPassword.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Buttons from '../components/submitButton';
 import FacultyImage from '../images/faculty.jpg';
@@ -16,7 +15,6 @@ export default function ForgotPassword() {
   const [inOtp, setInOpt] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

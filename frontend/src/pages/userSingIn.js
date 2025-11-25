@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../components/signIn.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Buttons from '../components/submitButton';
 import EntranceImage from '../images/entrance.jpg';
@@ -10,7 +9,6 @@ export default function UserSignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [failedAttempts, setFailedAttempts] = useState(0);
   const navigate = useNavigate();
 
   const sendData = async e => {
