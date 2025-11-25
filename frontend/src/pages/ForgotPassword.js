@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '../components/forgotPassword.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/auth.css';
 import axios from 'axios';
 import Buttons from '../components/submitButton';
 import FacultyImage from '../images/faculty.jpg';
@@ -14,15 +14,8 @@ export default function ForgotPassword() {
   const [otp, setOtp] = useState('');
   const [inOtp, setInOpt] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, []);
 
   const sendData = async e => {
     e.preventDefault();
@@ -40,7 +33,7 @@ export default function ForgotPassword() {
 
         alert('Password updated successfully!');
         console.log('Update password response:', response.data);
-        navigate('/userSingIn');
+        navigate('/userLogin');
       } else {
         // Handle error scenario where password or OTP does not match
         if (password !== confirmPassword) {
@@ -57,15 +50,20 @@ export default function ForgotPassword() {
   };
 
   const getCode = async () => {
+    if (!email) {
+      setErrorMessage('Please enter your email address');
+      return;
+    }
+    
     setLoading(true);
+    setErrorMessage('');
+    
     try {
       const response = await axios.get(
         `/api/users/verify-email?email=${email}`,
       );
 
-      setMessage(response.data.message);
       setOtp(response.data.otp);
-      setEmail(response.data.email);
 
       if (response.data.message === 'Email found') {
         setIsCodeSent(true);
@@ -75,7 +73,7 @@ export default function ForgotPassword() {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorMessage(error.response.data.error);
       } else {
-        setErrorMessage('Server i error');
+        setErrorMessage('Server error');
       }
     } finally {
       setLoading(false);
@@ -83,106 +81,121 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className='main-page-container-forgot-password'>
-      <div className='image-container-forgot-password'>
-        <img
-          src={FacultyImage}
-          alt='university-photograph-entrance'
-          className='FacultyImage'
-        />
-      </div>
-
-      <div className='page-container-forgot-password'>
-        <div className='form-container-forgot-password'>
-          <form className='form-forgot' onSubmit={sendData}>
-            <h1>Change Password</h1>
-            <div className='form-group-forgot-password'>
-              <label htmlFor='email' className='label'>
-                Enter your email address below to get the code to your inbox
-              </label>
-              <div className='input-button-wrapper'>
-                <input
-                  type='email'
-                  id='email'
-                  className='input-with-button'
-                  placeholder='Enter the email'
-                  onChange={e => setEmail(e.target.value)}
-                />
-                <Link to='#' onClick={getCode}>
-                  {loading ? (
-                    <div className='loading-spinner'>
-                      <BeatLoader color={'#000000'} loading={true} size={20} />
-                    </div>
-                  ) : (
-                    <Buttons
-                      className='get-code-button'
-                      text='Get Code'
-                      borderRadius='10px'
-                      width='95px'
-                    />
-                  )}
-                </Link>
-              </div>
-            </div>
-
-            {isCodeSent && (
-              <>
-                <div className='form-group-forgot-password'>
-                  <label htmlFor='password' className='label'>
-                    New Password
-                  </label>
-                  <input
-                    type='password'
-                    id='password'
-                    className='input-1'
-                    placeholder='Enter the password'
-                    onChange={e => setPassword(e.target.value)}
-                  />
-                </div>
-
-                <div className='form-group-forgot-password'>
-                  <label htmlFor='confirmPassword' className='label'>
-                    Confirm Password
-                  </label>
-                  <input
-                    type='password'
-                    id='confirmPassword'
-                    className='input-1'
-                    placeholder='Enter the password'
-                    onChange={e => setConfirmPassword(e.target.value)}
-                  />
-                </div>
-
-                <div className='form-group-forgot-password'>
-                  <label htmlFor='otp' className='label'>
-                    OTP
-                  </label>
-                  <input
-                    type='text'
-                    id='otp'
-                    className='input-1'
-                    placeholder='Enter the OTP code'
-                    onChange={e => setInOpt(e.target.value)}
-                  />
-                </div>
-                <Buttons
-                  type='submit'
-                  text='Submit'
-                  borderRadius='50px'
-                  width='125px'
-                  height='50px'
-                  marginTop='20px'
-                />
-              </>
-            )}
-
-            {errorMessage && <p className='error-message'>{errorMessage}</p>}
-          </form>
+    <div className='auth-page'>
+      <div className='auth-container'>
+        <div className='auth-image-section'>
+          <div className='auth-image-overlay'></div>
+          <img
+            src={FacultyImage}
+            alt='University faculty building'
+            className='auth-background-image'
+          />
         </div>
-        {/* Oblique line divider */}
-        {/* <div className="oblique-line" style={{ borderColor: '#1D4C5A', borderStyle: 'solid', borderWidth: '10px', left: '12%' }}></div>
-        <div className="oblique-line" style={{ borderColor: '#1D4C5A', borderStyle: 'solid', borderWidth: '5px', left: '15%' }}></div>
-        <div className="oblique-line" style={{ borderColor: '#1D4C5A', borderStyle: 'solid', borderWidth: '3px', left: '18%' }}></div> */}
+
+        <div className='auth-form-section'>
+          <div className='auth-form-wrapper'>
+            <div className='auth-header'>
+              <h1>Change Password</h1>
+              <p className='auth-subtitle'>Enter your email to receive a verification code</p>
+            </div>
+            
+            <form className='auth-form' onSubmit={sendData}>
+              <div className='form-group'>
+                <label htmlFor='email' className='form-label'>
+                  Email Address
+                </label>
+                <div className='input-button-wrapper'>
+                  <input
+                    type='email'
+                    id='email'
+                    className='form-input input-with-button'
+                    placeholder='Enter your email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                  />
+                  <button
+                    type='button'
+                    onClick={getCode}
+                    className='get-code-button'
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <BeatLoader color={'#ffffff'} loading={true} size={8} />
+                    ) : (
+                      'Get Code'
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {isCodeSent && (
+                <>
+                  <div className='form-group'>
+                    <label htmlFor='password' className='form-label'>
+                      New Password
+                    </label>
+                    <input
+                      type='password'
+                      id='password'
+                      className='form-input'
+                      placeholder='Enter new password'
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className='form-group'>
+                    <label htmlFor='confirmPassword' className='form-label'>
+                      Confirm Password
+                    </label>
+                    <input
+                      type='password'
+                      id='confirmPassword'
+                      className='form-input'
+                      placeholder='Confirm new password'
+                      value={confirmPassword}
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className='form-group'>
+                    <label htmlFor='otp' className='form-label'>
+                      Verification Code
+                    </label>
+                    <input
+                      type='text'
+                      id='otp'
+                      className='form-input'
+                      placeholder='Enter the OTP code'
+                      value={inOtp}
+                      onChange={e => setInOpt(e.target.value)}
+                      required
+                    />
+                  </div>
+                  
+                  <div className='form-actions'>
+                    <Buttons
+                      text='Submit'
+                      borderRadius='50px'
+                      width='125px'
+                      height='50px'
+                      marginTop='20px'
+                    />
+                  </div>
+                </>
+              )}
+
+              {errorMessage && (
+                <div className='error-message' role='alert'>
+                  {errorMessage}
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

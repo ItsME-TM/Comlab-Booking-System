@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../components/signIn.css';
+import '../styles/auth.css';
 import axios from 'axios';
 import Buttons from '../components/submitButton';
 import EntranceImage from '../images/entrance.jpg';
 
-export default function UserSignIn() {
+export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -54,70 +54,79 @@ export default function UserSignIn() {
     }
   };
   return (
-    <div>
-      <div className='page-container-login'>
-        <div className='form-container-login'>
-          <h1>Admin Log in</h1>
-          <h3>Sign in to continue</h3>
-          <form className='form-signin' onSubmit={sendData}>
-            <div className='form-group-login'>
-              <label htmlFor='email' className='label'>
-                Email
-              </label>
-              <input
-                type='email'
-                id='email'
-                className='input-1'
-                placeholder='Enter the email'
-                onChange={e => setEmail(e.target.value)}
-              />
+    <div className='auth-page'>
+      <div className='auth-container'>
+        <div className='auth-form-section'>
+          <div className='auth-form-wrapper'>
+            <div className='auth-header'>
+              <h1>Admin Log in</h1>
+              <p className='auth-subtitle'>Sign in to continue</p>
             </div>
-            <div className='form-group-login'>
-              <label htmlFor='password' className='label'>
-                Password
-              </label>
-              <input
-                type='password'
-                id='password'
-                className='input-1'
-                placeholder='Enter the password'
-                onChange={e => setPassword(e.target.value)}
-              />
-            </div>
-            <div className='forgot-password-1'>
-              <Link
-                to='/forgotpassword'
-                style={{ textDecoration: 'underline' }}
-              >
-                Forgot password?
-              </Link>
-            </div>
-            <div className='buttons'>
-              <Buttons
-                text='Log in'
-                borderRadius='50px'
-                width='125px'
-                height='50px'
-                marginTop='20px'
-              />
-            </div>
-          </form>
-          {errorMessage && (
-            <p className='error-message-login'>{errorMessage}</p>
-          )}
+            
+            <form className='auth-form' onSubmit={sendData}>
+              <div className='form-group'>
+                <label htmlFor='email' className='form-label'>
+                  Email
+                </label>
+                <input
+                  type='email'
+                  id='email'
+                  className='form-input'
+                  placeholder='Enter your email'
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              
+              <div className='form-group'>
+                <label htmlFor='password' className='form-label'>
+                  Password
+                </label>
+                <input
+                  type='password'
+                  id='password'
+                  className='form-input'
+                  placeholder='Enter your password'
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              
+              <div className='forgot-password-link'>
+                <Link to='/forgotpassword'>
+                  Forgot password?
+                </Link>
+              </div>
+              
+              <div className='form-actions'>
+                <Buttons
+                  text='Log in'
+                  borderRadius='50px'
+                  width='125px'
+                  height='50px'
+                  marginTop='20px'
+                />
+              </div>
+              
+              {errorMessage && (
+                <div className='error-message' role='alert'>
+                  {errorMessage}
+                </div>
+              )}
+            </form>
+          </div>
         </div>
-        {/* Oblique line divider */}
-        {/* <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'8px' , left:'88%'}}></div>
-      <div className="oblique-line" style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'5px', left:'85%'}}></div>  
-      <div className="oblique-line"style={{borderColor:'#1D4C5A', borderStyle:'solid', borderWidth:'3px', left:'82%'}}></div> */}
-      </div>
-
-      <div className='image-container-login'>
-        <img
-          src={EntranceImage}
-          alt='university-photograph-entrance'
-          className='EntranceUniImage'
-        />
+        
+        <div className='auth-image-section'>
+          <div className='auth-image-overlay'></div>
+          <img
+            src={EntranceImage}
+            alt='University entrance'
+            className='auth-background-image'
+          />
+        </div>
       </div>
     </div>
   );

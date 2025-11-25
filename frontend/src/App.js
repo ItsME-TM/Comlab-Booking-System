@@ -5,7 +5,7 @@ import { NotificationProvider, UserProvider } from './contexts';
 
 // Import organized components
 import { Home, Dashboard } from './pages/common';
-import { SignIn, UserSignIn, AdminLogin, ForgotPassword } from './pages/auth';
+import { UserSignIn, UserLogin, AdminLogin, ForgotPassword } from './pages/auth';
 import { LabBooking } from './pages/booking';
 
 // Import remaining pages (to be organized in future tasks)
@@ -41,12 +41,12 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/user' element={<User />} />
-              <Route path='/signin' element={<SignIn />} />
               <Route path='/booking' element={<LabBooking />} />
               <Route path='/view' element={<CalendarView />} />
               <Route path='/errmsg' element={<Errmsg />} />
               <Route path='/notification' element={<Notification />} />
               <Route path='/userSingIn' element={<UserSignIn />} />
+              <Route path='/userLogin' element={<UserLogin />} />
               <Route path='/adminlogin' element={<AdminLogin />} />
               <Route path='/forgotpassword' element={<ForgotPassword />} />
               <Route path='/adminhome' element={<AdminHome />} />

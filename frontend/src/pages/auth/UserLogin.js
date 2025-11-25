@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../../styles/auth.css';
 import axios from 'axios';
 import Buttons from '../../components/submitButton';
 import EntranceImage from '../../images/entrance.jpg';
+import '../../styles/auth.css';
 
-export default function AdminLogin() {
+export default function UserLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [failedAttempts, setFailedAttempts] = useState(0);
   const navigate = useNavigate();
 
   const sendData = async e => {
@@ -20,6 +21,7 @@ export default function AdminLogin() {
     };
 
     try {
+      console.log('Attempting to log in with:', loginData);
       const response = await axios.post('/api/auth/login', loginData, {
         withCredentials: true,
         headers: {
@@ -27,18 +29,33 @@ export default function AdminLogin() {
         },
       });
 
+      console.log('Login response:', response);
       const { role } = response.data.user;
-      if (role === 'lecturer' || role === 'Instructor') {
-        alert('Redirect to the User login page.');
-        navigate('/userSingIn');
-      } else if (role === 'admin') {
+
+      if (role === 'admin') {
+        alert('Redirect to the Admin login page.');
+        navigate('/adminlogin');
+      } else if (role === 'lecturer' || role === 'instructor') {
         const token = response.data.token;
         localStorage.setItem('token', token);
-        navigate('/adminhome');
+        navigate('/dashboard');
+      } else if (role === 'to') {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        navigate('/toHome');
       } else {
         setErrorMessage('Unauthorized role');
       }
+      setFailedAttempts(0);
     } catch (error) {
+      console.error('Login error:', error);
+      setFailedAttempts(prev => {
+        const newAttempts = prev + 1;
+        if (newAttempts >= 3) {
+          navigate('/errmsg');
+        }
+        return newAttempts;
+      });
       if (
         error.response &&
         error.response.data &&
@@ -50,13 +67,14 @@ export default function AdminLogin() {
       }
     }
   };
+
   return (
     <div className='auth-page'>
       <div className='auth-container'>
         <div className='auth-form-section'>
           <div className='auth-form-wrapper'>
             <div className='auth-header'>
-              <h1>Admin Log in</h1>
+              <h1>Log in</h1>
               <p className='auth-subtitle'>Sign in to continue</p>
             </div>
             
